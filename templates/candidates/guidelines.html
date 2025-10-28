@@ -27,27 +27,27 @@
 
       <!-- Left: Logo -->
       <div class="flex items-center space-x-3">
-        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+        <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-20 h-10">
       </div>
 
       <!-- Right: Desktop Navigation -->
       <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-green-700 bg-green-50">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-blue-700 bg-blue-50">
           <span class="material-icons text-lg">menu_book</span>
           <span>CV Guide</span>
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">bookmark</span>
           <span>Bookmarked Jobs</span>
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">notifications</span>
           <span>Notifications</span>
         </a>
 
         <!-- User Profile + Logout -->
         <div class="flex items-center space-x-3">
-          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
           <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
             <span class="material-icons text-lg">logout</span>
             <span>Logout</span>
@@ -58,25 +58,25 @@
     <!-- Mobile Controls -->
     <div class="sm:hidden flex items-center space-x-2 relative">
       <!-- Dropdown Trigger Icon -->
-      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
-        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-blue-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
       </button>
 
       <!-- Sidebar Menu Button -->
-      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+      <button id="menuBtn" class="focus:outline-none text-blue-700 hover:text-blue-600 transition">
         <span class="material-icons text-3xl">menu</span>
       </button>
 
       <!-- Dropdown Menu -->
       <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">menu_book</span> CV Guide
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">bookmark</span> Bookmarked Jobs
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">notifications</span> Notifications
         </a>
         <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
           <span class="material-icons mr-2 text-red-500">logout</span> Logout
@@ -93,28 +93,28 @@
 
     <!-- Logo -->
     <div class="p-6 flex items-center space-x-3 border-b">
-      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+      <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-50 h-20">
     </div>
 
     <!-- Navigation -->
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-      <a href="/dashboard" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-blue-700 bg-blue-50">
+        <span class="material-icons mr-2 text-blue-600">dashboard</span> Dashboard
       </a>
-      <a href="/profile" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">account_circle</span> Account
       </a>
-      <a href="/applications" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">description</span> Applications
       </a>
-      <a href="/interviews" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">event</span> Interviews
       </a>
-      <a href="/offers" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">how_to_reg</span> Offers
       </a>
-      <a href="/account_settings" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">settings</span> Account Settings
       </a>
     </nav>
   </aside>
@@ -125,21 +125,21 @@
   <!-- Main Content -->
   <main class="flex-1 sm:ml-64 p-6 sm:p-10 transition-all duration-300">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-2xl font-bold text-green-600 mb-6">CV Guide</h2>
+      <h2 class="text-2xl font-bold text-blue-600 mb-6">CV Guide</h2>
 
       <p class="text-gray-600 mb-4">
-        Follow these professional CV guidelines to ensure compliance with BMA application standards.
+        Follow these professional CV guidelines to ensure compliance with VUT application standards.
       </p>
 
       <a href="/static/templates/BMA_CV_Template.pdf"
-         class="inline-flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg shadow hover:bg-green-700 transition">
+         class="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-lg shadow hover:bg-blue-700 transition">
          <span class="material-icons text-white">download</span> Download Example Template
       </a>
 
       <hr class="my-8">
 
       <section>
-        <h2 class="text-2xl font-semibold text-green-700 mb-3">Required CV Structure</h2>
+        <h2 class="text-2xl font-semibold text-blue-700 mb-3">Required CV Structure</h2>
 
         <ol class="list-decimal list-inside text-gray-700 space-y-2">
           <li><b>Personal Information</b> Full name, contact details, email, phone, address, and professional headshot (for public roles).</li>
@@ -154,7 +154,7 @@
       <hr class="my-8">
 
       <section>
-        <h2 class="text-2xl font-semibold text-green-700 mb-3">BMA CV Tips</h2>
+        <h2 class="text-2xl font-semibold text-blue-700 mb-3">BMA CV Tips</h2>
         <ul class="list-disc list-inside text-gray-700 space-y-2">
           <li>Tailor your CV to each specific position.</li>
           <li>Keep your layout professional and ATS-friendly.</li>
@@ -165,7 +165,7 @@
       </section>
 
       <div class="mt-10 text-gray-600">
-        For support, contact <a href="mailto:recruitment@bma.gov.za" class="text-green-600 hover:underline">recruitment@bma.gov.za</a>.
+        For support, contact <a href="mailto:recruitment@vut.ac.za" class="text-blue-600 hover:underline">recruitment@vut.ac.za</a>.
       </div>
     </div>
   </main>

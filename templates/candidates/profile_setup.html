@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>BMA | Profile Setup</title>
+<title>VUT | Profile Setup</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -13,7 +13,7 @@
   .chip button { margin-left:0.5rem; font-weight:bold; color:#166534; background:none; border:none; cursor:pointer; }
   .form-step { transition: all 0.5s ease; }
   .input { border: 1px solid #d1d5db; border-radius:1rem; padding:0.5rem 0.75rem; width:100%; outline:none; transition: all 0.3s ease; }
-  .input:focus { ring: 2px solid #16a34a; box-shadow: 0 2px 6px rgba(22,163,52,0.2); border-color:#16a34a; }
+  .input:focus { ring: 2px solid blue; box-shadow: 0 2px 6px rgba(22,163,52,0.2); border-color:#16a34a; }
 </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -30,26 +30,27 @@
 
       <!-- Left: Logo -->
       <div class="flex items-center space-x-3">
-        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+        <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-20 h-10">
       </div>
 
       <!-- Right: Desktop Navigation -->
       <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">menu_book</span>
           <span>CV Guide</span>
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition" disabled>
+        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">bookmark</span>
           <span>Bookmarked Jobs</span>
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition" disabled>
+        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">notifications</span>
           <span>Notifications</span>
         </a>
 
         <!-- User Profile + Logout -->
         <div class="flex items-center space-x-3">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
           <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
             <span class="material-icons text-lg">logout</span>
             <span>Logout</span>
@@ -60,25 +61,25 @@
     <!-- Mobile Controls -->
     <div class="sm:hidden flex items-center space-x-2 relative">
       <!-- Dropdown Trigger Icon -->
-      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
-        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-blue-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
       </button>
 
       <!-- Sidebar Menu Button -->
-      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+      <button id="menuBtn" class="focus:outline-none text-blue-700 hover:text-blue-600 transition">
         <span class="material-icons text-3xl">menu</span>
       </button>
 
       <!-- Dropdown Menu -->
       <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">menu_book</span> CV Guide
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">bookmark</span> Bookmarked Jobs
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">notifications</span> Notifications
         </a>
         <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
           <span class="material-icons mr-2 text-red-500">logout</span> Logout
@@ -95,28 +96,28 @@
 
     <!-- Logo -->
     <div class="p-6 flex items-center space-x-3 border-b">
-      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+      <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-50 h-20">
     </div>
 
     <!-- Navigation -->
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-      <a href="/dashboard" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
-        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-blue-700 bg-blue-50">
+        <span class="material-icons mr-2 text-blue-600">dashboard</span> Dashboard
       </a>
-      <a href="/profile" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
-        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">account_circle</span> Account
       </a>
-      <a href="/applications" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
-        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">description</span> Applications
       </a>
-      <a href="/interviews" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
-        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">event</span> Interviews
       </a>
-      <a href="/offers" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
-        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">how_to_reg</span> Offers
       </a>
-      <a href="/account_settings" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
-        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">settings</span> Account Settings
       </a>
     </nav>
   </aside>
@@ -131,9 +132,9 @@
     <!-- Step Indicator -->
     <div class="flex justify-between items-center mb-10 relative">
       <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-200 -z-10 rounded-full"></div>
-      <div id="progress" class="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-green-400 to-green-600 -z-10 w-1/4 transition-all duration-500 rounded-full"></div>
+      <div id="progress" class="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 -z-10 w-1/4 transition-all duration-500 rounded-full"></div>
       <div class="relative z-10 flex space-x-6 w-full justify-between">
-        <div class="step rounded-full w-10 h-10 flex items-center justify-center font-semibold text-green-600 bg-green-100 shadow-md">1</div>
+        <div class="step rounded-full w-10 h-10 flex items-center justify-center font-semibold text-blue-600 bg-green-100 shadow-md">1</div>
         <div class="step rounded-full w-10 h-10 flex items-center justify-center font-semibold text-gray-400 bg-gray-100 shadow-md">2</div>
         <div class="step rounded-full w-10 h-10 flex items-center justify-center font-semibold text-gray-400 bg-gray-100 shadow-md">3</div>
         <div class="step rounded-full w-10 h-10 flex items-center justify-center font-semibold text-gray-400 bg-gray-100 shadow-md">4</div>
@@ -147,15 +148,15 @@
         <div class="text-center">
           <label class="block text-gray-700 mb-3 font-semibold text-lg">Upload Profile Image</label>
           <div class="relative w-40 h-40 mx-auto">
-            <img id="imagePreview" class="rounded-full w-40 h-40 object-cover hidden border-4 border-green-400 shadow-xl transition-transform duration-300 hover:scale-105">
-            <label for="profileImage" class="absolute inset-0 flex items-center justify-center rounded-full bg-green-50 bg-opacity-50 cursor-pointer hover:bg-opacity-70 transition">
-              <span class="material-icons text-green-600 text-4xl">camera_alt</span>
+            <img id="imagePreview" class="rounded-full w-40 h-40 object-cover hidden border-4 border-blue-400 shadow-xl transition-transform duration-300 hover:scale-105">
+            <label for="profileImage" class="absolute inset-0 flex items-center justify-center rounded-full bg-blue-50 bg-opacity-50 cursor-pointer hover:bg-opacity-70 transition">
+              <span class="material-icons text-blue-600 text-4xl">camera_alt</span>
             </label>
             <input type="file" id="profileImage" accept="image/*" class="hidden">
           </div>
           <p class="text-gray-500 mt-2 text-sm">Click the icon to upload your profile picture</p>
           <div class="flex justify-center mt-6">
-            <button type="button" onclick="submitProfileImage()" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-xl shadow-lg transition transform hover:-translate-y-1 hover:scale-105">Next</button>
+            <button type="button" onclick="submitProfileImage()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-xl shadow-lg transition transform hover:-translate-y-1 hover:scale-105">Next</button>
           </div>
         </div>
       </div>
@@ -176,8 +177,8 @@
           <textarea placeholder="Professional Summary" class="input sm:col-span-2"></textarea>
         </div>
         <div class="flex justify-between mt-6">
-          <button type="button" class="bg-orange-600 text-white px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition" onclick="prevStep()">Back</button>
-          <button type="button" class="bg-green-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-xl transition" onclick="submitPersonalInfo()">Next</button>
+          <button type="button" class="bg-yellow-600 text-white px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition" onclick="prevStep()">Back</button>
+          <button type="button" class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-xl transition" onclick="submitPersonalInfo()">Next</button>
         </div>
       </div>
 
@@ -186,8 +187,8 @@
         <div id="experienceContainer"></div>
         <button type="button" class="btn-light px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition" onclick="addExperience()">+ Add Experience</button>
         <div class="flex justify-between mt-6">
-          <button type="button" class="bg-orange-600 text-white px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition" onclick="prevStep()">Back</button>
-          <button type="button" class="bg-green-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-xl transition" onclick="submitExperience()">Next</button>
+          <button type="button" class="bg-yellow-600 text-white px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition" onclick="prevStep()">Back</button>
+          <button type="button" class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-xl transition" onclick="submitExperience()">Next</button>
         </div>
       </div>
 
@@ -210,8 +211,8 @@
         <button type="button" class="btn-light px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition mb-4" onclick="addReference()">+ Add Reference</button>
 
         <div class="flex justify-between">
-          <button type="button" class="bg-orange-600 text-white px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition" onclick="prevStep()">Back</button>
-          <button type="button" class="bg-green-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-xl transition" onclick="submitStep4()">Submit Profile</button>
+          <button type="button" class="bg-yellow-600 text-white px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition" onclick="prevStep()">Back</button>
+          <button type="button" class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-xl transition" onclick="submitStep4()">Submit Profile</button>
         </div>
       </div>
 
@@ -230,7 +231,7 @@ let currentStep = 0;
 function showStep(i){
   steps.forEach((s, idx)=> s.classList.toggle('hidden', idx!==i));
   indicators.forEach((el, idx)=>{
-    el.classList.toggle('bg-green-500', idx <= i);
+    el.classList.toggle('bg-blue-500', idx <= i);
     el.classList.toggle('text-white', idx <= i);
     el.classList.toggle('bg-gray-100', idx > i);
     el.classList.toggle('text-gray-400', idx > i);

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BMA | Profile</title>
+  <title>VUT | Profile</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -23,17 +23,17 @@
   <header class="bg-white shadow-md sticky top-0 z-40">
     <div class="flex justify-between items-center px-4 py-3 sm:px-6">
       <div class="flex items-center space-x-3">
-        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+        <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-20 h-10">
       </div>
 
       <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">menu_book</span> <span>CV Guide</span>
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">bookmark</span> <span>Bookmarked</span>
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">notifications</span> <span>Notifications</span>
         </a>
         <div class="flex items-center space-x-3">
@@ -47,25 +47,25 @@
     <!-- Mobile Controls -->
     <div class="sm:hidden flex items-center space-x-2 relative">
       <!-- Dropdown Trigger Icon -->
-      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
-        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-blue-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
       </button>
 
       <!-- Sidebar Menu Button -->
-      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+      <button id="menuBtn" class="focus:outline-none text-blue-700 hover:text-blue-600 transition">
         <span class="material-icons text-3xl">menu</span>
       </button>
 
       <!-- Dropdown Menu -->
       <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">menu_book</span> CV Guide
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">bookmark</span> Bookmarked Jobs
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">notifications</span> Notifications
         </a>
         <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
           <span class="material-icons mr-2 text-red-500">logout</span> Logout
@@ -79,18 +79,18 @@
   <!-- Sidebar -->
   <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white shadow-md flex flex-col z-50 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
     <div class="p-6 border-b flex items-center justify-between">
-      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+      <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-50 h-20">
       <button id="closeSidebar" class="sm:hidden text-gray-600 hover:text-red-500">
         <span class="material-icons">close</span>
       </button>
     </div>
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto hide-scrollbar">
-      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition"><span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard</a>
-      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-green-700 bg-green-50"><span class="material-icons mr-2 text-green-600">account_circle</span> Account</a>
-      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition"><span class="material-icons mr-2 text-green-600">description</span> Applications</a>
-      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition"><span class="material-icons mr-2 text-green-600">event</span> Interviews</a>
-      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition"><span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers</a>
-      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition"><span class="material-icons mr-2 text-green-600">settings</span> Settings</a>
+      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span class="material-icons mr-2 text-blue-600">dashboard</span> Dashboard</a>
+      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-blue-700 bg-blue-50"><span class="material-icons mr-2 text-blue-600">account_circle</span> Account</a>
+      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span class="material-icons mr-2 text-blue-600">description</span> Applications</a>
+      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span class="material-icons mr-2 text-blue-600">event</span> Interviews</a>
+      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span class="material-icons mr-2 text-blue-600">how_to_reg</span> Offers</a>
+      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span class="material-icons mr-2 text-blue-600">settings</span> Settings</a>
     </nav>
   </aside>
 
@@ -100,12 +100,12 @@
   <!-- Main -->
   <main class="flex-1 sm:ml-64 p-4 sm:p-8 transition-all duration-300">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-2xl font-bold text-green-600 mb-6">Profile</h2>
+      <h2 class="text-2xl font-bold text-blue-600 mb-6">Profile</h2>
 
       <!-- Profile Header -->
       <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-8">
         <img data-profile-image
-            class="w-28 h-28 rounded-full border-4 border-green-500 shadow-md cursor-pointer"
+            class="w-28 h-28 rounded-full border-4 border-blue-500 shadow-md cursor-pointer"
             onclick="openProfileModal('editPhoto')">
         <div class="text-center sm:text-left">
           <h1 class="text-3xl font-bold text-gray-800" data-field="full_name">Loading...</h1>
@@ -115,7 +115,7 @@
 
       <!-- Tabs -->
       <div class="border-b border-gray-200 mb-6 flex flex-wrap gap-4 text-sm font-medium text-gray-600">
-        <button class="tab-btn text-green-600 border-b-2 border-green-600 pb-2" data-tab="personal">Personal Info</button>
+        <button class="tab-btn text-blue-600 border-b-2 border-blue-600 pb-2" data-tab="personal">Personal Info</button>
         <button class="tab-btn pb-2" data-tab="summary">Summary</button>
         <button class="tab-btn pb-2" data-tab="experience">Experience</button>
         <button class="tab-btn pb-2" data-tab="education">Education</button>
@@ -132,7 +132,7 @@
         <section class="tab-pane" id="personal">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold text-gray-800">Personal Information</h2>
-            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Personal Info')">
+            <button class="flex items-center gap-1 text-blue-600 hover:text-blue-700" onclick="openEditModal('Personal Info')">
               <span class="material-icons text-sm">edit</span> Edit
             </button>
           </div>
@@ -150,7 +150,7 @@
         <section class="tab-pane hidden" id="summary">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold text-gray-800">Professional Summary</h2>
-            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Summary')">
+            <button class="flex items-center gap-1 text-blue-600 hover:text-blue-700" onclick="openEditModal('Summary')">
               <span class="material-icons text-sm">edit</span> Edit
             </button>
           </div>
@@ -163,7 +163,7 @@
         <section class="tab-pane hidden" id="experience">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold text-gray-800">Work Experience</h2>
-            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Experience')">
+            <button class="flex items-center gap-1 text-blue-600 hover:text-blue-700" onclick="openEditModal('Experience')">
               <span class="material-icons text-sm">edit</span> Edit
             </button>
           </div>
@@ -176,7 +176,7 @@
         <section class="tab-pane hidden" id="education">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold text-gray-800">Education</h2>
-            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Education')">
+            <button class="flex items-center gap-1 text-blue-600 hover:text-blue-700" onclick="openEditModal('Education')">
               <span class="material-icons text-sm">edit</span> Edit
             </button>
           </div>
@@ -189,7 +189,7 @@
         <section class="tab-pane hidden" id="skills">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold text-gray-800">Skills</h2>
-            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('References')">
+            <button class="flex items-center gap-1 text-blue-600 hover:text-blue-700" onclick="openEditModal('References')">
               <span class="material-icons text-sm">edit</span> Edit
             </button>
           </div>
@@ -202,7 +202,7 @@
         <section class="tab-pane hidden" id="references">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold text-gray-800">References</h2>
-            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('References')">
+            <button class="flex items-center gap-1 text-blue-600 hover:text-blue-700" onclick="openEditModal('References')">
               <span class="material-icons text-sm">edit</span> Edit
             </button>
           </div>
@@ -215,7 +215,7 @@
         <section class="tab-pane hidden" id="languages">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold text-gray-800">Languages</h2>
-            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Additional Info')">
+            <button class="flex items-center gap-1 text-blue-600 hover:text-blue-700" onclick="openEditModal('Additional Info')">
               <span class="material-icons text-sm">edit</span> Edit
             </button>
           </div>
@@ -228,7 +228,7 @@
         <section class="tab-pane hidden" id="additional">
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-xl font-semibold text-gray-800">Account Status</h2>
-          <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Active Status')">
+          <button class="flex items-center gap-1 text-blue-600 hover:text-blue-700" onclick="openEditModal('Active Status')">
             <span class="material-icons text-sm">edit</span> Edit
           </button>
         </div>
@@ -246,16 +246,16 @@
       <h3 class="text-lg font-semibold mb-4" id="modalTitle">Edit Photo</h3>
       <div class="relative w-40 h-40 mx-auto">
         <img id="imagePreview"
-            class="rounded-full w-40 h-40 object-cover hidden border-4 border-green-400 shadow-xl transition-transform duration-300 hover:scale-105">
+            class="rounded-full w-40 h-40 object-cover hidden border-4 border-blue-400 shadow-xl transition-transform duration-300 hover:scale-105">
         <label for="profileImage"
-              class="absolute inset-0 flex items-center justify-center rounded-full bg-green-50 bg-opacity-50 cursor-pointer hover:bg-opacity-70 transition">
-          <span class="material-icons text-green-600 text-4xl">camera_alt</span>
+              class="absolute inset-0 flex items-center justify-center rounded-full bg-blue-50 bg-opacity-50 cursor-pointer hover:bg-opacity-70 transition">
+          <span class="material-icons text-blue-600 text-4xl">camera_alt</span>
         </label>
         <input type="file" id="profileImage" accept="image/*" class="hidden">
       </div>
       <div class="flex justify-end mt-4 gap-2">
         <button onclick="closeProfileModal()" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button>
-        <button onclick="saveProfilePhoto()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Save</button>
+        <button onclick="saveProfilePhoto()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Save</button>
       </div>
     </div>
   </div>
@@ -264,10 +264,10 @@
   <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
     <div class="bg-white rounded-xl p-6 w-11/12 max-w-md shadow-lg">
       <h3 class="text-lg font-semibold mb-4" id="modalTitle">Edit Section</h3>
-      <textarea id="editField" class="w-full p-3 border rounded-lg h-32 resize-none focus:ring-green-500"></textarea>
+      <textarea id="editField" class="w-full p-3 border rounded-lg h-32 resize-none focus:ring-blue-500"></textarea>
       <div class="flex justify-end mt-4 gap-2">
         <button onclick="closeEditModal()" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button>
-        <button onclick="saveEdit()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Save</button>
+        <button onclick="saveEdit()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Save</button>
       </div>
     </div>
   </div>
@@ -299,7 +299,7 @@
           } else {
             experiences.forEach(exp => {
               const card = document.createElement("div");
-              card.className = "border-l-4 border-green-600 pl-4";
+              card.className = "border-l-4 border-blue-600 pl-4";
 
               const title = document.createElement("h3");
               title.className = "text-lg font-semibold text-gray-800";

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BMA Signup</title>
+  <title>VUT Signup</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -14,20 +14,20 @@
 
   <!-- Logo -->
   <div class="flex flex-col items-center mb-6">
-    <img src="/static/images/BMA-Logo-Approved-3.png" alt="BMA Logo" class="w-24 h-24 mb-3">
+    <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="BMA Logo" class="w-50 h-20 mb-3">
   </div>
 
-  <h1 class="text-2xl font-bold text-orange-500 text-center mb-6">Sign Up</h1>
+  <h1 class="text-2xl font-bold text-yellow-500 text-center mb-6">Sign Up</h1>
 
   <!-- Tabs -->
   <div class="flex mb-6 border-b">
     <button @click="tab='candidate'" 
-            :class="tab==='candidate' ? 'text-green-600 border-b-4 font-semibold' : 'text-gray-600 hover:text-green-600 transition'" 
+            :class="tab==='candidate' ? 'text-blue-600 border-b-4 font-semibold' : 'text-gray-600 hover:text-blue-600 transition'" 
             class="flex-1 py-2 text-center">
       Candidate
     </button>
     <button @click="tab='employee'" 
-            :class="tab==='employee' ? 'text-green-600 border-b-4 font-semibold' : 'text-gray-600 hover:text-green-600 transition'" 
+            :class="tab==='employee' ? 'text-blue-600 border-b-4 font-semibold' : 'text-gray-600 hover:text-blue-600 transition'" 
             class="flex-1 py-2 text-center">
       Employee
     </button>
@@ -41,7 +41,7 @@
       <label class="mb-1 font-medium text-gray-700">Email</label>
       <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">email</span>
       <input type="email" name="email" required
-             class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none shadow-sm transition duration-200"
+             class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm transition duration-200"
              placeholder="Enter your email">
     </div>
 
@@ -50,7 +50,7 @@
       <label class="mb-1 font-medium text-gray-700">Password</label>
       <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">lock</span>
       <input :type="showPassCandidate ? 'text' : 'password'" name="password" required
-             class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none shadow-sm transition duration-200"
+             class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm transition duration-200"
              placeholder="Enter your password">
       <span class="material-icons absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer"
             @click="showPassCandidate = !showPassCandidate" x-text="showPassCandidate ? 'visibility_off' : 'visibility'"></span>
@@ -60,20 +60,20 @@
     <div class="relative flex flex-col">
       <label class="mb-1 font-medium text-gray-700">Confirm Password</label>
       <input type="password" name="confirmPassword" required
-             class="w-full pl-3 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none shadow-sm transition duration-200"
+             class="w-full pl-3 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm transition duration-200"
              placeholder="Confirm your password">
     </div>
 
     <!-- Sign Up Button -->
     <button type="submit"
-            class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transition-shadow duration-300 shadow-md hover:shadow-lg mt-2">
+            class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-shadow duration-300 shadow-md hover:shadow-lg mt-2">
       Sign Up as Candidate
     </button>
 
     <!-- Login Link -->
     <p class="text-sm text-gray-500 text-center mt-2">
       Already have an account? 
-      <a href="{{url_for('login')}}" class="text-green-600 hover:underline font-medium">Login</a>
+      <a href="{{url_for('login')}}" class="text-blue-600 hover:underline font-medium">Login</a>
     </p>
 
   </form>
@@ -86,20 +86,20 @@
       <label class="mb-1 font-medium text-gray-700">Email</label>
       <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">email</span>
       <input type="email" name="internal_email" required
-             class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none shadow-sm transition duration-200"
+             class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm transition duration-200"
              placeholder="Enter your internal email">
     </div>
 
     <!-- Sign Up Button -->
     <button type="submit"
-            class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transition-shadow duration-300 shadow-md hover:shadow-lg mt-2">
+            class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-shadow duration-300 shadow-md hover:shadow-lg mt-2">
       Sign Up as Employee
     </button>
 
     <!-- Login Link -->
     <p class="text-sm text-gray-500 text-center mt-2">
       Already have an account? 
-      <a href="{{url_for('login')}}" class="text-green-600 hover:underline font-medium">Login</a>
+      <a href="{{url_for('login')}}" class="text-blue-600 hover:underline font-medium">Login</a>
     </p>
 
   </form>

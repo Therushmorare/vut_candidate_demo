@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BMA | Apply</title>
+  <title>VUT | Apply</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -27,27 +27,27 @@
 
       <!-- Left: Logo -->
       <div class="flex items-center space-x-3">
-        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+        <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-20 h-10">
       </div>
 
       <!-- Right: Desktop Navigation -->
       <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">menu_book</span>
           <span>CV Guide</span>
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">bookmark</span>
           <span>Bookmarked Jobs</span>
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">notifications</span>
           <span>Notifications</span>
         </a>
 
         <!-- User Profile + Logout -->
         <div class="flex items-center space-x-3">
-          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
           <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
             <span class="material-icons text-lg">logout</span>
             <span>Logout</span>
@@ -58,25 +58,25 @@
       <!-- Mobile Controls -->
       <div class="sm:hidden flex items-center space-x-2 relative">
         <!-- Dropdown Trigger Icon -->
-        <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
-          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+        <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-blue-600 transition">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
         </button>
 
         <!-- Sidebar Menu Button -->
-        <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+        <button id="menuBtn" class="focus:outline-none text-blue-700 hover:text-blue-600 transition">
           <span class="material-icons text-3xl">menu</span>
         </button>
 
         <!-- Dropdown Menu -->
         <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
-          <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-            <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+          <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+            <span class="material-icons mr-2 text-blue-600">menu_book</span> CV Guide
           </a>
-          <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-            <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+          <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+            <span class="material-icons mr-2 text-blue-600">bookmark</span> Bookmarked Jobs
           </a>
-          <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-            <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+          <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+            <span class="material-icons mr-2 text-blue-600">notifications</span> Notifications
           </a>
           <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
             <span class="material-icons mr-2 text-red-500">logout</span> Logout
@@ -93,28 +93,28 @@
 
     <!-- Logo -->
     <div class="p-6 flex items-center space-x-3 border-b">
-      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+      <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-50 h-20">
     </div>
 
     <!-- Navigation -->
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">dashboard</span> Dashboard
       </a>
-      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">account_circle</span> Account
       </a>
-      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">description</span> Applications
       </a>
-      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">event</span> Interviews
       </a>
-      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">how_to_reg</span> Offers
       </a>
-      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">settings</span> Account Settings
       </a>
     </nav>
   </aside>
@@ -126,11 +126,11 @@
   <!-- Main Content -->
   <main class="flex-1 sm:ml-64 p-6 sm:p-10 transition-all duration-300">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-2xl font-bold text-green-600 mb-6">Apply</h2>
+      <h2 class="text-2xl font-bold text-blue-600 mb-6">Apply</h2>
     </div>
 
     <div class="mb-6">
-      <button onclick="window.history.back()" class="flex items-center text-green-700 hover:text-green-900">
+      <button onclick="window.history.back()" class="flex items-center text-blue-700 hover:text-blue-900">
         <span class="material-icons text-sm mr-1">arrow_back</span>
         Back to Listings
       </button>
@@ -144,13 +144,13 @@
           <p class="text-gray-500 text-sm">Category: <span id="jobDepartment" class="text-green-700 font-medium">...</span></p>
         </div>
         <div class="flex gap-3">
-          <a href="{{url_for('jobApplication', jid=job_id)}}" style="text-decoration:none;"><button id="applyBtn" class="flex items-center gap-1 bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition">
+          <a href="{{url_for('jobApplication', jid=job_id)}}" style="text-decoration:none;"><button id="applyBtn" class="flex items-center gap-1 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">
             <span class="material-icons text-sm">send</span> Apply Now
           </button></a>
           <button
             title="Bookmark"
            id="bookmarkBtn"
-           class="bookmark-btn flex items-center gap-1 border border-gray-300 text-gray-700 px-5 py-2 rounded-lg hover:bg-green-600 transition"
+           class="bookmark-btn flex items-center gap-1 border border-gray-300 text-gray-700 px-5 py-2 rounded-lg hover:bg-blue-600 transition"
            data-job-id="{{job_id}}">
             <span class="material-icons text-sm">bookmark_border</span> Bookmark
           </button>
@@ -197,12 +197,12 @@
 
     <!-- Bottom Apply Buttons -->
     <div class="flex justify-center gap-4 mt-8">
-      <a href="{{url_for('jobApplication', jid=job_id)}}" style="text-decoration:none;"><button id="applyBtnBottom" class="flex items-center gap-1 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
+      <a href="{{url_for('jobApplication', jid=job_id)}}" style="text-decoration:none;"><button id="applyBtnBottom" class="flex items-center gap-1 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
         <span class="material-icons text-sm">send</span> Apply Now
       </button></a>
       <button 
       title="Bookmark"
-      id="bookmarkBtnBottom" class="bookmark-btn flex items-center gap-1 border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-green-600 transition"
+      id="bookmarkBtnBottom" class="bookmark-btn flex items-center gap-1 border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-blue-600 transition"
       data-job-id="{{job_id}}">
         <span class="material-icons text-sm">bookmark_border</span> Bookmark
       </button>

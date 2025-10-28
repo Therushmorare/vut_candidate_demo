@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>BMA | Forgot Password</title>
+<title>VUT | Forgot Password</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
   body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   .input { border: 1px solid #d1d5db; border-radius:1rem; padding:0.5rem 0.75rem; width:100%; outline:none; transition: all 0.3s ease; }
-  .input:focus { ring: 2px solid #16a34a; box-shadow: 0 2px 6px rgba(22,163,52,0.2); border-color:#16a34a; }
+  .input:focus { ring: 2px solid blue; box-shadow: 0 2px 6px rgba(22,163,52,0.2); border-color:#16a34a; }
 </style>
 </head>
 <body class="min-h-screen flex items-center justify-center">
@@ -24,13 +24,13 @@
       <input type="email" id="email" placeholder="you@example.com" class="input" required>
     </div>
 
-    <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-xl shadow-lg transition transform hover:-translate-y-1 hover:scale-105">
+    <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-xl shadow-lg transition transform hover:-translate-y-1 hover:scale-105">
       Send Reset Link
     </button>
   </form>
 
   <p class="text-center text-gray-500 mt-6">
-    Remembered your password? <a href="{{url_for('login')}}" class="text-green-600 hover:underline font-medium">Login</a>
+    Remembered your password? <a href="{{url_for('login')}}" class="text-blue-600 hover:underline font-medium">Login</a>
   </p>
 </div>
 

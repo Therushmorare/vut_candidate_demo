@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BMA | Applications</title>
+  <title>VUT | Applications</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -27,22 +27,22 @@
 
       <!-- Logo -->
       <div class="flex items-center space-x-3">
-        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+        <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-20 h-10">
       </div>
 
       <!-- Desktop Nav -->
       <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">menu_book</span> <span>CV Guide</span>
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">bookmark</span> <span>Bookmarked Jobs</span>
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">notifications</span> <span>Notifications</span>
         </a>
         <div class="flex items-center space-x-3">
-          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
           <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
             <span class="material-icons text-lg">logout</span> <span>Logout</span>
           </a>
@@ -52,25 +52,25 @@
     <!-- Mobile Controls -->
     <div class="sm:hidden flex items-center space-x-2 relative">
       <!-- Dropdown Trigger Icon -->
-      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
-        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-blue-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
       </button>
 
       <!-- Sidebar Menu Button -->
-      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+      <button id="menuBtn" class="focus:outline-none text-blue-700 hover:text-blue-600 transition">
         <span class="material-icons text-3xl">menu</span>
       </button>
 
       <!-- Dropdown Menu -->
       <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">menu_book</span> CV Guide
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">bookmark</span> Bookmarked Jobs
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">notifications</span> Notifications
         </a>
         <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
           <span class="material-icons mr-2 text-red-500">logout</span> Logout
@@ -87,27 +87,27 @@
         class="fixed top-0 left-0 h-full w-64 bg-white shadow-md flex flex-col z-40 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
 
     <div class="p-6 flex items-center space-x-3 border-b">
-      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+      <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-50 h-20">
     </div>
 
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">dashboard</span> Dashboard
       </a>
-      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">account_circle</span> Account
       </a>
-      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-green-700 bg-green-50">
-        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-blue-700 bg-blue-50">
+        <span class="material-icons mr-2 text-blue-600">description</span> Applications
       </a>
-      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">event</span> Interviews
       </a>
-      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">how_to_reg</span> Offers
       </a>
-      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">settings</span> Account Settings
       </a>
     </nav>
   </aside>
@@ -118,12 +118,12 @@
   <!-- Main Content -->
   <main class="flex-1 sm:ml-64 p-6 sm:p-10 transition-all duration-300">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-2xl font-bold text-green-600 mb-6">Applications</h2>
+      <h2 class="text-2xl font-bold text-blue-600 mb-6">Applications</h2>
 
     <!-- Filters -->
     <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
-      <input id="searchInput" type="text" placeholder="Search jobs..." class="border rounded-lg p-2 w-full md:w-1/3 focus:ring-2 focus:ring-green-500 outline-none">
-      <select id="statusFilter" class="border rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
+      <input id="searchInput" type="text" placeholder="Search jobs..." class="border rounded-lg p-2 w-full md:w-1/3 focus:ring-2 focus:ring-blue-500 outline-none">
+      <select id="statusFilter" class="border rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none">
         <option value="">All Statuses</option>
         <option value="pending">Pending</option>
         <option value="interview">Interview</option>
@@ -188,7 +188,7 @@
           <div class="flex items-center gap-4 mt-4 md:mt-0">
             <span class="px-3 py-1 rounded-full text-sm font-medium ${badgeColor}">${app.status.charAt(0).toUpperCase() + app.status.slice(1)}</span>
             <a href="/viewJobApplication/${app.application_code}" style="text-decoration:none;">
-              <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm">View</button>
+              <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm">View</button>
             </a>
             <button class="withdraw-btn border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition text-sm">Withdraw</button>
           </div>

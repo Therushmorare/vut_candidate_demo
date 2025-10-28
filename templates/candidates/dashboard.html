@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BMA | Dashboard</title>
+  <title>VUT | Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -28,27 +28,27 @@
 
       <!-- Left: Logo -->
       <div class="flex items-center space-x-3">
-        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+        <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-20 h-10">
       </div>
 
       <!-- Right: Desktop Navigation -->
       <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">menu_book</span>
           <span>CV Guide</span>
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">bookmark</span>
           <span>Bookmarked Jobs</span>
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">notifications</span>
           <span>Notifications</span>
         </a>
 
         <!-- User Profile + Logout -->
         <div class="flex items-center space-x-3">
-          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
           <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
             <span class="material-icons text-lg">logout</span>
             <span>Logout</span>
@@ -59,25 +59,25 @@
     <!-- Mobile Controls -->
     <div class="sm:hidden flex items-center space-x-2 relative">
       <!-- Dropdown Trigger Icon -->
-      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
-        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-blue-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
       </button>
 
       <!-- Sidebar Menu Button -->
-      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+      <button id="menuBtn" class="focus:outline-none text-blue-700 hover:text-blue-600 transition">
         <span class="material-icons text-3xl">menu</span>
       </button>
 
       <!-- Dropdown Menu -->
       <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">menu_book</span> CV Guide
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">bookmark</span> Bookmarked Jobs
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">notifications</span> Notifications
         </a>
         <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
           <span class="material-icons mr-2 text-red-500">logout</span> Logout
@@ -94,28 +94,28 @@
 
     <!-- Logo -->
     <div class="p-6 flex items-center space-x-3 border-b">
-      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+      <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-50 h-20">
     </div>
 
     <!-- Navigation -->
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-green-700 bg-green-50">
-        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-blue-700 bg-blue-50">
+        <span class="material-icons mr-2 text-blue-600">dashboard</span> Dashboard
       </a>
-      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">account_circle</span> Account
       </a>
-      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">description</span> Applications
       </a>
-      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">event</span> Interviews
       </a>
-      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">how_to_reg</span> Offers
       </a>
-      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">settings</span> Account Settings
       </a>
     </nav>
   </aside>
@@ -126,19 +126,19 @@
   <!-- Main Content -->
   <main class="flex-1 sm:ml-64 p-6 sm:p-10 transition-all duration-300">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-2xl font-bold text-green-600 mb-6">Dashboard</h2>
+      <h2 class="text-2xl font-bold text-blue-600 mb-6">Dashboard</h2>
 
       <!-- Filters -->
       <div class="bg-white/80 backdrop-blur-md border border-gray-100 rounded-2xl p-5 md:p-6 shadow-lg mb-8 transition-all duration-300 hover:shadow-xl">
         <!-- Filter Header -->
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
-            <span class="material-icons text-green-600">work_outline</span>
+            <span class="material-icons text-blue-600">work_outline</span>
             Job Search
           </h2>
           <button 
             id="clearFilters"
-            class="text-sm text-gray-500 hover:text-green-600 transition flex items-center gap-1"
+            class="text-sm text-gray-500 hover:text-blue-600 transition flex items-center gap-1"
           >
             <span class="material-icons text-base">refresh</span>
             Clear Filters
@@ -154,7 +154,7 @@
               id="searchInput" 
               type="text" 
               placeholder="Job title, department, or city..." 
-              class="pl-10 pr-3 py-3 w-full bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition placeholder-gray-400"
+              class="pl-10 pr-3 py-3 w-full bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition placeholder-gray-400"
             />
           </div>
 
@@ -165,7 +165,7 @@
               id="departmentInput"
               type="text" 
               placeholder="Department" 
-              class="pl-10 pr-3 py-3 w-full bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition placeholder-gray-400"
+              class="pl-10 pr-3 py-3 w-full bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition placeholder-gray-400"
             />
           </div>
 
@@ -177,14 +177,14 @@
                 id="cityInput"
                 type="text" 
                 placeholder="City" 
-                class="pl-10 pr-3 py-3 w-full bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition placeholder-gray-400"
+                class="pl-10 pr-3 py-3 w-full bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition placeholder-gray-400"
               />
             </div>
             <input 
               id="zipInput"
               type="text" 
               placeholder="Zip" 
-              class="px-3 py-3 w-full sm:w-24 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition placeholder-gray-400"
+              class="px-3 py-3 w-full sm:w-24 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition placeholder-gray-400"
             />
           </div>
         </div>
@@ -193,7 +193,7 @@
         <div class="flex justify-end mt-5">
           <button 
             id="searchBtn"
-            class="flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition active:scale-95 w-full sm:w-auto"
+            class="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition active:scale-95 w-full sm:w-auto"
           >
             <span class="material-icons text-white text-lg">search</span>
             Search Jobs
@@ -205,7 +205,7 @@
       <div class="mb-6">
         <!-- Mobile Dropdown -->
         <div class="sm:hidden mb-3">
-          <select id="tabSelect" class="w-full border border-gray-300 rounded-lg p-2 text-gray-700 focus:ring-2 focus:ring-green-500">
+          <select id="tabSelect" class="w-full border border-gray-300 rounded-lg p-2 text-gray-700 focus:ring-2 focus:ring-blue-500">
             <option value="all">All Positions</option>
             <option value="open">Open</option>
             <option value="archived">Archived</option>
@@ -215,9 +215,9 @@
         <!-- Desktop Tabs -->
         <div class="hidden sm:block">
           <nav role="tablist" class="relative flex space-x-2 border-b border-gray-200 overflow-x-auto hide-scrollbar">
-            <button type="button" data-tab="all" class="tab-btn px-4 py-2 text-green-600 font-medium border-b-2 border-green-600 transition">All</button>
-            <button type="button" data-tab="open" class="tab-btn px-4 py-2 text-gray-600 hover:text-green-600 border-b-2 border-transparent transition">Open</button>
-            <button type="button" data-tab="archived" class="tab-btn px-4 py-2 text-gray-600 hover:text-green-600 border-b-2 border-transparent transition">Archived</button>          </nav>
+            <button type="button" data-tab="all" class="tab-btn px-4 py-2 text-blue-600 font-medium border-b-2 border-blue-600 transition">All</button>
+            <button type="button" data-tab="open" class="tab-btn px-4 py-2 text-gray-600 hover:text-blue-600 border-b-2 border-transparent transition">Open</button>
+            <button type="button" data-tab="archived" class="tab-btn px-4 py-2 text-gray-600 hover:text-blue-600 border-b-2 border-transparent transition">Archived</button>          </nav>
         </div>
       </div>
 
@@ -276,7 +276,7 @@
             </div>
             <button 
               title="Bookmark" 
-              class="bookmark-btn text-gray-400 hover:text-green-600 transition" 
+              class="bookmark-btn text-gray-400 hover:text-blue-600 transition" 
               data-job-id="${job.job_id}">
               <span class="material-icons">bookmark_border</span>
             </button>
@@ -286,7 +286,7 @@
           <p class="mt-3">
             <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full ${
               job.employment_type.toLowerCase() === 'full_time'
-                ? 'bg-green-100 text-green-700'
+                ? 'bg-blue-100 text-blue-700'
                 : 'bg-blue-100 text-blue-700'
             }">
               ${job.employment_type.replace('_', ' ')}
@@ -314,11 +314,11 @@
           <!-- Footer -->
           <div class="mt-4 flex items-center justify-between">
             <a href="/viewPost/${job.job_id}" style="text-decoration:none;">
-              <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Apply</button>
+              <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Apply</button>
             </a>
             <span class="text-xs font-semibold px-2 py-1 rounded-full ${
               job.status.toUpperCase() === 'APPROVED'
-                ? 'bg-green-100 text-green-700'
+                ? 'bg-green-100 text-blue-700'
                 : job.status.toUpperCase() === 'ARCHIVED'
                 ? 'bg-gray-200 text-gray-700'
                 : 'bg-gray-100 text-gray-600'
@@ -394,10 +394,10 @@
       zipInput.value = '';
       activeTab = 'all';
       tabButtons.forEach(btn => {
-        btn.classList.remove('text-green-600', 'border-green-600');
+        btn.classList.remove('text-blue-600', 'border-blue-600');
         btn.classList.add('text-gray-600', 'border-transparent');
       });
-      tabButtons[0]?.classList.add('text-green-600', 'border-green-600');
+      tabButtons[0]?.classList.add('text-blue-600', 'border-blue-600');
       tabSelect.value = 'all';
       filterJobs();
     });
@@ -405,8 +405,8 @@
     // Tabs (desktop)
     tabButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        tabButtons.forEach(b => b.classList.remove('text-green-600', 'border-green-600'));
-        btn.classList.add('text-green-600', 'border-green-600');
+        tabButtons.forEach(b => b.classList.remove('text-blue-600', 'border-blue-600'));
+        btn.classList.add('text-blue-600', 'border-blue-600');
         activeTab = btn.dataset.tab;
         filterJobs();
       });

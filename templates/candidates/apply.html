@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BMA | Apply</title>
+  <title>VUT | Apply</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="/static/styles/bookmark.css" rel="stylesheet">
@@ -15,7 +15,7 @@
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    .file-drop:hover { border-color: #16a34a; background-color: #f0fdf4; }
+    .file-drop:hover { border-color: blue; background-color: #f0fdf4; }
     
     @keyframes fade-in-out {
       0%, 100% { opacity: 0; transform: translateY(20px); }
@@ -31,22 +31,22 @@
   <header class="bg-white shadow-md sticky top-0 z-30">
     <div class="flex justify-between items-center px-4 py-3 sm:px-6">
       <div class="flex items-center space-x-3">
-        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+        <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-20 h-10">
       </div>
 
       <!-- Desktop Nav -->
       <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">menu_book</span><span>CV Guide</span>
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">bookmark</span><span>Bookmarked Jobs</span>
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-blue-600 transition">
           <span class="material-icons text-lg">notifications</span><span>Notifications</span>
         </a>
         <div class="flex items-center space-x-3">
-          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-blue-500">
           <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
             <span class="material-icons text-lg">logout</span><span>Logout</span>
           </a>
@@ -56,25 +56,25 @@
     <!-- Mobile Controls -->
     <div class="sm:hidden flex items-center space-x-2 relative">
       <!-- Dropdown Trigger Icon -->
-      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-blue-600 transition">
         <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
       </button>
 
       <!-- Sidebar Menu Button -->
-      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+      <button id="menuBtn" class="focus:outline-none text-blye-700 hover:text-blue-600 transition">
         <span class="material-icons text-3xl">menu</span>
       </button>
 
       <!-- Dropdown Menu -->
       <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
-        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">menu_book</span> CV Guide
         </a>
-        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">bookmark</span> Bookmarked Jobs
         </a>
-        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
-          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
+          <span class="material-icons mr-2 text-blue-600">notifications</span> Notifications
         </a>
         <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
           <span class="material-icons mr-2 text-red-500">logout</span> Logout
@@ -90,26 +90,26 @@
   <!-- Sidebar -->
   <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white shadow-md flex flex-col z-40 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
     <div class="p-6 flex items-center space-x-3 border-b">
-      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+      <img src="/static/images/id3tj44Wsz_1761674029816.png" alt="Logo" class="w-50 h-20">
     </div>
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-blue-700 bg-blue-50">
+        <span class="material-icons mr-2 text-blue-600">dashboard</span> Dashboard
       </a>
-      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">account_circle</span> Account
       </a>
-      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">description</span> Applications
       </a>
-      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">event</span> Interviews
       </a>
-      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">how_to_reg</span> Offers
       </a>
-      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
-        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-icons mr-2 text-blue-600">settings</span> Account Settings
       </a>
     </nav>
   </aside>
@@ -120,15 +120,15 @@
   <!-- Main Content -->
   <main class="flex-1 sm:ml-64 p-6 sm:p-10 transition-all duration-300">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-2xl font-bold text-green-600 mb-6">Application</h2>
+      <h2 class="text-2xl font-bold text-blue-600 mb-6">Application</h2>
     </div>
 
     <!-- Progress Line -->
     <div class="relative mb-10">
       <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-200 rounded-full transform -translate-y-1/2"></div>
-      <div id="progressLine" class="absolute top-1/2 left-0 w-1/4 h-1 bg-gradient-to-r from-green-400 to-green-600 rounded-full transform -translate-y-1/2 transition-all duration-500"></div>
+      <div id="progressLine" class="absolute top-1/2 left-0 w-1/4 h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transform -translate-y-1/2 transition-all duration-500"></div>
       <div class="flex justify-between relative z-10">
-        <div id="indicator1" class="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-semibold shadow">✓</div>
+        <div id="indicator1" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold shadow">✓</div>
         <div id="indicator2" class="w-10 h-10 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-semibold shadow">2</div>
         <div id="indicator3" class="w-10 h-10 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-semibold shadow">3</div>
         <div id="indicator4" class="w-10 h-10 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-semibold shadow">4</div>
@@ -143,31 +143,31 @@
       <div class="grid md:grid-cols-2 gap-6">
         <div class="card p-4 bg-white rounded-lg shadow">
           <label class="block text-gray-700 font-medium mb-2">Years Of Experience</label>
-          <input type="number" name="experience" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none" required>
+          <input type="number" name="experience" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none" required>
         </div>
         <div class="card p-4 bg-white rounded-lg shadow">
           <label class="block text-gray-700 font-medium mb-2">Highest Level Of Education</label>
-          <input type="text" name="qualification" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none" required>
+          <input type="text" name="qualification" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none" required>
         </div>
       </div>
       <div class="grid md:grid-cols-2 gap-6">
         <div class="card p-4 bg-white rounded-lg shadow">
           <label class="block text-gray-700 font-medium mb-2">City / State</label>
-          <input type="text" name="location" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none">
+          <input type="text" name="location" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div class="card p-4 bg-white rounded-lg shadow">
             <label class="block text-gray-700 font-medium mb-2">Min Salary (R)</label>
-            <input type="number" name="min_salary" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none">
+            <input type="number" name="min_salary" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none">
           </div>
           <div class="card p-4 bg-white rounded-lg shadow">
             <label class="block text-gray-700 font-medium mb-2">Max Salary (R)</label>
-            <input type="number" name="max_salary" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none">
+            <input type="number" name="max_salary" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none">
           </div>
         </div>
       </div>
       <div class="flex justify-end">
-        <button type="button" id="next1" class="bg-green-600 text-white px-8 py-2 rounded-lg hover:bg-green-700 transition shadow">Next</button>
+        <button type="button" id="next1" class="bg-blue-600 text-white px-8 py-2 rounded-lg hover:bg-blue-700 transition shadow">Next</button>
       </div>
     </div>
 
@@ -177,7 +177,7 @@
       <div class="space-y-4" id="technicalQuestions"></div>
       <div class="flex justify-between">
         <button type="button" id="prev2" class="border border-gray-300 text-gray-700 px-8 py-2 rounded-lg hover:bg-gray-100 transition">Back</button>
-        <button type="button" id="next2" class="bg-green-600 text-white px-8 py-2 rounded-lg hover:bg-green-700 transition shadow">Next</button>
+        <button type="button" id="next2" class="bg-blue-600 text-white px-8 py-2 rounded-lg hover:bg-blue-700 transition shadow">Next</button>
       </div>
     </div>
 
@@ -190,7 +190,7 @@
       </div>
       <div class="flex justify-between">
         <button type="button" id="prev3" class="border border-gray-300 text-gray-700 px-8 py-2 rounded-lg hover:bg-gray-100 transition">Back</button>
-        <button type="button" id="next3" class="bg-green-600 text-white px-8 py-2 rounded-lg hover:bg-green-700 transition shadow">Next</button>
+        <button type="button" id="next3" class="bg-blue-600 text-white px-8 py-2 rounded-lg hover:bg-blue-700 transition shadow">Next</button>
       </div>
     </div>
 
@@ -200,7 +200,7 @@
       <div id="reviewSection" class="p-4 bg-white rounded-lg shadow space-y-2"></div>
       <div class="flex justify-between">
         <button type="button" id="prev4" class="border border-gray-300 text-gray-700 px-8 py-2 rounded-lg hover:bg-gray-100 transition">Back</button>
-        <button type="submit" class="bg-green-600 text-white px-8 py-2 rounded-lg hover:bg-green-700 transition shadow">Submit</button>
+        <button type="submit" class="bg-blue-600 text-white px-8 py-2 rounded-lg hover:bg-blue-700 transition shadow">Submit</button>
       </div>
     </div>
 
@@ -292,7 +292,7 @@ async function fetchJob() {
       div.innerHTML = `
         <label class="block text-gray-700 font-medium mb-2">${q.question}</label>
         <textarea name="question_${q.question_id}" 
-          class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none" 
+          class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none" 
           rows="3"></textarea>`;
       techContainer.appendChild(div);
     });
@@ -331,7 +331,7 @@ function populateReview() {
     <div class="space-y-6">
       <div class="p-5 bg-white rounded-xl shadow border border-gray-200">
         <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-          <span class="material-icons text-green-600">person</span> Personal Information
+          <span class="material-icons text-blue-600">person</span> Personal Information
         </h3>
         <div class="grid md:grid-cols-2 gap-3 text-sm text-gray-700">
           ${personalInfo.map(i => `
@@ -345,7 +345,7 @@ function populateReview() {
 
       <div class="p-5 bg-white rounded-xl shadow border border-gray-200">
         <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-          <span class="material-icons text-green-600">attach_money</span> Salary Expectation
+          <span class="material-icons text-blue-600">attach_money</span> Salary Expectation
         </h3>
         <div class="grid md:grid-cols-2 gap-3 text-sm text-gray-700">
           ${salaryInfo.map(s => `
@@ -359,12 +359,12 @@ function populateReview() {
 
       <div class="p-5 bg-white rounded-xl shadow border border-gray-200">
         <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-          <span class="material-icons text-green-600">quiz</span> Technical Questions
+          <span class="material-icons text-blue-600">quiz</span> Technical Questions
         </h3>
         <div class="space-y-4 text-sm text-gray-700">
           ${questions.length > 0 
             ? questions.map((q, i) => `
-              <div class="border-l-4 border-green-500 pl-3">
+              <div class="border-l-4 border-blue-500 pl-3">
                 <p class="font-medium text-gray-900">Q${i + 1}:</p>
                 <p class="italic text-gray-700">${q.answer || 'No answer provided'}</p>
               </div>
@@ -375,7 +375,7 @@ function populateReview() {
 
       <div class="p-5 bg-white rounded-xl shadow border border-gray-200">
         <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-          <span class="material-icons text-green-600">description</span> CV / Resume
+          <span class="material-icons text-blue-600">description</span> CV / Resume
         </h3>
         <p class="text-sm text-gray-700">${cvFile}</p>
       </div>

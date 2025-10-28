@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Include Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Include SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+  <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md flex flex-col fixed h-full z-20 overflow-y-auto">
+    <!-- Logo -->
+    <div class="p-6 flex items-center space-x-3 border-b">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12 rounded-full">
+        <h1 class="font-bold text-xl text-green-700">BMA Admin</h1>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-6 space-y-2">
+        <a href="dashboard.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+        </a>
+        <a href="requests.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">notifications</span> Requests
+        </a>
+        <a href="users.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person</span> Users
+        </a>
+        <a href="posts.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">book</span> Posts
+        </a>
+        <a href="logs.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">bolt</span> Logs
+        </a>
+        <a href="logout.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">logout</span> Logout
+        </a>
+    </nav>
+    </aside>
+   <!-- Main Content -->
+  <main class="flex-1 ml-64 p-8 overflow-y-auto">
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center mb-10 flex-wrap gap-4">
+      <h2 class="text-2xl font-bold text-gray-800">Dashboard</h2>
+      <div class="flex items-center space-x-3">
+        <input type="text" placeholder="Search..." class="px-4 py-2 w-60 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Documents</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Payroll</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Reports</a>
+        <img src="https://i.pravatar.cc/40" alt="Admin Avatar" class="w-10 h-10 rounded-full border-2 border-green-500">
+      </div>
+    </div>
+
+   <section class="employees bg-white shadow-lg rounded-xl p-8 mt-8 max-w-5xl mx-auto">
+    <!-- Tabs -->
+    <div class="mb-6 max-w-7xl mx-auto px-4">
+
+    <!-- Tabs -->
+    <div class="flex border-b border-gray-200 mb-4">
+        <button class="tab-btn text-gray-700 px-4 py-2 font-medium border-b-2 border-green-600 focus:outline-none" data-tab="admin">Admin Users</button>
+        <button class="tab-btn text-gray-500 px-4 py-2 font-medium border-b-2 border-transparent focus:outline-none" data-tab="hr">HR Users</button>
+        <button class="tab-btn text-gray-500 px-4 py-2 font-medium border-b-2 border-transparent focus:outline-none" data-tab="applicants">Applicants</button>
+        <button class="tab-btn text-gray-500 px-4 py-2 font-medium border-b-2 border-transparent focus:outline-none" data-tab="employees">Employees</button>
+    </div>
+
+    <!-- Tab Contents -->
+    <div class="tab-content" id="admin">
+        <div class="flex justify-end mb-4">
+        <button id="openModal" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Add New Admin</button>
+        </div>
+        <div class="overflow-x-auto bg-white shadow rounded-lg border" style="max-width:100%;">
+        <table class="min-w-full text-left border-collapse">
+            <thead class="bg-gray-50 border-b">
+            <tr>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Name</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Admin ID</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Email</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Phone</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm text-right">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hover:bg-gray-50">
+                <td class="p-4 font-medium text-gray-800">John Doe</td>
+                <td class="p-4 text-gray-600">ADM001</td>
+                <td class="p-4 text-gray-600">john@example.com</td>
+                <td class="p-4 text-gray-600">+27 123 456 789</td>
+                <td class="p-4 text-right space-x-2">
+                <button class="text-green-600 text-sm">Update</button>
+                <button class="text-orange-600 text-sm">Ban</button>
+                <button class="text-red-600 text-sm">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <div class="tab-content hidden" id="hr">
+        <div class="flex justify-end mb-4">
+        <button id="openModal2" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Add New HR User</button>
+        </div>
+        <div class="overflow-x-auto bg-white shadow rounded-lg border">
+        <table class="min-w-full text-left border-collapse">
+            <thead class="bg-gray-50 border-b">
+            <tr>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Name</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Employee Number</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">HR ID</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Email</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Phone</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm text-right">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hover:bg-gray-50">
+                <td class="p-4 font-medium text-gray-800">Jane Smith</td>
+                <td class="p-4 text-gray-600">EMP67890</td>
+                <td class="p-4 text-gray-600">HR001</td>
+                <td class="p-4 text-gray-600">jane@example.com</td>
+                <td class="p-4 text-gray-600">+27 987 654 321</td>
+                <td class="p-4 text-right space-x-2">
+                <button class="text-green-600 text-sm">Update</button>
+                <button class="text-orange-600 text-sm">Ban</button>
+                <button class="text-red-600 text-sm">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <div class="tab-content hidden" id="applicants">
+        <div class="overflow-x-auto bg-white shadow rounded-lg border">
+        <table class="min-w-full text-left border-collapse">
+            <thead class="bg-gray-50 border-b">
+            <tr>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Name</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Applicant ID</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Email</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Phone</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm text-right">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hover:bg-gray-50">
+                <td class="p-4 font-medium text-gray-800">Alice Brown</td>
+                <td class="p-4 text-gray-600">APP001</td>
+                <td class="p-4 text-gray-600">alice@example.com</td>
+                <td class="p-4 text-gray-600">+27 555 123 456</td>
+                <td class="p-4 text-right space-x-2">
+                <button class="text-green-600 text-sm">View</button>
+                <button class="text-orange-600 text-sm">Ban</button>
+                <button class="text-red-600 text-sm">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <div class="tab-content hidden" id="employees">
+        <div class="overflow-x-auto bg-white shadow rounded-lg border">
+        <table class="min-w-full text-left border-collapse">
+            <thead class="bg-gray-50 border-b">
+            <tr>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Name</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Employee Number</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Email</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm">Phone</th>
+                <th class="p-4 text-gray-600 font-semibold text-sm text-right">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hover:bg-gray-50">
+                <td class="p-4 font-medium text-gray-800">Bob Green</td>
+                <td class="p-4 text-gray-600">EMP34567</td>
+                <td class="p-4 text-gray-600">bob@example.com</td>
+                <td class="p-4 text-gray-600">+27 444 987 654</td>
+                <td class="p-4 text-right space-x-2">
+                <button class="text-green-600 text-sm">Update</button>
+                <button class="text-orange-600 text-sm">Ban</button>
+                <button class="text-red-600 text-sm">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    </div>
+
+   </section>
+
+
+   <!-- Add Admin Modal -->
+<div id="addAdminModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 relative">
+
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold text-gray-800">Add New Admin</h2>
+      <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+    </div>
+
+    <!-- Modal Form -->
+    <form id="addAdminForm" class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">First Name</label>
+          <input type="text" name="first_name" placeholder="John" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Last Name</label>
+          <input type="text" name="last_name" placeholder="Doe" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Email</label>
+          <input type="email" name="email" placeholder="john@example.com" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Phone Number</label>
+          <input type="tel" name="phone_number" placeholder="+27 123 456 789" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Employee Number</label>
+          <input type="text" name="employee_number" placeholder="EMP12345" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Department</label>
+          <select name="department" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+            <option value="">Select Department</option>
+            <option>Marketing</option>
+            <option>Finance</option>
+            <option>IT</option>
+            <option>HR</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Role</label>
+        <input type="text" name="role" placeholder="Software Engineer" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition font-semibold">
+        Add Admin
+      </button>
+    </form>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="employeeModal"
+  class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 relative">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold text-gray-800">Add HR Employee</h2>
+      <button id="closeModal2" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+    </div>
+
+    <!-- Form -->
+    <form id="employeeForm" class="space-y-4">
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">First Name</label>
+        <input type="text" name="first_name" placeholder="John"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 focus:outline-none" required>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Last Name</label>
+        <input type="text" name="last_name" placeholder="Doe"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 focus:outline-none" required>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Email</label>
+        <input type="email" name="email" placeholder="john@example.com"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 focus:outline-none" required>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Employee Number</label>
+        <input type="text" name="employee_number" placeholder="EMP00123"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 focus:outline-none" required>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit"
+        class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-semibold">
+        Save Employee
+      </button>
+    </form>
+  </div>
+</div>
+
+  </main>
+    <script>
+    // Tabs JS
+    const tabs = document.querySelectorAll(".tab-btn");
+    const contents = document.querySelectorAll(".tab-content");
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+        // Remove active styles
+        tabs.forEach(t => {
+            t.classList.remove("text-gray-700", "border-green-600");
+            t.classList.add("text-gray-500", "border-transparent");
+        });
+        // Hide all tab contents
+        contents.forEach(c => c.classList.add("hidden"));
+        // Activate clicked tab
+        tab.classList.add("text-gray-700", "border-green-600");
+        tab.classList.remove("text-gray-500", "border-transparent");
+        document.getElementById(tab.dataset.tab).classList.remove("hidden");
+        });
+    });
+    </script>
+<!-- JS -->
+  <script>
+    const modal = document.getElementById('addAdminModal');
+    const openBtn = document.getElementById('openModal'); // Make sure you have this button somewhere
+    const closeBtn = document.getElementById('closeModal');
+    const form = document.getElementById('addAdminForm');
+
+    // Open modal
+    openBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+
+    // Close modal
+    closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
+
+    // Form submit
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+
+      const aid = sessionStorage.getItem('employee_id') || 'defaultAid';
+      const token = sessionStorage.getItem('access_token');
+
+      // Prepare payload
+      const payload = {
+        first_name: form.elements['first_name'].value.trim(),
+        last_name: form.elements['last_name'].value.trim(),
+        email: form.elements['email'].value.trim(),
+        phone_number: form.elements['phone_number'].value.trim(),
+        employee_number: form.elements['employee_number'].value.trim(),
+        department: form.elements['department'].value,
+        role: form.elements['role'].value.trim(),
+        aid: aid
+      };
+
+      // Simple validation
+      for (const key in payload) {
+        if (!payload[key]) {
+          Swal.fire({ icon: 'warning', title: 'Validation Error', text: `${key.replace('_', ' ')} is required` });
+          btn.disabled = false;
+          return;
+        }
+      }
+
+      try {
+        const res = await fetch(`http://127.0.0.1:5000/api/admin/addNewAdmin/${aid}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok) {
+          Swal.fire({ icon: 'success', title: 'Success!', text: 'Admin added successfully!', timer: 2000, showConfirmButton: false });
+          modal.classList.add('hidden');
+          form.reset();
+          // Optionally refresh your admin table here
+        } else {
+          Swal.fire({ icon: 'error', title: 'Error!', text: data.message || 'Failed to add admin' });
+        }
+      } catch (err) {
+        console.error(err);
+        Swal.fire({ icon: 'error', title: 'Error!', text: 'Failed to add admin' });
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+
+<script>
+  const modal2 = document.getElementById('employeeModal');
+  const openModal2 = document.getElementById('openModal2');
+  const closeModal2 = document.getElementById('closeModal2');
+  const form2 = document.getElementById('employeeForm');
+
+  // Open modal
+  openModal2.addEventListener('click', () => modal2.classList.remove('hidden', 'opacity-0'));
+
+  // Close modal
+  closeModal2.addEventListener('click', () => modal2.classList.add('hidden'));
+  modal2.addEventListener('click', e => { if (e.target === modal2) modal2.classList.add('hidden'); });
+
+  // Handle form submission
+  form2.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = form2.querySelector('button[type="submit"]');
+    btn.disabled = true;
+
+    const aid = sessionStorage.getItem('employee_id');
+    const token = sessionStorage.getItem('access_token');
+
+    if (!aid || !token) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Not Authorized',
+        text: 'Please log in again, session expired or missing token.'
+      });
+      btn.disabled = false;
+      return;
+    }
+
+    const payload = {
+      admin_id: aid,
+      hr_email: form2.email.value.trim(),
+      hr_employee_number: form2.employee_number.value.trim(),
+      first_name: form2.first_name.value.trim(),
+      last_name: form2.last_name.value.trim()
+    };
+
+    // Quick validation
+    for (const key in payload) {
+      if (!payload[key]) {
+        Swal.fire({ icon: 'warning', title: 'Validation Error', text: `${key.replace('_', ' ')} is required` });
+        btn.disabled = false;
+        return;
+      }
+    }
+
+    try {
+      const res = await fetch(`http://127.0.0.1:5000/api/admin/addHrMember/${aid}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'HR member added successfully!',
+          timer: 2000,
+          showConfirmButton: false
+        });
+        form2.reset();
+        modal2.classList.add('hidden');
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: data.message || 'Failed to add HR member.'
+        });
+      }
+    } catch (err) {
+      console.error('Request failed:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Network or server error occurred.'
+      });
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>

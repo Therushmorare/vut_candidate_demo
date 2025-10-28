@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Candidates</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-md flex flex-col fixed h-full z-20">
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12 rounded-full">
+      <h1 class="font-bold text-xl text-green-700">BMA HR</h1>
+    </div>
+
+    <nav class="flex-1 px-4 py-6 space-y-2">
+      <a href="dashboard.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="notifications.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+      </a>
+      <a href="applicants.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person</span> Applicants
+      </a>
+      <a href="employees.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">groups</span> Employees
+      </a>
+      <a href="candidates.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person_search</span> Candidates
+      </a>
+      <a href="screening.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="recruitment.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">business_center</span> Recruitment
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 ml-64 p-8 overflow-y-auto">
+    
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center mb-10 flex-wrap gap-4">
+      <h2 class="text-2xl font-bold text-gray-800">HR Dashboard</h2>
+      <div class="flex items-center space-x-3">
+        <input type="text" placeholder="Search..." class="px-4 py-2 w-60 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Documents</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Payroll</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Reports</a>
+        <img src="https://i.pravatar.cc/40" alt="Admin Avatar" class="w-10 h-10 rounded-full border-2 border-green-500">
+      </div>
+    </div>
+
+    <section class="employees bg-white shadow-lg rounded-xl p-8 mt-8 max-w-5xl mx-auto">
+    <!-- Tabs -->
+    <div class="mb-6">
+        <div class="flex border-b border-gray-200">
+        <button class="tab-btn text-gray-700 px-4 py-2 font-medium border-b-2 border-green-600 focus:outline-none" data-tab="potential">Offer</button>
+        <button class="tab-btn text-gray-500 px-4 py-2 font-medium border-b-2 border-transparent focus:outline-none" data-tab="current">Offered</button>
+        </div>
+    </div>
+
+    <!-- Potential Employees Table -->
+    <div class="tab-content" id="potential">
+        <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-gray-50 border-b">
+            <tr>
+                <th class="p-4 text-gray-600 text-sm font-semibold">Name</th>
+                <th class="p-4 text-gray-600 text-sm font-semibold">Email</th>
+                <th class="p-4 text-gray-600 text-sm font-semibold">Phone</th>
+                <th class="p-4 text-gray-600 text-sm font-semibold">Position</th>
+                <th class="p-4 text-gray-600 text-sm font-semibold text-right">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hover:bg-gray-50">
+                <td class="p-4 font-medium text-gray-800">Jane Smith</td>
+                <td class="p-4 text-gray-600 text-sm">jane.smith@example.com</td>
+                <td class="p-4 text-gray-600 text-sm">082-555-9876</td>
+                <td class="p-4 text-gray-600 text-sm">Marketing Manager</td>
+                <td class="p-4 text-right space-x-2">
+                <button class="text-green-600 hover:underline text-sm">View</button>
+                <button class="text-orange-600 hover:underline text-sm" id="openModalBtn">Make Offer</button>
+                <button class="text-red-600 hover:underline text-sm">Delete</button>
+                </td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+                <td class="p-4 font-medium text-gray-800">Mark Johnson</td>
+                <td class="p-4 text-gray-600 text-sm">mark.johnson@example.com</td>
+                <td class="p-4 text-gray-600 text-sm">082-555-1234</td>
+                <td class="p-4 text-gray-600 text-sm">Software Engineer</td>
+                <td class="p-4 text-right space-x-2">
+                <button class="text-green-600 hover:underline text-sm">View</button>
+                <button class="text-orange-600 hover:underline text-sm">Make Offer</button>
+                <button class="text-red-600 hover:underline text-sm">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <!-- Current Employees Table -->
+    <div class="tab-content hidden" id="current">
+        <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-gray-50 border-b">
+            <tr>
+                <th class="p-4 text-gray-600 text-sm font-semibold">Name</th>
+                <th class="p-4 text-gray-600 text-sm font-semibold">Email</th>
+                <th class="p-4 text-gray-600 text-sm font-semibold">Phone</th>
+                <th class="p-4 text-gray-600 text-sm font-semibold">Position</th>
+                <th class="p-4 text-gray-600 text-sm font-semibold">Status</th>
+                <th class="p-4 text-gray-600 text-sm font-semibold">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hover:bg-gray-50">
+                <td class="p-4 font-medium text-gray-800">Alice Brown</td>
+                <td class="p-4 text-gray-600 text-sm">alice.brown@example.com</td>
+                <td class="p-4 text-gray-600 text-sm">082-555-4321</td>
+                <td class="p-4 text-gray-600 text-sm">HR Specialist</td>
+                <td class="p-4 text-gray-600 text-sm"><span class="bg-yellow-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">Accepted</span></td>
+                <td class="p-4 text-right space-x-2">
+                <button class="text-green-600 hover:underline text-sm">View</button>
+                </td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+                <td class="p-4 font-medium text-gray-800">David Lee</td>
+                <td class="p-4 text-gray-600 text-sm">david.lee@example.com</td>
+                <td class="p-4 text-gray-600 text-sm">082-555-5678</td>
+                <td class="p-4 text-gray-600 text-sm">Finance Manager</td>
+                <td class="p-4 text-gray-600 text-sm"><span class="bg-yellow-100 text-red-700 px-2 py-1 rounded-full text-xs font-semibold">Rejected</span></td>
+                <td class="p-4 text-right space-x-2">
+                <button class="text-green-600 hover:underline text-sm">View</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </section>
+
+    <!-- Modal backdrop -->
+    <div id="offerModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+      <!-- Modal content -->
+      <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6 relative">
+        <!-- Close button -->
+        <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+          <span class="material-icons">close</span>
+        </button>
+
+        <!-- Modal heading -->
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Make Job Offer</h2>
+
+        <!-- Modal form -->
+        <form id="interviewForm" class="space-y-4">
+
+          <!-- Details -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">Details</label>
+            <textarea placeholder="Job Offer Message..." rows="3" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex justify-end space-x-2 mt-4">
+            <button type="button" id="cancelBtn" class="px-4 py-2 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">Cancel</button>
+            <button type="submit" class="px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script>
+  // Simple search/filter functionality
+  const searchInput = document.getElementById("searchInput");
+  const tableBody = document.getElementById("applicantsTableBody");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    const rows = tableBody.querySelectorAll("tr");
+    rows.forEach(row => {
+      const name = row.cells[0].textContent.toLowerCase();
+      row.style.display = name.includes(query) ? "" : "none";
+    });
+  });
+</script>
+<script>
+  // Tab logic
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      // Update active button
+      tabButtons.forEach(b => {
+        b.classList.toggle('border-green-600', b === btn);
+        b.classList.toggle('text-gray-700', b === btn);
+        b.classList.toggle('text-gray-500', b !== btn);
+        b.classList.toggle('border-transparent', b !== btn);
+      });
+
+      // Show target content
+      tabContents.forEach(content => content.classList.toggle('hidden', content.id !== target));
+    });
+  });
+</script>
+
+<script>
+  const modal = document.getElementById('offerModal');
+  const openBtn = document.getElementById('openModalBtn');
+  const closeBtn = document.getElementById('closeModal');
+  const cancelBtn = document.getElementById('cancelBtn');
+
+  // Open modal
+  openBtn.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  });
+
+
+  // Close modal
+  [closeBtn, cancelBtn].forEach(btn => {
+    btn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    });
+  });
+
+  // Submit form
+  document.getElementById('interviewForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Interview saved!');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  });
+
+</script>
+</body>
+</html>

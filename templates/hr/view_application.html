@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Applicant View</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-md flex flex-col fixed h-full z-20">
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12 rounded-full">
+      <h1 class="font-bold text-xl text-green-700">BMA HR</h1>
+    </div>
+
+    <nav class="flex-1 px-4 py-6 space-y-2">
+      <a href="dashboard.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="notifications.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+      </a>
+      <a href="applicants.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person</span> Applicants
+      </a>
+      <a href="employees.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">groups</span> Employees
+      </a>
+      <a href="candidates.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person_search</span> Candidates
+      </a>
+      <a href="screening.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="recruitment.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">business_center</span> Recruitment
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 ml-64 p-8 overflow-y-auto">
+    
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center mb-10 flex-wrap gap-4">
+      <h2 class="text-2xl font-bold text-gray-800">HR Dashboard</h2>
+      <div class="flex items-center space-x-3">
+        <input type="text" placeholder="Search..." class="px-4 py-2 w-60 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Documents</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Payroll</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Reports</a>
+        <img src="https://i.pravatar.cc/40" alt="Admin Avatar" class="w-10 h-10 rounded-full border-2 border-green-500">
+      </div>
+    </div>
+
+    <!-- View Applicant's Application -->
+    <section class="applicant-detail bg-white shadow-lg rounded-xl p-8 mt-8 max-w-4xl mx-auto">
+    <div class="mb-6">
+        <div class="flex border-b border-gray-200">
+        <button class="tab-btn text-gray-700 px-4 py-2 font-medium border-b-2 border-green-600 focus:outline-none" data-tab="application">Application</button>
+        <button class="tab-btn text-gray-500 px-4 py-2 font-medium border-b-2 border-transparent focus:outline-none" data-tab="evaluation">Evaluation</button>
+        </div>
+    </div>
+
+    <div class="tab-content" id="application">
+    <!-- Header: Profile photo + Name -->
+    <div class="flex items-center space-x-6 mb-6">
+        <img src="/static/images/default-profile.png" alt="Profile Photo" class="w-24 h-24 rounded-full object-cover border">
+        <div>
+        <h2 class="text-2xl font-semibold text-gray-800" id="applicantName">John Doe</h2>
+        <p class="text-gray-500" id="applicantEmail">johndoe@example.com</p>
+        <p class="text-gray-500" id="applicantPhone">082-555-1234</p>
+        </div>
+    </div>
+
+    <!-- Job Info -->
+    <div class="mb-6">
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Job Applied For</h3>
+        <p id="applicantJob" class="text-gray-600">Software Engineer</p>
+    </div>
+
+    <!-- Job Question Responses -->
+    <div class="mb-6">
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Job Question Responses</h3>
+        <div class="space-y-3" id="questionResponses">
+        <!-- Example question/response -->
+        <div class="p-4 border rounded-lg bg-gray-50">
+            <p class="font-medium text-gray-700">Question 1: Why do you want to join our company?</p>
+            <p class="text-gray-600 mt-1">Response: I am passionate about developing innovative solutions that improve user experience.</p>
+        </div>
+        <div class="p-4 border rounded-lg bg-gray-50">
+            <p class="font-medium text-gray-700">Question 2: How many years of experience do you have?</p>
+            <p class="text-gray-600 mt-1">Response: 5 years</p>
+        </div>
+        </div>
+    </div>
+
+    <!-- Application Scoring -->
+    <div class="mb-6">
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Application Scoring</h3>
+        <div class="grid grid-cols-2 gap-4">
+        <div class="p-4 border rounded-lg bg-gray-50">
+            <p class="text-gray-700 font-medium">Experience Score:</p>
+            <p class="text-gray-600">8 / 10</p>
+        </div>
+        <div class="p-4 border rounded-lg bg-gray-50">
+            <p class="text-gray-700 font-medium">Location Score:</p>
+            <p class="text-gray-600">9 / 10</p>
+        </div>
+        <div class="p-4 border rounded-lg bg-gray-50">
+            <p class="text-gray-700 font-medium">Qualification Score:</p>
+            <p class="text-gray-600">5 / 10</p>
+        </div>
+        <div class="p-4 border rounded-lg bg-gray-50">
+            <p class="text-gray-700 font-medium">Salary Expectation Score:</p>
+            <p class="text-gray-600">7.3 / 10</p>
+        </div>
+        </div>
+        <div style="margin-top:10px;">
+            <div class="p-4 border rounded-lg bg-gray-50">
+                <p class="text-gray-700 font-medium">Overall Score</p>
+                <p class="text-gray-600">7 / 10</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Documents Uploaded -->
+    <div class="mb-6">
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Uploaded Documents</h3>
+        <ul class="space-y-2" id="uploadedDocuments">
+        <li class="flex justify-between items-center p-3 border rounded bg-gray-50">
+            <span>Resume.pdf</span>
+            <a href="#" class="text-blue-600 hover:underline text-sm">View</a>
+        </li>
+        <li class="flex justify-between items-center p-3 border rounded bg-gray-50">
+            <span>CoverLetter.docx</span>
+            <a href="#" class="text-blue-600 hover:underline text-sm">View</a>
+        </li>
+        </ul>
+    </div>
+
+    <!-- Update Application Status -->
+    <div class="mb-6">
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Update Application Status</h3>
+        <form id="updateStatusForm" class="space-y-3">
+        <div class="flex items-center space-x-4">
+            <select id="applicationStatus" class="border rounded p-2 w-60">
+            <option value="">Select Status</option>
+            <option value="screening">Screening</option>
+            <option value="rejected">Rejected</option>
+            </select>
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Update</button>
+        </div>
+        </form>
+    </div>
+    </div>
+
+    <div class="tab-content" id="evaluation">
+        <section class="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+        <form id="feedbackForm" class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-lg space-y-6">
+
+            <!-- Heading -->
+            <h2 class="text-2xl font-bold text-gray-800 text-center">Leave Your Feedback</h2>
+
+            <!-- Rating stars -->
+            <div class="flex items-center justify-center space-x-1">
+            <span class="text-gray-700 font-medium">Rating:</span>
+            <div id="starRating" class="flex space-x-1">
+                <button type="button" data-value="1" class="text-gray-300 hover:text-yellow-400 text-3xl transition-colors">★</button>
+                <button type="button" data-value="2" class="text-gray-300 hover:text-yellow-400 text-3xl transition-colors">★</button>
+                <button type="button" data-value="3" class="text-gray-300 hover:text-yellow-400 text-3xl transition-colors">★</button>
+                <button type="button" data-value="4" class="text-gray-300 hover:text-yellow-400 text-3xl transition-colors">★</button>
+                <button type="button" data-value="5" class="text-gray-300 hover:text-yellow-400 text-3xl transition-colors">★</button>
+            </div>
+            <input type="hidden" name="rating" id="ratingValue">
+            </div>
+
+            <!-- Description box -->
+            <div>
+            <label class="block text-gray-700 font-medium mb-2">Evaluate Candidate</label>
+            <textarea 
+                name="description" 
+                rows="5" 
+                placeholder="Write your feedback here..." 
+                class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400 transition"
+            ></textarea>
+            </div>
+
+            <!-- Submit button -->
+            <div class="flex justify-center">
+            <button type="submit" class="px-6 py-3 bg-green-600 text-white font-semibold rounded-xl shadow hover:bg-green-700 transition-all">
+                Submit Evaluation
+            </button>
+            </div>
+        </form>
+        </section>
+    </div>
+
+    </section>
+
+  </main>
+
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script>
+  // Simple search/filter functionality
+  const searchInput = document.getElementById("searchInput");
+  const tableBody = document.getElementById("applicantsTableBody");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    const rows = tableBody.querySelectorAll("tr");
+    rows.forEach(row => {
+      const name = row.cells[0].textContent.toLowerCase();
+      row.style.display = name.includes(query) ? "" : "none";
+    });
+  });
+</script>
+<script>
+  // Tab logic
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      // Update active button
+      tabButtons.forEach(b => {
+        b.classList.toggle('border-green-600', b === btn);
+        b.classList.toggle('text-gray-700', b === btn);
+        b.classList.toggle('text-gray-500', b !== btn);
+        b.classList.toggle('border-transparent', b !== btn);
+      });
+
+      // Show target content
+      tabContents.forEach(content => content.classList.toggle('hidden', content.id !== target));
+    });
+  });
+</script>
+<script>
+  const stars = document.querySelectorAll("#starRating button");
+  const ratingInput = document.getElementById("ratingValue");
+
+  stars.forEach(star => {
+    star.addEventListener("click", () => {
+      const value = parseInt(star.dataset.value);
+      ratingInput.value = value;
+
+      stars.forEach(s => s.classList.toggle("text-yellow-400", parseInt(s.dataset.value) <= value));
+      stars.forEach(s => s.classList.toggle("text-gray-300", parseInt(s.dataset.value) > value));
+    });
+  });
+
+  document.getElementById("feedbackForm").addEventListener("submit", e => {
+    e.preventDefault();
+    alert(`Feedback submitted!\nRating: ${ratingInput.value}\nDescription: ${e.target.description.value}`);
+    e.target.reset();
+    stars.forEach(s => s.classList.remove("text-yellow-400"));
+  });
+</script>
+</body>
+</html>

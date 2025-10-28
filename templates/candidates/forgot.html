@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BMA | Forgot Password</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+  .input { border: 1px solid #d1d5db; border-radius:1rem; padding:0.5rem 0.75rem; width:100%; outline:none; transition: all 0.3s ease; }
+  .input:focus { ring: 2px solid #16a34a; box-shadow: 0 2px 6px rgba(22,163,52,0.2); border-color:#16a34a; }
+</style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+
+<div class="max-w-md w-full bg-white p-10 rounded-3xl shadow-2xl">
+  <h2 class="text-3xl font-extrabold text-gray-800 mb-6 text-center">Forgot Password</h2>
+  <p class="text-gray-600 text-center mb-6">Enter your email address and we will send you a link to reset your password.</p>
+
+  <form id="forgotPasswordForm" class="space-y-6">
+    <div>
+      <label for="email" class="block text-gray-700 mb-2 font-medium">Email Address</label>
+      <input type="email" id="email" placeholder="you@example.com" class="input" required>
+    </div>
+
+    <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-xl shadow-lg transition transform hover:-translate-y-1 hover:scale-105">
+      Send Reset Link
+    </button>
+  </form>
+
+  <p class="text-center text-gray-500 mt-6">
+    Remembered your password? <a href="{{url_for('login')}}" class="text-green-600 hover:underline font-medium">Login</a>
+  </p>
+</div>
+
+<script>
+async function apiRequest(url, method = 'POST', data = null){
+  const ACCESS_TOKEN = localStorage.getItem('access_token') || ''; // optional
+  const options = { method, headers: { 'Content-Type': 'application/json' } };
+  if(ACCESS_TOKEN) options.headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
+  if(data) options.body = JSON.stringify(data);
+  const res = await fetch(url, options);
+  if(!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+  return await res.json();
+}
+
+document.getElementById('forgotPasswordForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+
+  if(!email){
+    Swal.fire({ icon: 'error', title: 'Oops...', text: 'Please enter your email!' });
+    return;
+  }
+
+  try{
+    const payload = { email, table: "ExternalApplicant" };
+    await apiRequest('https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/forgotPassword', 'POST', payload);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Email Sent!',
+      text: 'A password reset link has been sent to your email.',
+      confirmButtonColor: '#16a34a'
+    });
+  }catch(err){
+    console.error(err);
+    Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to send reset link. Please try again later.' });
+  }
+});
+</script>
+
+</body>
+</html>

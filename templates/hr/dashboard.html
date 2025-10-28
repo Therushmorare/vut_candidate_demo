@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | HR Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-md flex flex-col fixed h-full z-20">
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12 rounded-full">
+      <h1 class="font-bold text-xl text-green-700">BMA HR</h1>
+    </div>
+
+    <nav class="flex-1 px-4 py-6 space-y-2">
+      <a href="dashboard.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="notifications.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+      </a>
+      <a href="dashboard.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person</span> Applicants
+      </a>
+      <a href="employees.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">groups</span> Employees
+      </a>
+      <a href="candidates.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person_search</span> Candidates
+      </a>
+      <a href="screening.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="recruitment.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">business_center</span> Recruitment
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 ml-64 p-8 overflow-y-auto">
+    
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center mb-10 flex-wrap gap-4">
+      <h2 class="text-2xl font-bold text-gray-800">HR Dashboard</h2>
+      <div class="flex items-center space-x-3">
+        <input type="text" placeholder="Search..." class="px-4 py-2 w-60 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Documents</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Payroll</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Reports</a>
+        <img src="https://i.pravatar.cc/40" alt="Admin Avatar" class="w-10 h-10 rounded-full border-2 border-green-500">
+      </div>
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="card bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+        <h3 class="text-gray-500 font-medium">Job Posts</h3>
+        <p class="text-3xl font-bold text-gray-800 mt-2">1,245</p>
+      </div>
+      <div class="card bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+        <h3 class="text-gray-500 font-medium">Onboarded</h3>
+        <p class="text-3xl font-bold text-gray-800 mt-2">125</p>
+      </div>
+      <div class="card bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+        <h3 class="text-gray-500 font-medium">Interviewed</h3>
+        <p class="text-3xl font-bold text-gray-800 mt-2">987</p>
+      </div>
+      <div class="card bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+        <h3 class="text-gray-500 font-medium">Screened</h3>
+        <p class="text-3xl font-bold text-gray-800 mt-2">12</p>
+      </div>
+    </div>
+
+    <!-- Charts-->
+    <section class="mb-12">
+        <h2 class="text-xl font-semibold mb-6 text-gray-800">Analytics Overview</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Bar Chart -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-lg font-semibold mb-4 text-gray-700">Monthly Job Applications</h3>
+            <canvas id="applicationsChart" height="150"></canvas>
+        </div>
+
+        <!-- Pie Chart -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-lg font-semibold mb-4 text-gray-700">Employee Department Breakdown</h3>
+            <canvas id="departmentChart" height="150"></canvas>
+        </div>
+        </div>
+    </section>
+
+    <!-- All Job Posts -->
+    <section>
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-800">All Job Posts</h2>
+        <a  href="recruitment.html" style="text-decoration:none;"><button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow transition">+ New Job Post</button></a>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Example job post card -->
+        <div class="bg-white border rounded-xl p-5 shadow-sm hover:shadow-md transition flex flex-col">
+          <h3 class="font-semibold text-green-800 text-lg">Senior Software Engineer</h3>
+          <p class="font-medium text-orange-700 mt-1">Engineering Department</p>
+          <p class="text-sm text-gray-500 mt-1">R350,000 - R450,000 | Full Time | OR Thambo</p>
+          <div class="mt-4 flex gap-2">
+            <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">View</button>
+            <button class="flex-1 border border-green-600 text-green-600 py-2 rounded-lg hover:bg-green-50 transition">Edit</button>
+            <button class="flex-1 bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition">Delete</button>
+          </div>
+        </div>
+
+        <!-- Duplicate this block for more cards -->
+        <div class="bg-white border rounded-xl p-5 shadow-sm hover:shadow-md transition flex flex-col">
+          <h3 class="font-semibold text-green-800 text-lg">HR Manager</h3>
+          <p class="font-medium text-orange-700 mt-1">Human Resources</p>
+          <p class="text-sm text-gray-500 mt-1">R250,000 - R300,000 | Full Time | Sandton</p>
+          <div class="mt-4 flex gap-2">
+            <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">View</button>
+            <button class="flex-1 border border-green-600 text-green-600 py-2 rounded-lg hover:bg-green-50 transition">Edit</button>
+            <button class="flex-1 bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition">Delete</button>
+          </div>
+        </div>
+
+        <div class="bg-white border rounded-xl p-5 shadow-sm hover:shadow-md transition flex flex-col">
+          <h3 class="font-semibold text-green-800 text-lg">Recruitment Officer</h3>
+          <p class="font-medium text-orange-700 mt-1">Talent Acquisition</p>
+          <p class="text-sm text-gray-500 mt-1">R180,000 - R240,000 | Contract | Pretoria</p>
+          <div class="mt-4 flex gap-2">
+            <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">View</button>
+            <button class="flex-1 border border-green-600 text-green-600 py-2 rounded-lg hover:bg-green-50 transition">Edit</button>
+            <button class="flex-1 bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition">Delete</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Chart.js Logic -->
+<script>
+  // Bar Chart - Applications
+  const ctx1 = document.getElementById('applicationsChart').getContext('2d');
+  new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      datasets: [{
+        label: 'Applications',
+        data: [120, 190, 300, 500, 200, 300, 450],
+        backgroundColor: 'rgba(34, 197, 94, 0.6)',
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+
+  // Pie Chart - Departments
+  const ctx2 = document.getElementById('departmentChart').getContext('2d');
+  new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+      labels: ['Engineering', 'HR', 'Marketing', 'Finance', 'Support'],
+      datasets: [{
+        label: 'Departments',
+        data: [45, 15, 20, 10, 10],
+        backgroundColor: [
+          'rgba(34, 197, 94, 0.8)',
+          'rgba(249, 115, 22, 0.8)',
+          'rgba(59, 130, 246, 0.8)',
+          'rgba(234, 179, 8, 0.8)',
+          'rgba(107, 114, 128, 0.8)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      cutout: '50%',
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
+  });
+</script>
+</body>
+</html>

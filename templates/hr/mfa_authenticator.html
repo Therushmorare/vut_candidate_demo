@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | MFA Authentication</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+  <section class="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
+    <div class="flex flex-col items-center mb-6">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="BMA Logo" class="w-24 h-24 mb-3">
+      <h2 class="text-2xl font-bold text-gray-800">Multi-Factor Authentication</h2>
+      <p class="text-gray-500 text-sm mt-1 text-center">
+        Enter the 6-digit code sent to your email or phone to continue
+      </p>
+    </div>
+
+    <form id="mfaForm" class="space-y-5">
+
+      <!-- OTP Input Fields -->
+      <div class="flex justify-between space-x-2">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition shadow-md">
+          Verify
+        </button>
+      </div>
+
+      <!-- Resend Code -->
+      <div class="text-center text-sm text-gray-500">
+        Didn’t receive a code? <button type="button" class="text-green-600 hover:underline">Resend</button>
+      </div>
+
+    </form>
+  </section>
+
+  <script>
+    // Auto-focus next input
+    const otpInputs = document.querySelectorAll(".otp-input");
+    otpInputs.forEach((input, index) => {
+      input.addEventListener("input", () => {
+        if (input.value.length === 1 && index < otpInputs.length - 1) {
+          otpInputs[index + 1].focus();
+        }
+      });
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && index > 0 && input.value === "") {
+          otpInputs[index - 1].focus();
+        }
+      });
+    });
+
+    // MFA Form Submission
+    document.getElementById("mfaForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const adminId = sessionStorage.getItem("employee_id"); // saved from login
+      const token = Array.from(otpInputs).map(i => i.value).join("");
+
+      if (!adminId || token.length < 6) {
+        alert("Please enter the 6-digit code");
+        return;
+      }
+
+      try {
+        const res = await fetch("http://127.0.0.1:5000/api/hr/hrAuth", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ employee_id: adminId, token })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Authentication successful!");
+          // Redirect to admin dashboard
+          window.location.href = "dashboard.html";
+        } else {
+          alert(data.message || "Invalid code, try again.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("An error occurred. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>

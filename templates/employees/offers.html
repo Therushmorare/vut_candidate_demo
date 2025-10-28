@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Offers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="/static/styles/bookmark.css" rel="stylesheet">
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- Top Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-30">
+    <div class="flex justify-between items-center px-4 py-3 sm:px-6">
+
+      <!-- Left: Logo -->
+      <div class="flex items-center space-x-3">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+      </div>
+
+      <!-- Right: Desktop Navigation -->
+      <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
+        <a href="{{url_for('employeeCvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">menu_book</span>
+          <span>CV Guide</span>
+        </a>
+        <a href="{{url_for('employeeBookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">bookmark</span>
+          <span>Bookmarked Jobs</span>
+        </a>
+        <a href="{{url_for('employeeNotifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">notifications</span>
+          <span>Notifications</span>
+        </a>
+
+        <!-- User Profile + Logout -->
+        <div class="flex items-center space-x-3">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
+            <span class="material-icons text-lg">logout</span>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+    <!-- Mobile Controls -->
+    <div class="sm:hidden flex items-center space-x-2 relative">
+      <!-- Dropdown Trigger Icon -->
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      </button>
+
+      <!-- Sidebar Menu Button -->
+      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+        <span class="material-icons text-3xl">menu</span>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+        <a href="{{url_for('employeeCvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        </a>
+        <a href="{{url_for('employeeBookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        </a>
+        <a href="{{url_for('employeeNotifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        </a>
+        <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
+          <span class="material-icons mr-2 text-red-500">logout</span> Logout
+        </button>
+      </div>
+    </div>
+
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+        class="fixed top-0 left-0 h-full w-64 bg-white shadow-md flex flex-col z-40 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
+
+    <!-- Logo -->
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+      <a href="{{url_for('employeeDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-green-700 bg-green-50">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="{{url_for('employeeProfile')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      </a>
+      <a href="{{url_for('employeeApplications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      </a>
+      <a href="{{url_for('employeeInterviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="{{url_for('employeeOffers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      </a>
+      <a href="#" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event_available</span> Leave Management
+      </a>
+      <a href="#" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">attach_money</span> Payslip Management
+      </a>
+      <a href="{{url_for('employeeAccountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Overlay for Mobile -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-40 hidden z-30 sm:hidden"></div>
+
+  <!-- Main Content -->
+  <main class="flex-1 sm:ml-64 p-6 sm:p-10 transition-all duration-300">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-green-600 mb-6">Offers</h2>
+    </div>
+    <div id="offersContainer" class="space-y-4">
+      <p id="loadingOffers" class="text-gray-500 italic text-center py-4">Loading job offers...</p>
+    </div>
+  </main>
+
+<script src="/static/js/data_grabber.js"></script>
+<script src="/static/js/login.js"></script>
+
+<script>
+const applicantId = sessionStorage.getItem("applicant_id"); // or wherever you store it
+const offersContainer = document.getElementById("offersContainer");
+const apiURL = `https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/myJobOffers/${applicantId}`;
+
+async function loadJobOffers() {
+  try {
+    const res = await fetch(apiURL);
+    const data = await res.json();
+    const offers = data.offers || [];
+
+    offersContainer.innerHTML = ''; // clear loading text
+
+    if (offers.length === 0) {
+      offersContainer.innerHTML = '<p class="text-gray-500 italic text-center py-4">You have no job offers at the moment.</p>';
+      return;
+    }
+
+    offers.forEach(offer => {
+      const div = document.createElement('div');
+      div.className = 'bg-white p-6 rounded-2xl shadow-md flex flex-col md:flex-row justify-between items-start md:items-center';
+
+      // Determine status styling
+      let statusText = 'Pending';
+      let statusColor = 'text-green-600';
+      let acceptDisabled = false;
+      let rejectDisabled = false;
+
+      // Example logic: if offer.accepted or offer.rejected (adjust according to your API response)
+      if (offer.status === 'Accepted') {
+        statusText = 'Accepted';
+        statusColor = 'text-blue-600';
+        acceptDisabled = true;
+        rejectDisabled = true;
+      } else if (offer.status === 'Rejected') {
+        statusText = 'Rejected';
+        statusColor = 'text-red-600';
+        acceptDisabled = true;
+        rejectDisabled = true;
+      }
+
+      div.innerHTML = `
+        <div class="flex-1">
+          <h2 class="text-xl font-semibold text-gray-800">${offer.job_title || 'N/A'}</h2>
+          <p class="text-gray-600">Department: ${offer.department || 'N/A'}</p>
+          <p class="text-gray-600">Employment: ${offer.employment_type || 'N/A'}</p>
+          <p class="text-gray-600">Office: ${offer.office || 'N/A'}</p>
+          <p class="text-gray-600">Offer Expires: ${offer.offer_expires ? new Date(offer.offer_expires).toLocaleDateString() : 'N/A'}</p>
+          <p class="text-gray-600">Status: <span class="${statusColor} font-medium">${statusText}</span></p>
+        </div>
+        <div class="flex space-x-2 mt-4 md:mt-0">
+          <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition ${acceptDisabled ? 'cursor-not-allowed opacity-50' : ''}" ${acceptDisabled ? 'disabled' : ''}>Accept</button>
+          <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition ${rejectDisabled ? 'cursor-not-allowed opacity-50' : ''}" ${rejectDisabled ? 'disabled' : ''}>Reject</button>
+        </div>
+      `;
+
+      // Add accept/reject functionality if enabled
+      const [acceptBtn, rejectBtn] = div.querySelectorAll('button');
+      if (!acceptDisabled) {
+        acceptBtn.addEventListener('click', () => handleOfferResponse(offer.offer_id, 'Accepted', div));
+      }
+      if (!rejectDisabled) {
+        rejectBtn.addEventListener('click', () => handleOfferResponse(offer.offer_id, 'Rejected', div));
+      }
+
+      offersContainer.appendChild(div);
+    });
+
+  } catch (err) {
+    console.error(err);
+    offersContainer.innerHTML = '<p class="text-red-500 text-center py-4">Failed to load job offers.</p>';
+  }
+}
+
+// Handle Accept/Reject API call
+async function handleOfferResponse(offerId, response, cardDiv) {
+  const result = await Swal.fire({
+    title: `Are you sure you want to ${response.toLowerCase()} this offer?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#16a34a',
+    cancelButtonColor: '#d33',
+    confirmButtonText: `Yes, ${response}`
+  });
+
+  if (!result.isConfirmed) return;
+
+  try {
+    const res = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/respondJobOffer`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ applicant_id: applicantId, offer_id: offerId, response })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      Swal.fire({ icon: 'success', title: 'Success', text: data.message || `Offer ${response.toLowerCase()} successfully.` });
+      // Update card visually
+      const statusSpan = cardDiv.querySelector('span');
+      statusSpan.textContent = response;
+      statusSpan.className = response === 'Accepted' ? 'text-blue-600 font-medium' : 'text-red-600 font-medium';
+      const [acceptBtn, rejectBtn] = cardDiv.querySelectorAll('button');
+      acceptBtn.disabled = true; acceptBtn.classList.add('cursor-not-allowed', 'opacity-50');
+      rejectBtn.disabled = true; rejectBtn.classList.add('cursor-not-allowed', 'opacity-50');
+    } else {
+      Swal.fire({ icon: 'error', title: 'Failed', text: data.message || 'Could not respond to the offer.' });
+    }
+  } catch (err) {
+    console.error(err);
+    Swal.fire({ icon: 'error', title: 'Error', text: 'Network error. Please try again.' });
+  }
+}
+
+// Load on page start
+loadJobOffers();
+</script>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Sidebar Toggle Script -->
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const menuBtn = document.getElementById("menuBtn");
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("-translate-x-full");
+      overlay.classList.toggle("hidden");
+    });
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+    });
+  </script>
+  <script>
+    const dropdownBtn = document.getElementById('mobileDropdownBtn');
+    const dropdownMenu = document.getElementById('mobileDropdown');
+
+    dropdownBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdownMenu.contains(e.target) && !dropdownBtn.contains(e.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
+  </script>
+
+</body>
+</html>

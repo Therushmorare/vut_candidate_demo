@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMA Careers | Border Management Security</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-sans" x-data="jobFilter()">
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-md" x-data="{ open: false }">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      
+      <!-- Logo & Title -->
+      <div class="flex items-center gap-3">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="BMA Logo" class="w-16 h-16 sm:w-20 sm:h-20">
+      </div>
+
+      <!-- Desktop Menu / Sign In -->
+      <div class="hidden sm:flex items-center gap-4">
+        <a onclick="document.getElementById('roleModal').classList.remove('hidden')" 
+          class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition flex items-center gap-2">
+          <span class="material-icons text-white">person</span> Sign In
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button @click="open = !open" class="sm:hidden flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
+        <span class="material-icons text-orange-600" x-text="open ? 'close' : 'menu'"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div 
+      x-show="open" 
+      x-transition:enter="transition ease-out duration-300" 
+      x-transition:enter-start="opacity-0 -translate-y-2" 
+      x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-200" 
+      x-transition:leave-start="opacity-100 translate-y-0" 
+      x-transition:leave-end="opacity-0 -translate-y-2"
+      @click.away="open = false" 
+      class="sm:hidden bg-white/95 backdrop-blur-md rounded-xl shadow-lg mt-2 mx-4 py-4 border border-gray-200">
+
+      <a onclick="document.getElementById('roleModal').classList.remove('hidden')"
+        class="block px-6 py-3 mb-2 rounded-lg hover:bg-orange-50 transition flex items-center gap-3 text-orange-600 font-medium">
+        <span class="material-icons">person</span> Sign In
+      </a>
+
+      <!-- Example extra links -->
+      <a href="#jobs" 
+        class="block px-6 py-3 mb-2 rounded-lg hover:bg-gray-100 transition flex items-center gap-3 text-gray-700 font-medium">
+        <span class="material-icons text-gray-400">work</span> Browse Jobs
+      </a>
+
+      <a href="https://www.bma.gov.za/about-us/" 
+        class="block px-6 py-3 rounded-lg hover:bg-gray-100 transition flex items-center gap-3 text-gray-700 font-medium">
+        <span class="material-icons text-gray-400">info</span> About BMA
+      </a>
+    </div>
+    <br />
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative bg-green-700 text-white py-20">
+    <img src="/static/images/Border-Management-Agency-BMA-696x464.jpg" alt="Border Security" class="absolute inset-0 w-full h-full object-cover opacity-30">
+    <div class="relative max-w-7xl mx-auto px-6 text-center">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Protect Borders. Grow Your Career.</h1>
+      <p class="text-base sm:text-lg md:text-xl mb-6">Explore opportunities at Border Management Security (BMA) and join our mission for national safety.</p>
+      <section class="bg-white shadow-sm border border-gray-100 rounded-xl mx-4 sm:mx-10 my-6">
+        <div class="grid grid-cols-3 text-center divide-x divide-gray-200">
+          
+          <!-- Jobs -->
+          <div class="py-4 sm:py-6">
+            <p class="text-sm text-gray-500 font-medium uppercase tracking-wide">Jobs</p>
+            <h2 class="text-2xl sm:text-3xl font-bold text-green-700 mt-1">128</h2>
+          </div>
+
+          <!-- Applied -->
+          <div class="py-4 sm:py-6">
+            <p class="text-sm text-gray-500 font-medium uppercase tracking-wide">Applied</p>
+            <h2 class="text-2xl sm:text-3xl font-bold text-green-700 mt-1">76</h2>
+          </div>
+
+          <!-- Hired -->
+          <div class="py-4 sm:py-6">
+            <p class="text-sm text-gray-500 font-medium uppercase tracking-wide">Hired</p>
+            <h2 class="text-2xl sm:text-3xl font-bold text-green-700 mt-1">24</h2>
+          </div>
+
+        </div>
+      </section>
+      <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+        <a href="{{url_for('login')}}" class="bg-white text-green-700 font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition">Get Started</a>
+        <a href="#jobs" class="border border-white text-white px-6 py-3 rounded-lg hover:bg-white hover:text-green-700 transition">Browse Jobs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section id="jobs" class="max-w-7xl mx-auto px-6 py-10">
+    <h2 class="text-2xl font-bold mb-4">Available Jobs</h2>
+    <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-6">
+      <!-- Keyword Input -->
+      <div class="relative flex-1 min-w-[200px]">
+        <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+        <input type="text" 
+              placeholder="Search by job title" 
+              x-model="filters.keyword" 
+              class="w-full pl-10 pr-3 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none shadow-sm transition">
+      </div>
+
+      <!-- Location Select -->
+      <select x-model="filters.location" 
+              class="rounded-xl border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none shadow-sm transition">
+        <option value="">Location</option>
+        <option value="Gauteng">Gauteng</option>
+        <option value="Cape Town">Cape Town</option>
+        <option value="Durban">Durban</option>
+      </select>
+
+      <!-- Job Type Select -->
+      <select x-model="filters.type" 
+              class="rounded-xl border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none shadow-sm transition">
+        <option value="">Job Type</option>
+        <option value="Full-Time">Full-Time</option>
+        <option value="Part-Time">Part-Time</option>
+        <option value="Internship">Internship</option>
+      </select>
+
+      <!-- Reset Button -->
+      <button @click="resetFilters()" 
+              class="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-5 py-2 rounded-xl hover:from-gray-500 hover:to-gray-600 transition shadow-sm w-full sm:w-auto">
+        Reset
+      </button>
+    </div>
+
+    <!-- Job Listings -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <template x-for="job in filteredJobs()" :key="job.id">
+      <div class="bg-white rounded-2xl shadow-lg p-6 transform transition hover:-translate-y-2 hover:shadow-2xl flex flex-col relative border-t-4"
+          :class="job.urgent ? 'border-orange-500' : 'border-green-500'">
+        
+        <!-- Title & Badge -->
+        <div class="flex justify-between items-start mb-3 flex-col sm:flex-row sm:items-center gap-2">
+          <h3 class="text-xl font-semibold text-gray-800" x-text="job.title"></h3>
+          <span :class="job.urgent 
+                    ? 'bg-orange-500 text-white' 
+                    : 'bg-gradient-to-r from-green-400 to-green-600 text-white'"
+                class="text-sm px-3 py-1 rounded-full font-medium shadow-md" x-text="job.type">
+          </span>
+        </div>
+        
+        <!-- Location -->
+        <p class="text-gray-500 mb-3 flex items-center gap-1 hover:text-green-600 transition">
+          <span class="material-icons text-gray-400 text-base">location_on</span>
+          <span x-text="job.location"></span>
+        </p>
+        
+        <!-- Description -->
+        <p class="text-gray-700 mb-5 line-clamp-3" x-text="job.description"></p>
+        
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-auto">
+          <a :href="`/templates/candidates/login.html`" 
+            class="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2 rounded-full hover:from-green-600 hover:to-green-700 shadow-md transition text-center flex-1 sm:flex-none">
+            Apply Now
+          </a>
+          <button @click="toggleSave(job)" 
+                  class="border border-gray-300 text-gray-600 hover:border-green-500 hover:text-green-600 transition rounded-full px-5 py-2 shadow-sm flex-1 sm:flex-none text-center"
+                  x-text="job.saved ? 'Saved' : 'Save Job'">
+          </button>
+        </div>
+
+        <!-- Optional Ribbon for Urgent -->
+        <div x-show="job.urgent" class="absolute top-4 right-4 bg-red-600 text-white px-2 py-1 rounded-lg text-xs font-bold shadow-lg">URGENT</div>
+      </div>
+    </template>
+  </div>
+
+  </section>
+
+<!-- Modal -->
+<div id="roleModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-2xl shadow-xl p-6 w-80 text-center relative">
+    
+    <!-- Close Button -->
+    <button 
+      onclick="document.getElementById('roleModal').classList.add('hidden')" 
+      class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition">
+      <span class="material-icons text-lg">close</span>
+    </button>
+
+    <h2 class="text-xl font-semibold text-gray-800 mb-6">Login As</h2>
+
+    <div class="space-y-3">
+      <!-- Candidate/Employee -->
+      <button 
+        onclick="window.location.href='{{ url_for('login') }}'" 
+        class="w-full flex items-center justify-center gap-3 py-3 rounded-lg border border-gray-200 hover:bg-green-50 hover:border-green-400 transition">
+        <span class="material-icons text-green-600">badge</span>
+        <span class="font-medium text-gray-700">Candidate / Employee</span>
+      </button>
+
+      <!-- HR -->
+      <button 
+        onclick="window.location.href='https://bma-hr.netlify.app'" 
+        class="w-full flex items-center justify-center gap-3 py-3 rounded-lg border border-gray-200 hover:bg-green-50 hover:border-green-400 transition">
+        <span class="material-icons text-green-600">groups</span>
+        <span class="font-medium text-gray-700">Human Resources</span>
+      </button>
+
+      <!-- Admin -->
+      <button 
+        onclick="window.location.href='https://bma-admin.netlify.app/'" 
+        class="w-full flex items-center justify-center gap-3 py-3 rounded-lg border border-gray-200 hover:bg-green-50 hover:border-green-400 transition">
+        <span class="material-icons text-green-600">admin_panel_settings</span>
+        <span class="font-medium text-gray-700">Administrator</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-green-700 text-white mt-12 py-10">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-y-6 md:gap-y-0">
+    
+    <!-- Company Info -->
+    <div class="max-w-sm">
+      <h3 class="font-bold text-lg mb-2">Border Management Security</h3>
+      <p class="text-gray-200">Committed to protecting South Africa’s borders with integrity, professionalism, and excellence.</p>
+    </div>
+    
+    <!-- Contact Info -->
+    <div class="space-y-2">
+      <p><strong>Email:</strong> info@bma.gov.za</p>
+      <p><strong>Phone:</strong> +27 12 065 1147</p>
+      <p><strong>Address:</strong>67 Koranna Ave, Doringkloof, Centurion, 0157</p>
+    </div>
+    
+    <!-- Social Links -->
+    <div class="flex justify-center md:justify-start space-x-4">
+      <a href="https://www.instagram.com/bma_sa23/" class="hover:text-gray-300 transition flex items-center gap-1">
+        Instagram
+      </a>
+      <a href="https://x.com/TheBMA_SA?s=09" class="hover:text-gray-300 transition flex items-center gap-1">
+        Twitter
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61558516915651&mibextid=ZbWKwL" class="hover:text-gray-300 transition flex items-center gap-1">
+        Facebook
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Copyright -->
+  <p class="text-center text-gray-300 mt-6 text-sm">© 2025 Border Management Security. All rights reserved.</p>
+</footer>
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    function jobFilter() {
+      return {
+        filters: { keyword: '', location: '', type: '' },
+        jobs: [
+          {id:1, title:'Software Engineer', location:'Gauteng', type:'Full-Time', description:'Develop security applications and internal tools.', urgent:false, saved:false},
+          {id:2, title:'Cybersecurity Analyst', location:'Cape Town', type:'Full-Time', description:'Monitor and protect BMA systems.', urgent:true, saved:false},
+          {id:3, title:'Border Patrol Officer', location:'Durban', type:'Full-Time', description:'Ensure border safety and compliance.', urgent:false, saved:false},
+          {id:4, title:'Data Analyst', location:'Gauteng', type:'Internship', description:'Analyze border security data.', urgent:false, saved:false},
+          {id:5, title:'System Administrator', location:'Cape Town', type:'Full-Time', description:'Manage internal IT systems.', urgent:false, saved:false},
+          {id:6, title:'Network Engineer', location:'Durban', type:'Part-Time', description:'Maintain BMA network infrastructure.', urgent:true, saved:false},
+          {id:7, title:'HR Officer', location:'Gauteng', type:'Full-Time', description:'Manage recruitment processes.', urgent:false, saved:false},
+          {id:8, title:'Training Coordinator', location:'Cape Town', type:'Full-Time', description:'Coordinate officer training programs.', urgent:false, saved:false},
+          {id:9, title:'Compliance Officer', location:'Durban', type:'Full-Time', description:'Ensure compliance with national regulations.', urgent:false, saved:false},
+          {id:10, title:'Logistics Manager', location:'Gauteng', type:'Full-Time', description:'Manage equipment and resources.', urgent:false, saved:false},
+        ],
+        filteredJobs() {
+          return this.jobs.filter(job => {
+            return (!this.filters.keyword || job.title.toLowerCase().includes(this.filters.keyword.toLowerCase())) &&
+                   (!this.filters.location || job.location === this.filters.location) &&
+                   (!this.filters.type || job.type === this.filters.type);
+          });
+        },
+        resetFilters() {
+          this.filters = { keyword:'', location:'', type:'' };
+        },
+        toggleSave(job) {
+          job.saved = !job.saved;
+        }
+      }
+    }
+  </script>
+  <script>
+    const loginBtn = document.getElementById('loginBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+
+    loginBtn.addEventListener('click', () => loginModal.classList.remove('hidden'));
+    closeLoginModal.addEventListener('click', () => loginModal.classList.add('hidden'));
+
+    // Hide modal when clicking outside
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) loginModal.classList.add('hidden');
+    });
+
+    // Redirect logic
+    function redirectToLogin(userType) {
+      const loginRoutes = {
+        candidate: "{{ url_for('login') }}"
+      };
+
+      const redirectUrl = loginRoutes[userType] || '/';
+      window.location.href = redirectUrl;
+    }
+  </script>
+</body>
+</html>

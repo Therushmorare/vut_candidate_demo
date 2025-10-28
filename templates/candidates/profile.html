@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-40">
+    <div class="flex justify-between items-center px-4 py-3 sm:px-6">
+      <div class="flex items-center space-x-3">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+      </div>
+
+      <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">menu_book</span> <span>CV Guide</span>
+        </a>
+        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">bookmark</span> <span>Bookmarked</span>
+        </a>
+        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">notifications</span> <span>Notifications</span>
+        </a>
+        <div class="flex items-center space-x-3">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
+            <span class="material-icons text-lg">logout</span> <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+    <!-- Mobile Controls -->
+    <div class="sm:hidden flex items-center space-x-2 relative">
+      <!-- Dropdown Trigger Icon -->
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      </button>
+
+      <!-- Sidebar Menu Button -->
+      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+        <span class="material-icons text-3xl">menu</span>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        </a>
+        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        </a>
+        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        </a>
+        <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
+          <span class="material-icons mr-2 text-red-500">logout</span> Logout
+        </button>
+      </div>
+    </div>
+
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white shadow-md flex flex-col z-50 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
+    <div class="p-6 border-b flex items-center justify-between">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+      <button id="closeSidebar" class="sm:hidden text-gray-600 hover:text-red-500">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto hide-scrollbar">
+      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition"><span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard</a>
+      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-green-700 bg-green-50"><span class="material-icons mr-2 text-green-600">account_circle</span> Account</a>
+      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition"><span class="material-icons mr-2 text-green-600">description</span> Applications</a>
+      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition"><span class="material-icons mr-2 text-green-600">event</span> Interviews</a>
+      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition"><span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers</a>
+      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition"><span class="material-icons mr-2 text-green-600">settings</span> Settings</a>
+    </nav>
+  </aside>
+
+  <!-- Overlay for mobile -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-40 hidden z-40 sm:hidden"></div>
+
+  <!-- Main -->
+  <main class="flex-1 sm:ml-64 p-4 sm:p-8 transition-all duration-300">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-green-600 mb-6">Profile</h2>
+
+      <!-- Profile Header -->
+      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-8">
+        <img data-profile-image
+            class="w-28 h-28 rounded-full border-4 border-green-500 shadow-md cursor-pointer"
+            onclick="openProfileModal('editPhoto')">
+        <div class="text-center sm:text-left">
+          <h1 class="text-3xl font-bold text-gray-800" data-field="full_name">Loading...</h1>
+          <p class="text-gray-600" data-field="province">Loading...</p>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="border-b border-gray-200 mb-6 flex flex-wrap gap-4 text-sm font-medium text-gray-600">
+        <button class="tab-btn text-green-600 border-b-2 border-green-600 pb-2" data-tab="personal">Personal Info</button>
+        <button class="tab-btn pb-2" data-tab="summary">Summary</button>
+        <button class="tab-btn pb-2" data-tab="experience">Experience</button>
+        <button class="tab-btn pb-2" data-tab="education">Education</button>
+        <button class="tab-btn pb-2" data-tab="skills">Skills</button>
+        <button class="tab-btn pb-2" data-tab="references">References</button>
+        <button class="tab-btn pb-2" data-tab="languages">Languages</button>
+        <button class="tab-btn pb-2" data-tab="additional">Additional</button>
+      </div>
+
+      <!-- Tab Content -->
+      <div id="tabContent" class="bg-white p-6 rounded-2xl shadow-md">
+
+        <!-- Personal Info -->
+        <section class="tab-pane" id="personal">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">Personal Information</h2>
+            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Personal Info')">
+              <span class="material-icons text-sm">edit</span> Edit
+            </button>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div><label class="font-medium text-gray-700">Full Name</label><p class="text-gray-600" data-field="full_name">Loading...</p></div>
+            <div><label class="font-medium text-gray-700">ID Number</label><p class="text-gray-600" data-field="ID_number">Loading...</p></div>
+            <div><label class="font-medium text-gray-700">Date Of Birth</label><p class="text-gray-600" data-field="date_of_birth">Loading...</p></div>
+            <div><label class="font-medium text-gray-700">Phone</label><p class="text-gray-600" data-field="phone_number">Loading...</p></div>
+            <div><label class="font-medium text-gray-700">Address</label><p class="text-gray-600" data-field="physical_address">Loading...</p></div>
+            <div><label class="font-medium text-gray-700">Location</label><p class="text-gray-600" data-field="city">Loading...</p></div>
+          </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="tab-pane hidden" id="summary">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">Professional Summary</h2>
+            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Summary')">
+              <span class="material-icons text-sm">edit</span> Edit
+            </button>
+          </div>
+          <p class="text-gray-600 leading-relaxed" data-field="professional_summary">
+            Loading...
+          </p>
+        </section>
+
+        <!-- Experience -->
+        <section class="tab-pane hidden" id="experience">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">Work Experience</h2>
+            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Experience')">
+              <span class="material-icons text-sm">edit</span> Edit
+            </button>
+          </div>
+            <div id="experienceContainer" class="space-y-4">
+              <!-- JS will inject experience cards here -->
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="tab-pane hidden" id="education">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">Education</h2>
+            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Education')">
+              <span class="material-icons text-sm">edit</span> Edit
+            </button>
+          </div>
+          <ul id="educationContainer" class="space-y-3">
+            <!-- JS will inject education entries here -->
+          </ul>
+        </section>
+
+        <!-- Skills -->
+        <section class="tab-pane hidden" id="skills">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">Skills</h2>
+            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('References')">
+              <span class="material-icons text-sm">edit</span> Edit
+            </button>
+          </div>
+          <div id="skillsContainer" class="space-y-3">
+            <!-- JS will inject reference entries here -->
+          </div>
+        </section>
+
+        <!-- References -->
+        <section class="tab-pane hidden" id="references">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">References</h2>
+            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('References')">
+              <span class="material-icons text-sm">edit</span> Edit
+            </button>
+          </div>
+          <div id="referencesContainer" class="space-y-3">
+            <!-- JS will inject reference entries here -->
+          </div>
+        </section>
+
+        <!-- Languages -->
+        <section class="tab-pane hidden" id="languages">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">Languages</h2>
+            <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Additional Info')">
+              <span class="material-icons text-sm">edit</span> Edit
+            </button>
+          </div>
+          <p id="languagesContainer" class="text-gray-600 leading-relaxed">
+            <!-- Languages will be populated here -->
+          </p>
+        </section>
+
+        <!-- Additional -->
+        <section class="tab-pane hidden" id="additional">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold text-gray-800">Account Status</h2>
+          <button class="flex items-center gap-1 text-green-600 hover:text-green-700" onclick="openEditModal('Active Status')">
+            <span class="material-icons text-sm">edit</span> Edit
+          </button>
+        </div>
+        <p id="statusContainer" class="text-gray-700 text-lg font-medium">
+        </p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- profile photo modal-->
+  <div id="editPhoto" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-11/12 max-w-md shadow-lg">
+      <h3 class="text-lg font-semibold mb-4" id="modalTitle">Edit Photo</h3>
+      <div class="relative w-40 h-40 mx-auto">
+        <img id="imagePreview"
+            class="rounded-full w-40 h-40 object-cover hidden border-4 border-green-400 shadow-xl transition-transform duration-300 hover:scale-105">
+        <label for="profileImage"
+              class="absolute inset-0 flex items-center justify-center rounded-full bg-green-50 bg-opacity-50 cursor-pointer hover:bg-opacity-70 transition">
+          <span class="material-icons text-green-600 text-4xl">camera_alt</span>
+        </label>
+        <input type="file" id="profileImage" accept="image/*" class="hidden">
+      </div>
+      <div class="flex justify-end mt-4 gap-2">
+        <button onclick="closeProfileModal()" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button>
+        <button onclick="saveProfilePhoto()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-11/12 max-w-md shadow-lg">
+      <h3 class="text-lg font-semibold mb-4" id="modalTitle">Edit Section</h3>
+      <textarea id="editField" class="w-full p-3 border rounded-lg h-32 resize-none focus:ring-green-500"></textarea>
+      <div class="flex justify-end mt-4 gap-2">
+        <button onclick="closeEditModal()" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button>
+        <button onclick="saveEdit()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Save</button>
+      </div>
+    </div>
+  </div>
+  <script src="/static/js/login.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const aid = sessionStorage.getItem("applicant_id");
+      if (!aid) return console.error("No applicant ID in sessionStorage.");
+
+      try {
+        // Fetch personal info
+        const personalRes = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/personalInfo/${aid}`);
+        const personalData = await personalRes.json();
+        personalData.full_name = `${personalData.first_name || ""} ${personalData.last_name || ""}`.trim();
+
+        Object.keys(personalData).forEach(key => {
+          document.querySelectorAll(`[data-field="${key}"]`).forEach(el => el.textContent = personalData[key] || "—");
+        });
+
+        //Fetch Experience Info
+          const expRes = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/myExperience/${aid}`);
+          const experiences = await expRes.json();
+
+          const expContainer = document.getElementById("experienceContainer");
+          expContainer.innerHTML = ""; // clear existing content
+
+          if (experiences.length === 0) {
+            expContainer.innerHTML = "<p class='text-gray-500'>No work experience found.</p>";
+          } else {
+            experiences.forEach(exp => {
+              const card = document.createElement("div");
+              card.className = "border-l-4 border-green-600 pl-4";
+
+              const title = document.createElement("h3");
+              title.className = "text-lg font-semibold text-gray-800";
+              title.textContent = `${exp.title} - ${exp.organization}`;
+
+              const dates = document.createElement("p");
+              dates.className = "text-gray-500 text-sm";
+              const start = new Date(exp.start_date).getFullYear();
+              const end = exp.end_date ? new Date(exp.end_date).getFullYear() : "Present";
+              dates.textContent = `${start} - ${end}`;
+
+              const desc = document.createElement("p");
+              desc.className = "text-gray-600 mt-2";
+              desc.textContent = exp.description;
+
+              card.appendChild(title);
+              card.appendChild(dates);
+              card.appendChild(desc);
+              expContainer.appendChild(card);
+            });
+          }
+
+          // Fetch education
+          const eduRes = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/myEducation/${aid}`);
+          const educationArray = await eduRes.json();
+
+          const eduContainer = document.getElementById("educationContainer");
+          eduContainer.innerHTML = ""; // Clear existing content
+
+          if (educationArray.length === 0) {
+            eduContainer.innerHTML = "<p class='text-gray-500'>No education history found.</p>";
+          } else {
+            educationArray.forEach(edu => {
+              const li = document.createElement("li");
+              li.className = "border rounded-lg p-4 bg-gray-50";
+
+              const qual = document.createElement("p");
+              qual.className = "font-medium text-gray-800";
+              qual.textContent = edu.qualification;
+
+              const details = document.createElement("p");
+              details.className = "text-gray-500 text-sm";
+              details.textContent = `${edu.institution} (${edu.year_completed})`;
+
+              li.appendChild(qual);
+              li.appendChild(details);
+              eduContainer.appendChild(li);
+            });
+          }
+
+          // Fetch Skills
+          const skillsRes = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/mySkills/${aid}`);
+          const skillsData = await skillsRes.json();
+
+          const skillsContainer = document.getElementById("skillsContainer");
+          skillsContainer.innerHTML = ""; // Clear previous content
+
+          if (!skillsData || !skillsData.skills || skillsData.skills.length === 0) {
+            skillsContainer.textContent = "No skills added.";
+          } else {
+            skillsData.skills.forEach(skill => {
+              const pill = document.createElement("span");
+              pill.textContent = skill;
+              pill.className = "inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 mb-2 px-3 py-1 rounded-full";
+              // Tailwind styling: bg color, text color, padding, margin, rounded full for pill shape
+              skillsContainer.appendChild(pill);
+            });
+          }
+
+        // Fetch profile image (array)
+        const imageRes = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/profileImage/${aid}`);
+        const imageData = await imageRes.json();
+
+        if (imageData.length > 0) {
+          const imageUrl = imageData[0].image;
+          document.querySelectorAll("[data-profile-image]").forEach(img => {
+            img.src = imageUrl;
+            img.alt = "Profile Image";
+            img.onerror = () => img.src = "https://via.placeholder.com/150";
+          });
+        }
+
+        // Fetch Languages
+        const langres = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/myLanguages/${aid}`);
+        const langdata = await langres.json();
+
+        const containerEL = document.getElementById("languagesContainer");
+        containerEL.innerHTML = ""; // Clear previous content
+
+        if (!langdata || langdata.length === 0) {
+          containerEL.textContent = "No languages added.";
+        } else {
+          langdata.forEach(item => {
+            if (item.language) {
+              const pill = document.createElement("span");
+              pill.textContent = item.language;
+              pill.className = "inline-block bg-green-100 text-green-800 text-sm font-medium mr-2 mb-2 px-3 py-1 rounded-full"; 
+              // Tailwind styling: bg color, text color, padding, margin, rounded full for pill shape
+              containerEL.appendChild(pill);
+            }
+          });
+        }
+
+        //Fetch Account Status
+        const statusRes = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/activeStatus/${aid}`);
+        const statusData = await statusRes.json();
+
+        const statusContainer = document.getElementById("statusContainer");
+        if (!statusData || !statusData.is_active) {
+          statusContainer.textContent = "No status available.";
+          statusContainer.className = "px-3 py-1 rounded-full bg-gray-200 text-gray-700 inline-block";
+        } else {
+          // Clear previous classes
+          statusContainer.className = "";
+
+          // Create a badge
+          const badge = document.createElement("span");
+          badge.textContent = statusData.is_active;
+          badge.classList.add("px-3", "py-1", "rounded-full", "font-semibold", "inline-block");
+
+          // Color based on status
+          if (statusData.is_active.toLowerCase().includes("active")) {
+            badge.classList.add("bg-green-100", "text-green-800");
+          } else {
+            badge.classList.add("bg-red-100", "text-red-800");
+          }
+
+          // Inject badge into container
+          statusContainer.appendChild(badge);
+        }
+
+        //Fetch References
+        const res = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/myReferences/${aid}`);
+        const data = await res.json();
+
+        const container = document.getElementById("referencesContainer");
+        container.innerHTML = "";
+
+        const { referenceNames, roles, companies, contactEmails, contactNumbers, years, descriptions } = data;
+
+        if (!referenceNames || referenceNames.length === 0) {
+          container.innerHTML = "<p class='text-gray-500'>No references available.</p>";
+          return;
+        }
+
+        for (let i = 0; i < referenceNames.length; i++) {
+          const div = document.createElement("div");
+          div.className = "border rounded-lg p-4 bg-gray-50";
+
+          const name = document.createElement("p");
+          name.className = "font-medium text-gray-800";
+          name.textContent = referenceNames[i] || "";
+
+          const role = document.createElement("p");
+          role.className = "text-gray-500 text-sm";
+          role.textContent = `${roles[i] || ""} at ${companies[i] || ""}`;
+
+          const email = document.createElement("p");
+          email.className = "text-gray-600";
+          email.textContent = `Email: ${contactEmails[i] || ""}`;
+
+          const phone = document.createElement("p");
+          phone.className = "text-gray-600";
+          phone.textContent = `Phone: ${contactNumbers[i] || ""}`;
+
+          const description = document.createElement("p");
+          description.className = "text-gray-600 mt-1";
+          description.textContent = descriptions[i] || "";
+
+          div.append(name, role, email, phone, description);
+          container.appendChild(div);
+        }
+
+      } catch (err) {
+        console.error("Error loading candidate data:", err);
+      }
+    });
+  </script>
+
+  <script>
+    // Tabs
+    const tabs = document.querySelectorAll('.tab-btn');
+    const panes = document.querySelectorAll('.tab-pane');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('text-green-600', 'border-b-2', 'border-green-600'));
+        panes.forEach(p => p.classList.add('hidden'));
+        tab.classList.add('text-green-600', 'border-b-2', 'border-green-600');
+        document.getElementById(tab.dataset.tab).classList.remove('hidden');
+      });
+    });
+
+    // Sidebar toggle
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menuBtn');
+    const closeSidebar = document.getElementById('closeSidebar');
+    const overlay = document.getElementById('overlay');
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.remove('-translate-x-full');
+      overlay.classList.remove('hidden');
+    });
+
+    closeSidebar.addEventListener('click', closeMobileSidebar);
+    overlay.addEventListener('click', closeMobileSidebar);
+
+    function closeMobileSidebar() {
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+    }
+
+    // Modal
+    const modal = document.getElementById('editModal');
+    const editField = document.getElementById('editField');
+    const modalTitle = document.getElementById('modalTitle');
+
+    function openEditModal(section) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      modalTitle.textContent = `Edit ${section}`;
+      editField.value = '';
+    }
+
+    function closeEditModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function saveEdit() {
+      Swal.fire('Saved!', 'Your changes have been saved.', 'success');
+      closeEditModal();
+    }
+  </script>
+
+  <script>
+    const profileModal = document.getElementById('editPhoto');
+    const imageInput = document.getElementById('profileImage');
+    const imagePreview = document.getElementById('imagePreview');
+
+    function openProfileModal(id) {
+      profileModal.classList.remove('hidden');
+      profileModal.classList.add('flex');
+      imagePreview.classList.add('hidden'); // Hide previous preview
+    }
+
+    function closeProfileModal() {
+      profileModal.classList.add('hidden');
+      profileModal.classList.remove('flex');
+      imageInput.value = '';
+    }
+
+    // Preview the selected image
+    imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        imagePreview.src = event.target.result;
+        imagePreview.classList.remove('hidden');
+      }
+      reader.readAsDataURL(file);
+    });
+
+    // Save photo (dummy save)
+    function saveProfilePhoto() {
+      if (imagePreview.src) {
+        Swal.fire('Saved!', 'Your profile photo has been updated.', 'success');
+        // Here you can implement your actual upload logic
+      }
+      closeProfileModal();
+    }
+  </script>
+  <script>
+    const dropdownBtn = document.getElementById('mobileDropdownBtn');
+    const dropdownMenu = document.getElementById('mobileDropdown');
+
+    dropdownBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdownMenu.contains(e.target) && !dropdownBtn.contains(e.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
+  </script>
+
+</body>
+</html>

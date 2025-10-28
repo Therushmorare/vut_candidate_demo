@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Applicants</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-md flex flex-col fixed h-full z-20">
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12 rounded-full">
+      <h1 class="font-bold text-xl text-green-700">BMA HR</h1>
+    </div>
+
+    <nav class="flex-1 px-4 py-6 space-y-2">
+      <a href="dashboard.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="#" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+      </a>
+      <a href="applicants.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person</span> Applicants
+      </a>
+      <a href="employees.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">groups</span> Employees
+      </a>
+      <a href="candidates.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person_search</span> Candidates
+      </a>
+      <a href="screening.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="recruitment.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">business_center</span> Recruitment
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 ml-64 p-8 overflow-y-auto">
+    
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center mb-10 flex-wrap gap-4">
+      <h2 class="text-2xl font-bold text-gray-800">HR Dashboard</h2>
+      <div class="flex items-center space-x-3">
+        <input type="text" placeholder="Search..." class="px-4 py-2 w-60 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Documents</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Payroll</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Reports</a>
+        <img src="https://i.pravatar.cc/40" alt="Admin Avatar" class="w-10 h-10 rounded-full border-2 border-green-500">
+      </div>
+    </div>
+
+    <!-- Overview Filters -->
+<section class="filters bg-white shadow-sm rounded-xl p-6 mb-6 flex flex-wrap gap-4 items-end">
+  <div class="flex flex-col">
+    <label class="text-gray-700 text-sm mb-1">Date</label>
+    <input type="date" class="border rounded p-2 w-40">
+  </div>
+  <div class="flex flex-col">
+    <label class="text-gray-700 text-sm mb-1">Position</label>
+    <input type="text" placeholder="Job title..." class="border rounded p-2 w-40">
+  </div>
+  <div class="flex flex-col">
+    <label class="text-gray-700 text-sm mb-1">Status</label>
+    <select class="border rounded p-2 w-40">
+      <option value="">All</option>
+      <option>Draft</option>
+      <option>Published</option>
+      <option>Pending</option>
+    </select>
+  </div>
+  <div class="flex flex-col">
+    <label class="text-gray-700 text-sm mb-1">Candidate Type</label>
+    <select class="border rounded p-2 w-40">
+      <option value="">All</option>
+      <option>Internal</option>
+      <option>External</option>
+    </select>
+  </div>
+  <div class="flex flex-col">
+    <label class="text-gray-700 text-sm mb-1">Experience (Years)</label>
+    <input type="number" placeholder="0+" class="border rounded p-2 w-32">
+  </div>
+  <div class="flex flex-col">
+    <label class="text-gray-700 text-sm mb-1">Salary Range</label>
+    <input type="text" placeholder="Min - Max" class="border rounded p-2 w-32">
+  </div>
+  <div class="flex flex-col">
+    <label class="text-gray-700 text-sm mb-1">Highest Qualification</label>
+    <select class="border rounded p-2 w-40">
+      <option value="">All</option>
+      <option>Diploma</option>
+      <option>Degree</option>
+      <option>Masters</option>
+      <option>PhD</option>
+    </select>
+  </div>
+  <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Filter</button>
+</section>
+
+<!-- All Applicants -->
+<section>
+  <div class="mt-6">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-xl font-semibold text-gray-800">Applicants</h3>
+      <input type="text" id="searchInput" placeholder="Search by name..." class="border rounded p-2 w-64">
+    </div>
+
+    <div class="bg-white shadow-sm rounded-xl border overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-gray-50 border-b">
+          <tr>
+            <th class="p-4 text-gray-600 text-sm font-semibold">Name</th>
+            <th class="p-4 text-gray-600 text-sm font-semibold">Phone Number</th>
+            <th class="p-4 text-gray-600 text-sm font-semibold">Job</th>
+            <th class="p-4 text-gray-600 text-sm font-semibold">Status</th>
+            <th class="p-4 text-gray-600 text-sm font-semibold text-right">CV</th>
+            <th class="p-4 text-gray-600 text-sm font-semibold text-right">Created Date</th>
+            <th class="p-4 text-gray-600 text-sm font-semibold text-right">Stage</th>
+            <th class="p-4 text-gray-600 text-sm font-semibold text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody id="applicantsTableBody">
+          <!-- Example Row -->
+          <tr class="hover:bg-gray-50">
+            <td class="p-4 font-medium text-gray-800">John Doe</td>
+            <td class="p-4 text-gray-600 text-sm">082-555-1234</td>
+            <td class="p-4 text-gray-600 text-sm">Software Engineer</td>
+            <td class="p-4">
+              <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">Published</span>
+            </td>
+            <td class="p-4 text-right space-x-2">
+                <a href="#" style="text-decoration:none;">my_cv.pdf</a>
+            </td>
+            <td class="p-4 text-right text-gray-600 text-sm">Oct 6, 2025</td>
+            <td class="p-4 text-right text-gray-600 text-sm">Interview</td>
+            <td class="p-4 text-right space-x-2">
+              <a href="view_application.html" style="text-decoration:none;"><button class="text-green-600 hover:underline text-sm">View</button></a>
+              <button class="text-orange-600 hover:underline text-sm">Delete</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="p-4 font-medium text-gray-800">Jane Doe</td>
+            <td class="p-4 text-gray-600 text-sm">082-555-1234</td>
+            <td class="p-4 text-gray-600 text-sm">Software Engineer</td>
+            <td class="p-4">
+              <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">Published</span>
+            </td>
+            <td class="p-4 text-right space-x-2">
+                <a href="#" style="text-decoration:none;">my_cv.pdf</a>
+            </td>
+            <td class="p-4 text-right text-gray-600 text-sm">Oct 6, 2025</td>
+            <td class="p-4 text-right text-gray-600 text-sm">Interview</td>
+            <td class="p-4 text-right space-x-2">
+              <button class="text-green-600 hover:underline text-sm">View</button>
+              <button class="text-orange-600 hover:underline text-sm">Delete</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="p-4 font-medium text-gray-800">Jared Doe</td>
+            <td class="p-4 text-gray-600 text-sm">082-555-1234</td>
+            <td class="p-4 text-gray-600 text-sm">Software Engineer</td>
+            <td class="p-4">
+              <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">Published</span>
+            </td>
+            <td class="p-4 text-right space-x-2">
+                <a href="#" style="text-decoration:none;">my_cv.pdf</a>
+            </td>
+            <td class="p-4 text-right text-gray-600 text-sm">Oct 6, 2025</td>
+            <td class="p-4 text-right text-gray-600 text-sm">Interview</td>
+            <td class="p-4 text-right space-x-2">
+              <button class="text-green-600 hover:underline text-sm">View</button>
+              <button class="text-orange-600 hover:underline text-sm">Delete</button>
+            </td>
+          </tr>
+
+          <!-- Add more rows dynamically here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script>
+  // Simple search/filter functionality
+  const searchInput = document.getElementById("searchInput");
+  const tableBody = document.getElementById("applicantsTableBody");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    const rows = tableBody.querySelectorAll("tr");
+    rows.forEach(row => {
+      const name = row.cells[0].textContent.toLowerCase();
+      row.style.display = name.includes(query) ? "" : "none";
+    });
+  });
+</script>
+
+</body>
+</html>

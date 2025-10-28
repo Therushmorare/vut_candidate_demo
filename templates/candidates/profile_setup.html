@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BMA | Profile Setup</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+  .chip { display:inline-flex; align-items:center; padding:0.25rem 0.75rem; border-radius:9999px; background-color:#dcfce7; color:#166534; margin:0.25rem; font-size:0.875rem; }
+  .chip button { margin-left:0.5rem; font-weight:bold; color:#166534; background:none; border:none; cursor:pointer; }
+  .form-step { transition: all 0.5s ease; }
+  .input { border: 1px solid #d1d5db; border-radius:1rem; padding:0.5rem 0.75rem; width:100%; outline:none; transition: all 0.3s ease; }
+  .input:focus { ring: 2px solid #16a34a; box-shadow: 0 2px 6px rgba(22,163,52,0.2); border-color:#16a34a; }
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<script>
+  // Global variables
+  const APPLICANT_ID = sessionStorage.getItem('applicant_id'); // Replace dynamically
+  const ACCESS_TOKEN = sessionStorage.getItem('access_token'); // Replace dynamically
+</script>
+
+  <!-- Top Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-30">
+    <div class="flex justify-between items-center px-4 py-3 sm:px-6">
+
+      <!-- Left: Logo -->
+      <div class="flex items-center space-x-3">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+      </div>
+
+      <!-- Right: Desktop Navigation -->
+      <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">menu_book</span>
+          <span>CV Guide</span>
+        </a>
+        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition" disabled>
+          <span class="material-icons text-lg">bookmark</span>
+          <span>Bookmarked Jobs</span>
+        </a>
+        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition" disabled>
+          <span class="material-icons text-lg">notifications</span>
+          <span>Notifications</span>
+        </a>
+
+        <!-- User Profile + Logout -->
+        <div class="flex items-center space-x-3">
+          <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
+            <span class="material-icons text-lg">logout</span>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+    <!-- Mobile Controls -->
+    <div class="sm:hidden flex items-center space-x-2 relative">
+      <!-- Dropdown Trigger Icon -->
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      </button>
+
+      <!-- Sidebar Menu Button -->
+      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+        <span class="material-icons text-3xl">menu</span>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        </a>
+        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        </a>
+        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        </a>
+        <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
+          <span class="material-icons mr-2 text-red-500">logout</span> Logout
+        </button>
+      </div>
+    </div>
+
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+        class="fixed top-0 left-0 h-full w-64 bg-white shadow-md flex flex-col z-40 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
+
+    <!-- Logo -->
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+      <a href="/dashboard" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="/profile" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
+        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      </a>
+      <a href="/applications" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
+        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      </a>
+      <a href="/interviews" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="/offers" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
+        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      </a>
+      <a href="/account_settings" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition" disabled>
+        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      </a>
+    </nav>
+  </aside>
+
+<div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden sm:hidden z-30"></div>
+
+<!-- Main -->
+<main class="flex-1 sm:ml-64 p-6 bg-gray-50 min-h-screen">
+  <div class="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl p-8 sm:p-12">
+    <h2 class="text-3xl font-extrabold text-gray-800 mb-8 text-center">Profile Setup</h2>
+
+    <!-- Step Indicator -->
+    <div class="flex justify-between items-center mb-10 relative">
+      <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-200 -z-10 rounded-full"></div>
+      <div id="progress" class="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-green-400 to-green-600 -z-10 w-1/4 transition-all duration-500 rounded-full"></div>
+      <div class="relative z-10 flex space-x-6 w-full justify-between">
+        <div class="step rounded-full w-10 h-10 flex items-center justify-center font-semibold text-green-600 bg-green-100 shadow-md">1</div>
+        <div class="step rounded-full w-10 h-10 flex items-center justify-center font-semibold text-gray-400 bg-gray-100 shadow-md">2</div>
+        <div class="step rounded-full w-10 h-10 flex items-center justify-center font-semibold text-gray-400 bg-gray-100 shadow-md">3</div>
+        <div class="step rounded-full w-10 h-10 flex items-center justify-center font-semibold text-gray-400 bg-gray-100 shadow-md">4</div>
+      </div>
+    </div>
+
+    <form id="profileForm" class="space-y-8">
+
+      <!-- Step 1: Profile Image -->
+      <div class="form-step space-y-6">
+        <div class="text-center">
+          <label class="block text-gray-700 mb-3 font-semibold text-lg">Upload Profile Image</label>
+          <div class="relative w-40 h-40 mx-auto">
+            <img id="imagePreview" class="rounded-full w-40 h-40 object-cover hidden border-4 border-green-400 shadow-xl transition-transform duration-300 hover:scale-105">
+            <label for="profileImage" class="absolute inset-0 flex items-center justify-center rounded-full bg-green-50 bg-opacity-50 cursor-pointer hover:bg-opacity-70 transition">
+              <span class="material-icons text-green-600 text-4xl">camera_alt</span>
+            </label>
+            <input type="file" id="profileImage" accept="image/*" class="hidden">
+          </div>
+          <p class="text-gray-500 mt-2 text-sm">Click the icon to upload your profile picture</p>
+          <div class="flex justify-center mt-6">
+            <button type="button" onclick="submitProfileImage()" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-xl shadow-lg transition transform hover:-translate-y-1 hover:scale-105">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Personal Info -->
+      <div class="form-step hidden space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <input type="text" placeholder="First Name *" class="input">
+          <input type="text" placeholder="Last Name *" class="input">
+          <input type="text" placeholder="Phone Number *" class="input">
+          <input type="text" placeholder="ID Number" class="input">
+          <input type="date" placeholder="Date of Birth" class="input">
+          <input type="text" placeholder="Physical Address" class="input">
+          <input type="text" placeholder="City" class="input">
+          <input type="text" placeholder="Province" class="input">
+          <input type="text" placeholder="Postal Code" class="input">
+          <input type="text" placeholder="Nationality" class="input">
+          <textarea placeholder="Professional Summary" class="input sm:col-span-2"></textarea>
+        </div>
+        <div class="flex justify-between mt-6">
+          <button type="button" class="bg-orange-600 text-white px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition" onclick="prevStep()">Back</button>
+          <button type="button" class="bg-green-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-xl transition" onclick="submitPersonalInfo()">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Experience -->
+      <div class="form-step hidden space-y-6">
+        <div id="experienceContainer"></div>
+        <button type="button" class="btn-light px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition" onclick="addExperience()">+ Add Experience</button>
+        <div class="flex justify-between mt-6">
+          <button type="button" class="bg-orange-600 text-white px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition" onclick="prevStep()">Back</button>
+          <button type="button" class="bg-green-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-xl transition" onclick="submitExperience()">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Education / Skills / Languages / References -->
+      <div class="form-step hidden space-y-6">
+        <h3 class="font-semibold text-gray-700 mb-2">Education</h3>
+        <div id="educationContainer" class="space-y-3"></div>
+        <button type="button" class="btn-light px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition mb-4" onclick="addEducation()">+ Add Qualification</button>
+
+        <h3 class="font-semibold text-gray-700 mb-2">Skills</h3>
+        <div id="skillsContainer" class="flex flex-wrap mb-3"></div>
+        <input type="text" id="skillInput" placeholder="Add skill and press Enter" class="input mb-4" onkeydown="addSkill(event)">
+
+        <h3 class="font-semibold text-gray-700 mb-2">Languages</h3>
+        <div id="languagesContainer" class="flex flex-wrap mb-3"></div>
+        <input type="text" id="languageInput" placeholder="Add language and press Enter" class="input mb-4" onkeydown="addLanguage(event)">
+
+        <h3 class="font-semibold text-gray-700 mb-2">References</h3>
+        <div id="referencesContainer" class="space-y-3"></div>
+        <button type="button" class="btn-light px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition mb-4" onclick="addReference()">+ Add Reference</button>
+
+        <div class="flex justify-between">
+          <button type="button" class="bg-orange-600 text-white px-5 py-2 rounded-lg shadow-sm hover:shadow-md transition" onclick="prevStep()">Back</button>
+          <button type="button" class="bg-green-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-xl transition" onclick="submitStep4()">Submit Profile</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</main>
+<script src="/static/js/login.js"></script>
+
+<script>
+/* --- STEP LOGIC --- */
+const steps = document.querySelectorAll('.form-step');
+const indicators = document.querySelectorAll('.step');
+const progress = document.getElementById('progress');
+let currentStep = 0;
+
+function showStep(i){
+  steps.forEach((s, idx)=> s.classList.toggle('hidden', idx!==i));
+  indicators.forEach((el, idx)=>{
+    el.classList.toggle('bg-green-500', idx <= i);
+    el.classList.toggle('text-white', idx <= i);
+    el.classList.toggle('bg-gray-100', idx > i);
+    el.classList.toggle('text-gray-400', idx > i);
+  });
+  progress.style.width = `${(i+1)/steps.length*100}%`;
+}
+
+function nextStep(){ if(currentStep<steps.length-1) currentStep++; showStep(currentStep);}
+function prevStep(){ if(currentStep>0) currentStep--; showStep(currentStep);}
+
+/* --- API REQUEST UTILITY --- */
+async function apiRequest(url, method="POST", data=null, isFormData=false){
+  const headers = {};
+  if(!isFormData) headers['Content-Type'] = 'application/json';
+  headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
+  const options = { method, headers, body: isFormData ? data : JSON.stringify(data) };
+  const res = await fetch(url, options);
+  if(!res.ok) throw new Error(`Request failed: ${res.status}`);
+  return res.json();
+}
+
+/* --- STEP 1: PROFILE IMAGE --- */
+document.getElementById('profileImage').addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      const img = document.getElementById('imagePreview');
+      img.src = ev.target.result;
+      img.classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+async function submitProfileImage(){
+  const file = document.getElementById('profileImage').files[0];
+  if(!file) return alert("Please select an image");
+  const formData = new FormData();
+  formData.append('applicant_id', APPLICANT_ID);
+  formData.append('file', file);
+  try { await apiRequest('https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/uploadProfilePhoto', 'POST', formData, true); nextStep(); }
+  catch(err){ console.error(err); alert("Failed to upload profile photo"); }
+}
+
+/* --- STEP 2: PERSONAL INFO --- */
+async function submitPersonalInfo(){
+  const data = {
+    applicant_id: APPLICANT_ID,
+    firstName: document.querySelector('input[placeholder="First Name *"]').value,
+    lastName: document.querySelector('input[placeholder="Last Name *"]').value,
+    phoneNumber: document.querySelector('input[placeholder="Phone Number *"]').value,
+    IDNumber: document.querySelector('input[placeholder="ID Number"]').value,
+    DateOfBirth: document.querySelector('input[placeholder="Date of Birth"]').value,
+    address: document.querySelector('input[placeholder="Physical Address"]').value,
+    city: document.querySelector('input[placeholder="City"]').value,
+    province: document.querySelector('input[placeholder="Province"]').value,
+    postalCode: document.querySelector('input[placeholder="Postal Code"]').value,
+    nationality: document.querySelector('input[placeholder="Nationality"]').value,
+    professionalSummary: document.querySelector('textarea[placeholder="Professional Summary"]').value
+  };
+  try { await apiRequest('https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/createProfile','POST', data); nextStep(); }
+  catch(err){ console.error(err); alert("Failed to save personal info"); }
+}
+
+/* --- STEP 3: EXPERIENCE --- */
+function addExperience(){ 
+  document.getElementById('experienceContainer').insertAdjacentHTML('beforeend', `
+    <div class="border rounded-xl p-4 mb-3 shadow-sm">
+      <input type="text" placeholder="Title *" class="input mb-2">
+      <input type="text" placeholder="Organization *" class="input mb-2">
+      <div class="flex gap-2 mb-2">
+        <input type="date" class="input">
+        <input type="date" class="input">
+      </div>
+      <textarea placeholder="Description" class="input mb-2"></textarea>
+      <button type="button" onclick="this.parentElement.remove()" class="text-red-600 font-semibold">Remove</button>
+    </div>
+  `);
+}
+
+async function submitExperience(){
+  const experiences = [];
+  document.querySelectorAll('#experienceContainer > div').forEach(div=>{
+    experiences.push({
+      applicant_id: APPLICANT_ID,
+      title: div.querySelector('input[placeholder="Title *"]').value,
+      organization: div.querySelector('input[placeholder="Organization *"]').value,
+      startDate: div.querySelectorAll('input[type="date"]')[0].value,
+      endDate: div.querySelectorAll('input[type="date"]')[1].value,
+      description: div.querySelector('textarea').value
+    });
+  });
+  try { for(const exp of experiences) await apiRequest('https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/addExperience','POST', exp); nextStep(); }
+  catch(err){ console.error(err); alert("Failed to save experience"); }
+}
+
+/* --- STEP 4: EDUCATION / SKILLS / LANGUAGES / REFERENCES --- */
+function addEducation(){
+  document.getElementById('educationContainer').insertAdjacentHTML('beforeend',`
+    <div class="border rounded-xl p-4 mb-3 shadow-sm">
+      <input type="text" placeholder="Qualification *" class="input mb-2">
+      <input type="text" placeholder="Institution *" class="input mb-2">
+      <input type="text" placeholder="Year Completed" class="input mb-2">
+      <input type="text" placeholder="Grade" class="input mb-2">
+      <button type="button" onclick="this.parentElement.remove()" class="text-red-600 font-semibold">Remove</button>
+    </div>
+  `);
+}
+function addReference(){
+  document.getElementById('referencesContainer').insertAdjacentHTML('beforeend',`
+    <div class="border rounded-xl p-4 mb-3 shadow-sm">
+      <input type="text" placeholder="Name *" class="input mb-2">
+      <input type="text" placeholder="Role" class="input mb-2">
+      <input type="text" placeholder="Company *" class="input mb-2">
+      <input type="email" placeholder="Email" class="input mb-2">
+      <input type="text" placeholder="Contact Number" class="input mb-2">
+      <input type="text" placeholder="Year" class="input mb-2">
+      <textarea placeholder="Description" class="input mb-2"></textarea>
+      <button type="button" onclick="this.parentElement.remove()" class="text-red-600 font-semibold">Remove</button>
+    </div>
+  `);
+}
+function addSkill(e){ if(e.key==='Enter'){ e.preventDefault(); const val=e.target.value.trim(); if(val){const chip=document.createElement('div'); chip.className='chip'; chip.innerHTML=`${val} <button onclick="this.parentElement.remove()">x</button>`; document.getElementById('skillsContainer').appendChild(chip); e.target.value='';}}}
+function addLanguage(e){ if(e.key==='Enter'){ e.preventDefault(); const val=e.target.value.trim(); if(val){const chip=document.createElement('div'); chip.className='chip'; chip.innerHTML=`${val} <button onclick="this.parentElement.remove()">x</button>`; document.getElementById('languagesContainer').appendChild(chip); e.target.value='';}}}
+
+async function submitStep4() {
+  try {
+    // --- Education ---
+    const educationPayloads = Array.from(document.querySelectorAll('#educationContainer > div')).map(div => ({
+      applicant_id: APPLICANT_ID,
+      qualification: div.querySelector('input[placeholder="Qualification *"]')?.value.trim() || '',
+      institution: div.querySelector('input[placeholder="Institution *"]')?.value.trim() || '',
+      yearCompleted: div.querySelector('input[placeholder="Year Completed"]')?.value.trim() || '',
+      grade: div.querySelector('input[placeholder^="Grade"]')?.value.trim() || ''
+    })).filter(e => e.qualification || e.institution);
+
+    // Send all education entries in parallel
+    await Promise.all(educationPayloads.map(payload =>
+      apiRequest('https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/addEducation', 'POST', payload)
+    ));
+
+    // --- Skills ---
+    const skills = Array.from(document.querySelectorAll('#skillsContainer .chip'))
+                        .map(chip => chip.textContent.slice(0, -1).trim())
+                        .filter(s => s);
+    if (skills.length) {
+      await apiRequest('https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/addSkill', 'POST', { applicant_id: APPLICANT_ID, skills });
+    }
+
+    // --- Languages ---
+    const languages = Array.from(document.querySelectorAll('#languagesContainer .chip'))
+                           .map(chip => chip.textContent.slice(0, -1).trim())
+                           .filter(l => l);
+
+    // --- References ---
+    const references = Array.from(document.querySelectorAll('#referencesContainer > div')).map(div => ({
+      referenceNames: div.querySelector('input[placeholder="Name *"]')?.value.trim() || '',
+      roles: div.querySelector('input[placeholder="Role"]')?.value.trim() || '',
+      companies: div.querySelector('input[placeholder="Company *"]')?.value.trim() || '',
+      contactEmails: div.querySelector('input[placeholder="Email"]')?.value.trim() || '',
+      contactNumbers: div.querySelector('input[placeholder="Contact Number"]')?.value.trim() || '',
+      years: div.querySelector('input[placeholder="Years"]')?.value.trim() || '',
+      descriptions: div.querySelector('textarea')?.value.trim() || ''
+    })).filter(r => r.referenceNames || r.roles || r.companies || r.contactEmails || r.contactNumbers || r.descriptions);
+
+    // --- Payload for additional info ---
+    if (languages.length || references.length) {
+      const payload = {
+        applicant_id: APPLICANT_ID,
+        languages,
+        referenceNames: references.map(r => r.referenceNames),
+        roles: references.map(r => r.roles),
+        companies: references.map(r => r.companies),
+        contactEmails: references.map(r => r.contactEmails),
+        contactNumbers: references.map(r => r.contactNumbers),
+        years: references.map(r => r.years),
+        descriptions: references.map(r => r.descriptions)
+      };
+      await apiRequest('https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/addAdditionalInfo', 'POST', payload);
+    }
+
+    Swal.fire({
+      title: "Profile Submitted!",
+      text: "Your profile setup is complete.",
+      icon: "success",
+      confirmButtonColor: "#16a34a"
+    });
+
+    setTimeout(() => window.location.href = "{{ url_for('candidateDashboard') }}", 1600);
+
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      title: "Error",
+      text: "Failed to submit profile. Please check your inputs.",
+      icon: "error",
+      confirmButtonColor: "#dc2626"
+    });
+  }
+}
+
+/* --- SIDEBAR TOGGLE --- */
+const menuBtn = document.getElementById('menuBtn');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+menuBtn.addEventListener('click', ()=>{ sidebar.classList.toggle('-translate-x-full'); overlay.classList.toggle('hidden'); });
+overlay.addEventListener('click', ()=>{ sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); });
+
+showStep(currentStep);
+</script>
+<script>
+  const dropdownBtn = document.getElementById('mobileDropdownBtn');
+  const dropdownMenu = document.getElementById('mobileDropdown');
+
+  dropdownBtn.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!dropdownMenu.contains(e.target) && !dropdownBtn.contains(e.target)) {
+      dropdownMenu.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>

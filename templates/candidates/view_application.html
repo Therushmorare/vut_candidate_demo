@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | View Application</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md sticky top-0 z-30">
+    <div class="flex justify-between items-center px-6 py-4">
+      <div class="flex items-center space-x-3">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-10 h-10">
+      </div>
+
+      <button onclick="window.history.back()" class="flex items-center space-x-1 text-gray-700 hover:text-green-600">
+        <span class="material-icons">arrow_back</span><span>Back</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-6">
+
+    <!-- Job Details -->
+    <section class="bg-white shadow-md rounded-2xl p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-2" id="jobTitle">Loading...</h2>
+      <p class="text-gray-500 mb-1" id="companyName">BMA | Location</p>
+      <p class="text-gray-400 text-sm" id="dateApplied">Applied on: --</p>
+      <p class="text-gray-700 mt-4" id="jobDescription">Job description loading...</p>
+    </section>
+
+    <!-- Application Info -->
+    <section class="bg-white shadow-md rounded-2xl p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Your Submitted Information</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><strong>Experience:</strong> <span id="experience">Loading...</span></div>
+        <div><strong>Location:</strong> <span id="location">Loading...</span></div>
+        <div><strong>Qualification:</strong> <span id="qualification">Loading...</span></div>
+        <div><strong>Salary Expectation:</strong> <span id="salary">Loading...</span></div>
+        <div class="md:col-span-2">
+          <strong>CV Document:</strong>
+          <a id="cvLink" href="#" target="_blank" class="text-green-600 hover:underline">View CV</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Questions -->
+    <section class="bg-white shadow-md rounded-2xl p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Technical Questions</h3>
+      <div id="questionsContainer" class="space-y-4">
+        <!-- Questions will be populated dynamically -->
+      </div>
+    </section>
+
+  </main>
+<script src="/static/js/login.js"></script>
+<script>
+const applicationId = "{{application_id}}";
+const applicantId = sessionStorage.getItem("applicant_id");
+
+async function loadApplication() {
+  try {
+    const res = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/myApplications/${applicantId}`);
+    const data = await res.json();
+
+    // Find the correct application
+    const app = data.applications.find(a => a.application_code === applicationId);
+    if (!app) throw new Error("Application not found");
+
+    // Populate job details
+    document.getElementById("jobTitle").textContent = app.position || "N/A";
+    document.getElementById("companyName").textContent = `BMA | ${app.department || "N/A"}`;
+    document.getElementById("dateApplied").textContent = `Applied on: ${new Date(app.date_applied).toLocaleDateString()}`;
+    document.getElementById("jobDescription").textContent = app.job_description || "No description available.";
+
+    // Populate user info (fallbacks for missing fields)
+    document.getElementById("experience").textContent = app.experience || "N/A";
+    document.getElementById("location").textContent = app.location || "N/A";
+    document.getElementById("qualification").textContent = app.qualification || "N/A";
+    const minSalary = app.min_salary || 0;
+    const maxSalary = app.max_salary || 0;
+    document.getElementById("salary").textContent = `$${minSalary} - $${maxSalary}`;
+
+    // CV link
+    const resume = data.resumes.find(r => r.job_id === app.job_id);
+    document.getElementById("cvLink").href = resume ? resume.file_url : "#";
+
+    // Technical questions
+    const questionsContainer = document.getElementById("questionsContainer");
+    questionsContainer.innerHTML = '';
+    const questions = data.questions.filter(q => q.job_id === app.job_id);
+
+    if (questions.length > 0) {
+      questions.forEach((q, i) => {
+        const div = document.createElement("div");
+        div.className = "bg-gray-50 p-4 rounded-lg border";
+        div.innerHTML = `<strong>Q${i+1}:</strong> ${q.question || "N/A"}<br><strong>Answer:</strong> ${q.question_response || "N/A"}`;
+        questionsContainer.appendChild(div);
+      });
+    } else {
+      questionsContainer.innerHTML = '<p class="text-gray-500 italic">No technical questions were answered.</p>';
+    }
+
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Failed to load application data!'
+    });
+  }
+}
+
+loadApplication();
+</script>
+
+</body>
+</html>

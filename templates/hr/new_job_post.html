@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | HR Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-md flex flex-col fixed h-full z-20">
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12 rounded-full">
+      <h1 class="font-bold text-xl text-green-700">BMA HR</h1>
+    </div>
+
+    <nav class="flex-1 px-4 py-6 space-y-2">
+      <a href="dashboard.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="notifications.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+      </a>
+      <a href="applicants.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person</span> Applicants
+      </a>
+      <a href="employees.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">groups</span> Employees
+      </a>
+      <a href="candidates.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person_search</span> Candidates
+      </a>
+      <a href="screening.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="recruitment.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">business_center</span> Recruitment
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 ml-64 p-8 overflow-y-auto">
+    
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center mb-10 flex-wrap gap-4">
+      <h2 class="text-2xl font-bold text-green-800">HR Dashboard</h2>
+      <div class="flex items-center space-x-3">
+        <input type="text" placeholder="Search..." class="px-4 py-2 w-60 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Documents</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Payroll</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Reports</a>
+        <img src="https://i.pravatar.cc/40" alt="Admin Avatar" class="w-10 h-10 rounded-full border-2 border-green-500">
+      </div>
+    </div>
+
+    <section class="job-post">
+  <div class="bg-white shadow-lg rounded-2xl w-full max-w-2xl mx-auto p-10 relative mt-10">
+    
+    <!-- Progress bar -->
+    <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+      <div id="progress" class="bg-green-500 h-2 rounded-full transition-all duration-300"></div>
+    </div>
+
+    <form id="multiStepForm">
+
+      <!-- Step 1 -->
+      <div class="step" id="step1">
+        <h2 class="text-2xl font-semibold mb-4">Step 1: Job Info</h2>
+
+        <div class="space-y-3">
+          <label class="block">
+            <span class="text-gray-700">Job Title</span>
+            <input type="text" class="w-full border p-2 rounded mt-1" placeholder="e.g., Software Engineer">
+          </label>
+
+          <label class="block">
+            <span class="text-gray-700">Candidate Type</span>
+            <select class="w-full border p-2 rounded mt-1">
+              <option>Internal</option>
+              <option>External</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="text-gray-700">Employment Type</span>
+            <select class="w-full border p-2 rounded mt-1">
+              <option>Full Time</option>
+              <option>Part Time</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="text-gray-700">Department</span>
+            <select class="w-full border p-2 rounded mt-1">
+              <option>Marketing</option>
+              <option>Finance</option>
+              <option>IT</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="text-gray-700">Office</span>
+            <select class="w-full border p-2 rounded mt-1">
+              <option>Centurion</option>
+              <option>Midrand</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="text-gray-700">Quantity</span>
+            <input type="number" class="w-full border p-2 rounded mt-1" placeholder="Number of Candidates">
+          </label>
+
+          <label class="block">
+            <span class="text-gray-700">Closing Date</span>
+            <input type="date" class="w-full border p-2 rounded mt-1">
+          </label>
+
+          <label class="block">
+            <span class="text-gray-700">Job Description</span>
+            <textarea class="w-full border p-2 rounded mt-1" rows="3"></textarea>
+          </label>
+        </div>
+
+        <div class="flex justify-end mt-6">
+          <button type="button" class="nextBtn bg-green-600 text-white px-4 py-2 rounded">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step hidden" id="step2">
+        <h2 class="text-2xl font-semibold mb-4">Step 2: Additional Info</h2>
+
+        <label class="block mb-3">
+          <span class="text-gray-700">Location</span>
+          <input type="text" class="w-full border p-2 rounded mt-1">
+        </label>
+
+        <label class="block mb-3">
+          <span class="text-gray-700">Experience (Years)</span>
+          <input type="number" class="w-full border p-2 rounded mt-1">
+        </label>
+
+        <!-- Requirements -->
+        <div class="dynamic-group mb-5" data-group="requirements">
+        <label class="block mb-2 text-gray-700">Requirements</label>
+        <div class="inputs space-y-2"><!-- JS will inject initial item --></div>
+        <button type="button" class="addBtn w-full bg-green-600 text-white py-2 rounded mt-2">Add Requirement</button>
+        </div>
+
+        <!-- Duties -->
+        <div class="dynamic-group mb-5" data-group="duties">
+        <label class="block mb-2 text-gray-700">Duties</label>
+        <div class="inputs space-y-2"></div>
+        <button type="button" class="addBtn w-full bg-green-600 text-white py-2 rounded mt-2">Add Duty</button>
+        </div>
+
+        <!-- Documents -->
+        <div class="dynamic-group mb-5" data-group="documents">
+        <label class="block mb-2 text-gray-700">Documents Required</label>
+        <div class="inputs space-y-2"></div>
+        <button type="button" class="addBtn w-full bg-green-600 text-white py-2 rounded mt-2">Add Document</button>
+        </div>
+
+        <div class="flex justify-between">
+          <button type="button" class="prevBtn bg-gray-400 text-white px-4 py-2 rounded">Previous</button>
+          <button type="button" class="nextBtn bg-green-600 text-white px-4 py-2 rounded">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step hidden" id="step3">
+        <h2 class="text-2xl font-semibold mb-4">Step 3: Job Questions</h2>
+
+        <div class="dynamic-group mb-5" data-group="questions">
+        <label class="block mb-2 text-gray-700">Questions</label>
+        <div class="inputs space-y-2"></div>
+        <button type="button" class="addBtn w-full bg-green-600 text-white py-2 rounded mt-2">Add Question</button>
+        </div>
+
+        <div class="flex justify-between">
+          <button type="button" class="prevBtn bg-gray-400 text-white px-4 py-2 rounded">Previous</button>
+          <button type="button" class="nextBtn bg-green-600 text-white px-4 py-2 rounded">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step hidden" id="step4">
+        <h2 class="text-2xl font-semibold mb-4">Step 4: Job Filters</h2>
+
+        <div class="space-y-3">
+          <label class="block">
+            <span class="text-gray-700">Expected Experience</span>
+            <input type="number" class="w-full border p-2 rounded mt-1" placeholder="5 years">
+          </label>
+
+          <label class="block">
+            <span class="text-gray-700">Preferred Location</span>
+            <input type="text" class="w-full border p-2 rounded mt-1" placeholder="Midrand">
+          </label>
+
+          <label class="block">
+            <span class="text-gray-700">Qualification</span>
+            <select class="w-full border p-2 rounded mt-1">
+              <option>Diploma</option>
+              <option>Degree</option>
+              <option>Masters</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="text-gray-700">Max Salary</span>
+            <input type="number" class="w-full border p-2 rounded mt-1" placeholder="100000">
+          </label>
+        </div>
+
+        <div class="flex justify-between mt-6">
+          <button type="button" class="prevBtn bg-gray-400 text-white px-4 py-2 rounded">Previous</button>
+          <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Submit</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</section>
+  </main>
+
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- Step navigation (same as before) ---
+  const steps = document.querySelectorAll(".step");
+  const progress = document.getElementById("progress");
+  let currentStep = 0;
+
+  function showStep(index) {
+    steps.forEach((s, i) => s.classList.toggle("hidden", i !== index));
+    if (progress) progress.style.width = `${((index + 1) / steps.length) * 100}%`;
+  }
+
+  document.querySelectorAll(".nextBtn").forEach(b => b.addEventListener("click", () => {
+    if (currentStep < steps.length - 1) currentStep++;
+    showStep(currentStep);
+  }));
+  document.querySelectorAll(".prevBtn").forEach(b => b.addEventListener("click", () => {
+    if (currentStep > 0) currentStep--;
+    showStep(currentStep);
+  }));
+
+  // --- Dynamic groups initialization ---
+  const groups = document.querySelectorAll(".dynamic-group");
+
+  groups.forEach(group => {
+    const type = group.dataset.group;          // 'requirements' | 'duties' | 'documents' | 'questions'
+    const inputsContainer = group.querySelector(".inputs");
+    const addBtn = group.querySelector(".addBtn");
+
+    // create initial item
+    addDynamic(type, inputsContainer);
+
+    // add new items on click
+    addBtn.addEventListener("click", () => addDynamic(type, inputsContainer));
+  });
+
+  // --- addDynamic: creates a new .dynamic-item for given group ---
+  function addDynamic(type, container) {
+    const index = container.querySelectorAll(".dynamic-item").length + 1;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "dynamic-item flex flex-col md:flex-row md:items-start md:space-x-3 space-y-2 md:space-y-0 p-3 bg-gray-50 rounded-lg border relative";
+
+    if (type === "questions") {
+      // question block: textarea + response-type select + expected response input
+      wrapper.innerHTML = `
+        <div class="flex-1">
+          <label class="block text-sm font-medium text-gray-600 mb-1">Question ${index}</label>
+          <textarea name="questions[${index}][question]" rows="2" placeholder="Enter question..." class="w-full border p-2 rounded"></textarea>
+        </div>
+
+        <div class="w-full md:w-1/2 space-y-2 mt-2 md:mt-0">
+          <label class="block text-sm font-medium text-gray-600 mb-1">Response Type</label>
+          <select name="questions[${index}][response_type]" class="w-full border p-2 rounded">
+            <option value="text">Text (single line)</option>
+            <option value="textarea">Text (multi-line)</option>
+            <option value="yes_no">Yes / No</option>
+          </select>
+
+          <label class="block text-sm font-medium text-gray-600 mb-1">Expected Response</label>
+          <input name="questions[${index}][expected_response]" type="text" placeholder="Optional expected response (e.g., 'Yes/No' or example answer)" class="w-full border p-2 rounded">
+        </div>
+
+        <button type="button" class="removeBtn absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">✕</button>
+      `;
+    } else {
+      // simple single input for requirements/duties/documents
+      const placeholder = (type === "requirements") ? "Requirement" : (type === "duties") ? "Duty" : "Document Name";
+      wrapper.innerHTML = `
+        <div class="flex-1">
+          <label class="sr-only">${placeholder} ${index}</label>
+          <input name="${type}[${index}]" type="text" placeholder="${placeholder}" class="w-full border p-2 rounded">
+        </div>
+        <button type="button" class="removeBtn absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">✕</button>
+      `;
+    }
+
+    // append and wire remove
+    container.appendChild(wrapper);
+    const removeBtn = wrapper.querySelector(".removeBtn");
+    removeBtn.addEventListener("click", () => {
+      wrapper.remove();
+      renumber(container, type);
+    });
+
+    renumber(container, type);
+  }
+
+  // --- renumber: keeps names and labels sequential after add/remove ---
+  function renumber(container, type) {
+    const items = container.querySelectorAll(".dynamic-item");
+    items.forEach((item, i) => {
+      const idx = i + 1;
+      if (type === "questions") {
+        const label = item.querySelector("label");
+        if (label) label.textContent = `Question ${idx}`; // first label is question label
+        const ta = item.querySelector("textarea");
+        const sel = item.querySelector("select");
+        const inp = item.querySelector("input[name^='questions']");
+        if (ta) ta.name = `questions[${idx}][question]`;
+        if (sel) sel.name = `questions[${idx}][response_type]`;
+        if (inp) inp.name = `questions[${idx}][expected_response]`;
+      } else {
+        const input = item.querySelector("input");
+        if (input) input.name = `${type}[${idx}]`;
+      }
+    });
+
+    // hide remove buttons if only one item
+    const removeBtns = container.querySelectorAll(".removeBtn");
+    removeBtns.forEach(btn => btn.classList.toggle("hidden", items.length === 1));
+  }
+
+  // --- Form submit: gather structured data ---
+  const form = document.getElementById("multiStepForm");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const data = {
+      requirements: [],
+      duties: [],
+      documents: [],
+      questions: []
+    };
+
+    document.querySelectorAll(".dynamic-group").forEach(group => {
+      const type = group.dataset.group;
+      const items = group.querySelectorAll(".dynamic-item");
+
+      items.forEach(item => {
+        if (type === "questions") {
+          const question = item.querySelector("textarea")?.value.trim() || "";
+          const response_type = item.querySelector("select")?.value || "";
+          const expected = item.querySelector("input[name^='questions']")?.value.trim() || "";
+          if (question) data.questions.push({ question, response_type, expected_response: expected });
+        } else {
+          const val = item.querySelector("input")?.value.trim();
+          if (val) data[type].push(val);
+        }
+      });
+    });
+
+    console.log("STRUCTURED JOB POST DATA:", data);
+    // replace next line with AJAX/fetch to your backend
+    alert("Form ready — check console for the structured payload.");
+  });
+
+  // show first step
+  showStep(0);
+});
+</script>
+
+</body>
+</html>

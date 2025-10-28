@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Apply</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- Top Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-30">
+    <div class="flex justify-between items-center px-4 py-3 sm:px-6">
+
+      <!-- Left: Logo -->
+      <div class="flex items-center space-x-3">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+      </div>
+
+      <!-- Right: Desktop Navigation -->
+      <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
+        <a href="{{url_for('employeeCvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">menu_book</span>
+          <span>CV Guide</span>
+        </a>
+        <a href="{{url_for('employeeBookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">bookmark</span>
+          <span>Bookmarked Jobs</span>
+        </a>
+        <a href="{{url_for('employeeNotifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">notifications</span>
+          <span>Notifications</span>
+        </a>
+
+        <!-- User Profile + Logout -->
+        <div class="flex items-center space-x-3">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
+            <span class="material-icons text-lg">logout</span>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile Controls -->
+      <div class="sm:hidden flex items-center space-x-2 relative">
+        <!-- Dropdown Trigger Icon -->
+        <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+        </button>
+
+        <!-- Sidebar Menu Button -->
+        <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+          <span class="material-icons text-3xl">menu</span>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+          <a href="{{url_for('employeeCvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+            <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+          </a>
+          <a href="{{url_for('employeeBookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+            <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+          </a>
+          <a href="{{url_for('employeeNotifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+            <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+          </a>
+          <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
+            <span class="material-icons mr-2 text-red-500">logout</span> Logout
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+        class="fixed top-0 left-0 h-full w-64 bg-white shadow-md flex flex-col z-40 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
+
+    <!-- Logo -->
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+      <a href="{{url_for('employeeDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-green-700 bg-green-50">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="{{url_for('employeeProfile')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      </a>
+      <a href="{{url_for('employeeApplications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      </a>
+      <a href="{{url_for('employeeInterviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="{{url_for('employeeOffers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      </a>
+      <a href="#" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event_available</span> Leave Management
+      </a>
+      <a href="#" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">attach_money</span> Payslip Management
+      </a>
+      <a href="{{url_for('employeeAccountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Overlay for Mobile -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-40 hidden z-30 sm:hidden"></div>
+
+  <!-- Main Content -->
+  <!-- Main Content -->
+  <main class="flex-1 sm:ml-64 p-6 sm:p-10 transition-all duration-300">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-green-600 mb-6">Apply</h2>
+    </div>
+
+    <div class="mb-6">
+      <button onclick="window.history.back()" class="flex items-center text-green-700 hover:text-green-900">
+        <span class="material-icons text-sm mr-1">arrow_back</span>
+        Back to Listings
+      </button>
+    </div>
+
+    <!-- Job Header -->
+    <div class="bg-white rounded-2xl shadow p-8 mb-8">
+      <div class="flex flex-col md:flex-row justify-between gap-4 md:items-center">
+        <div>
+          <h1 id="jobTitle" class="text-3xl font-bold text-gray-800 mb-2">Loading...</h1>
+          <p class="text-gray-500 text-sm">Category: <span id="jobDepartment" class="text-green-700 font-medium">...</span></p>
+        </div>
+        <div class="flex gap-3">
+          <a href="{{url_for('jobApplication', jid=job_id)}}" style="text-decoration:none;"><button id="applyBtn" class="flex items-center gap-1 bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition">
+            <span class="material-icons text-sm">send</span> Apply Now
+          </button></a>
+          <button
+            title="Bookmark"
+           id="bookmarkBtn"
+           class="bookmark-btn flex items-center gap-1 border border-gray-300 text-gray-700 px-5 py-2 rounded-lg hover:bg-green-600 transition"
+           data-job-id="{{job_id}}">
+            <span class="material-icons text-sm">bookmark_border</span> Bookmark
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Job Overview -->
+    <div id="jobOverview" class="bg-white rounded-2xl shadow p-8 mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Job Overview</h2>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-700">
+        <p><span class="font-semibold">Location:</span> <span id="jobLocation">...</span></p>
+        <p><span class="font-semibold">Employment Type:</span> <span id="jobType">...</span></p>
+        <p><span class="font-semibold">Salary Range:</span> <span id="jobSalary">...</span></p>
+        <p><span class="font-semibold">Posted:</span> <span id="jobPosted">...</span></p>
+        <p><span class="font-semibold">Deadline:</span> <span id="jobDeadline">...</span></p>
+        <p><span class="font-semibold">Expected Start:</span> <span id="jobStart">...</span></p>
+      </div>
+    </div>
+
+    <!-- Full Job Description -->
+    <div class="bg-white rounded-2xl shadow p-8 mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Full Job Description</h2>
+      <p id="jobDescription" class="text-gray-700 leading-relaxed">Loading...</p>
+    </div>
+
+    <!-- Duties -->
+    <div class="bg-white rounded-2xl shadow p-8 mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Duties & Responsibilities</h2>
+      <ul id="jobDuties" class="list-disc list-inside text-gray-700 space-y-2"></ul>
+    </div>
+
+    <!-- Requirements -->
+    <div class="bg-white rounded-2xl shadow p-8 mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Requirements</h2>
+      <ul id="jobRequirements" class="list-disc list-inside text-gray-700 space-y-2"></ul>
+    </div>
+
+    <!-- Selection Process -->
+    <div class="bg-white rounded-2xl shadow p-8 mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Selection Process</h2>
+      <ol id="jobSelection" class="list-decimal list-inside text-gray-700 space-y-2"></ol>
+    </div>
+
+    <!-- Bottom Apply Buttons -->
+    <div class="flex justify-center gap-4 mt-8">
+      <a href="{{url_for('jobApplication', jid=job_id)}}" style="text-decoration:none;"><button id="applyBtnBottom" class="flex items-center gap-1 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
+        <span class="material-icons text-sm">send</span> Apply Now
+      </button></a>
+      <button 
+      title="Bookmark"
+      id="bookmarkBtnBottom" class="bookmark-btn flex items-center gap-1 border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-green-600 transition"
+      data-job-id="{{job_id}}">
+        <span class="material-icons text-sm">bookmark_border</span> Bookmark
+      </button>
+    </div>
+  </main>
+  <script src="/static/js/login.js"></script>
+
+  <script src="/static/js/data_grabber.js"></script>
+
+  <!-- Sidebar Toggle Script -->
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const menuBtn = document.getElementById("menuBtn");
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("-translate-x-full");
+      overlay.classList.toggle("hidden");
+    });
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+    });
+  </script>
+
+  <script type="module">
+  import { JobAPI } from '/static/js/jobData.js';
+
+  const jobId = "{{job_id}}"; // Use ?jid=... in URL
+  if (!jobId) throw new Error("Job ID is required in query string");
+
+  JobAPI.fetchJob(jobId).then(job => {
+    document.getElementById('jobTitle').textContent = job.job_title;
+    document.getElementById('jobDepartment').textContent = job.department;
+    document.getElementById('jobLocation').textContent = job.office;
+    document.getElementById('jobType').textContent = job.employment_type.replace("_", " ");
+    document.getElementById('jobSalary').textContent = job.filters?.[0]?.salary ? `R${job.filters[0].salary}` : 'Negotiable';
+    document.getElementById('jobPosted').textContent = new Date(job.created_at).toLocaleDateString();
+    document.getElementById('jobDeadline').textContent = job.closing_date;
+    document.getElementById('jobStart').textContent = "TBD"; // Optional
+
+    document.getElementById('jobDescription').textContent = job.job_description;
+
+    const duties = document.getElementById('jobDuties');
+    duties.innerHTML = job.duties.map(d => `<li>${d}</li>`).join('');
+
+    const requirements = document.getElementById('jobRequirements');
+    requirements.innerHTML = job.requirements.map(r => `<li>${r}</li>`).join('');
+
+    const selection = document.getElementById('jobSelection');
+    selection.innerHTML = [
+      "Initial application screening",
+      "Technical coding assessment",
+      "Interview with engineering team",
+      "Final discussion with HR and department head"
+    ].map(s => `<li>${s}</li>`).join('');
+  });
+</script>
+<script src="/static/js/bookmark_job.js"></script>
+<script>
+  const dropdownBtn = document.getElementById('mobileDropdownBtn');
+  const dropdownMenu = document.getElementById('mobileDropdown');
+
+  dropdownBtn.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!dropdownMenu.contains(e.target) && !dropdownBtn.contains(e.target)) {
+      dropdownMenu.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>

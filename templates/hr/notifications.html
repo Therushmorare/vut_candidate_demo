@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Notifications</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-md flex flex-col fixed h-full z-20">
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12 rounded-full">
+      <h1 class="font-bold text-xl text-green-700">BMA HR</h1>
+    </div>
+
+    <nav class="flex-1 px-4 py-6 space-y-2">
+      <a href="dashboard.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="notifications.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+      </a>
+      <a href="applicants.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person</span> Applicants
+      </a>
+      <a href="employees.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">groups</span> Employees
+      </a>
+      <a href="candidates.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person_search</span> Candidates
+      </a>
+      <a href="screening.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="recruitment.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">business_center</span> Recruitment
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 ml-64 p-8 overflow-y-auto">
+    
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center mb-10 flex-wrap gap-4">
+      <h2 class="text-2xl font-bold text-gray-800">HR Dashboard</h2>
+      <div class="flex items-center space-x-3">
+        <input type="text" placeholder="Search..." class="px-4 py-2 w-60 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Documents</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Payroll</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Reports</a>
+        <img src="https://i.pravatar.cc/40" alt="Admin Avatar" class="w-10 h-10 rounded-full border-2 border-green-500">
+      </div>
+    </div>
+
+    <section class="min-h-screen bg-gray-100 p-6">
+    <div class="max-w-5xl mx-auto">
+        <!-- Page Heading -->
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Notifications</h2>
+
+        <!-- Tabs -->
+        <div class="flex space-x-4 border-b border-gray-300 mb-6">
+        <button class="tab-btn text-gray-700 font-medium py-2 px-4 border-b-2 border-blue-600" data-tab="requests">Requests</button>
+        <button class="tab-btn text-gray-500 font-medium py-2 px-4 hover:text-gray-800" data-tab="jobPosts">Job Posts</button>
+        <button class="tab-btn text-gray-500 font-medium py-2 px-4 hover:text-gray-800" data-tab="offerStatus">Offer Status</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tabContent">
+        <!-- Requests Tab -->
+        <div class="tab-content" id="requests">
+            <div class="space-y-4">
+            <div class="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row md:justify-between md:items-center">
+                <div>
+                <h3 class="text-lg font-semibold text-gray-800">Request from Admin</h3>
+                <p class="text-gray-600 text-sm">Admin has approved your job post.</p>
+                <p class="text-gray-400 text-xs mt-1">Oct 8, 2025 • 14:30</p>
+                </div>
+                <div class="flex space-x-2 mt-3 md:mt-0">
+                <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">View</button>
+                <button class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition">Delete</button>
+                </div>
+            </div>
+            <!-- Repeat card as needed -->
+            </div>
+        </div>
+
+        <!-- Job Posts Tab -->
+        <div class="tab-content hidden" id="jobPosts">
+            <div class="space-y-4">
+            <div class="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row md:justify-between md:items-center">
+                <div>
+                <h3 class="text-lg font-semibold text-gray-800">Job Post: Software Engineer</h3>
+                <p class="text-gray-600 text-sm">A new candidate applied for your job post.</p>
+                <p class="text-gray-400 text-xs mt-1">Oct 7, 2025 • 10:00</p>
+                </div>
+                <div class="flex space-x-2 mt-3 md:mt-0">
+                <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">View</button>
+                <button class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition">Delete</button>
+                </div>
+            </div>
+            <!-- Repeat card as needed -->
+            </div>
+        </div>
+
+        <!-- Offer Status Tab -->
+        <div class="tab-content hidden" id="offerStatus">
+            <div class="space-y-4">
+            <div class="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row md:justify-between md:items-center">
+                <div>
+                <h3 class="text-lg font-semibold text-gray-800">Offer Accepted: Jane Smith</h3>
+                <p class="text-gray-600 text-sm">Candidate accepted the offer for Marketing Manager.</p>
+                <p class="text-gray-400 text-xs mt-1">Oct 6, 2025 • 16:45</p>
+                </div>
+                <div class="flex space-x-2 mt-3 md:mt-0">
+                <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">View</button>
+                <button class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition">Delete</button>
+                </div>
+            </div>
+            <!-- Repeat card as needed -->
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+
+  </main>
+
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script>
+  // Simple search/filter functionality
+  const searchInput = document.getElementById("searchInput");
+  const tableBody = document.getElementById("applicantsTableBody");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    const rows = tableBody.querySelectorAll("tr");
+    rows.forEach(row => {
+      const name = row.cells[0].textContent.toLowerCase();
+      row.style.display = name.includes(query) ? "" : "none";
+    });
+  });
+</script>
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove active styles
+      tabs.forEach(t => t.classList.remove('border-blue-600', 'text-gray-700'));
+      tabs.forEach(t => t.classList.add('text-gray-500'));
+
+      // Hide all tab contents
+      tabContents.forEach(c => c.classList.add('hidden'));
+
+      // Activate current tab
+      tab.classList.add('border-blue-600', 'text-gray-700');
+      tab.classList.remove('text-gray-500');
+
+      const selectedTab = tab.dataset.tab;
+      document.getElementById(selectedTab).classList.remove('hidden');
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | CV Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+  <!-- Your header here -->
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- Top Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-30">
+    <div class="flex justify-between items-center px-4 py-3 sm:px-6">
+
+      <!-- Left: Logo -->
+      <div class="flex items-center space-x-3">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+      </div>
+
+      <!-- Right: Desktop Navigation -->
+      <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-green-700 bg-green-50">
+          <span class="material-icons text-lg">menu_book</span>
+          <span>CV Guide</span>
+        </a>
+        <a href="{{url_for('bookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">bookmark</span>
+          <span>Bookmarked Jobs</span>
+        </a>
+        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">notifications</span>
+          <span>Notifications</span>
+        </a>
+
+        <!-- User Profile + Logout -->
+        <div class="flex items-center space-x-3">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
+            <span class="material-icons text-lg">logout</span>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+    <!-- Mobile Controls -->
+    <div class="sm:hidden flex items-center space-x-2 relative">
+      <!-- Dropdown Trigger Icon -->
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      </button>
+
+      <!-- Sidebar Menu Button -->
+      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+        <span class="material-icons text-3xl">menu</span>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        </a>
+        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        </a>
+        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        </a>
+        <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
+          <span class="material-icons mr-2 text-red-500">logout</span> Logout
+        </button>
+      </div>
+    </div>
+
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+        class="fixed top-0 left-0 h-full w-64 bg-white shadow-md flex flex-col z-40 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
+
+    <!-- Logo -->
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+      <a href="/dashboard" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="/profile" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      </a>
+      <a href="/applications" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      </a>
+      <a href="/interviews" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="/offers" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      </a>
+      <a href="/account_settings" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Overlay for Mobile -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-40 hidden z-30 sm:hidden"></div>
+
+  <!-- Main Content -->
+  <main class="flex-1 sm:ml-64 p-6 sm:p-10 transition-all duration-300">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-green-600 mb-6">CV Guide</h2>
+
+      <p class="text-gray-600 mb-4">
+        Follow these professional CV guidelines to ensure compliance with BMA application standards.
+      </p>
+
+      <a href="/static/templates/BMA_CV_Template.pdf"
+         class="inline-flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg shadow hover:bg-green-700 transition">
+         <span class="material-icons text-white">download</span> Download Example Template
+      </a>
+
+      <hr class="my-8">
+
+      <section>
+        <h2 class="text-2xl font-semibold text-green-700 mb-3">Required CV Structure</h2>
+
+        <ol class="list-decimal list-inside text-gray-700 space-y-2">
+          <li><b>Personal Information</b> Full name, contact details, email, phone, address, and professional headshot (for public roles).</li>
+          <li><b>Professional Summary</b> Brief overview of your experience and career goals.</li>
+          <li><b>Work Experience</b> List positions, employers, durations, and responsibilities.</li>
+          <li><b>Education & Qualifications</b> Degrees, certifications, and relevant training.</li>
+          <li><b>Key Skills</b> Include both technical and soft skills relevant to the job.</li>
+          <li><b>Additional Information</b> Achievements, references, or volunteer work.</li>
+        </ol>
+      </section>
+
+      <hr class="my-8">
+
+      <section>
+        <h2 class="text-2xl font-semibold text-green-700 mb-3">BMA CV Tips</h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Tailor your CV to each specific position.</li>
+          <li>Keep your layout professional and ATS-friendly.</li>
+          <li>Use concise bullet points to summarize achievements.</li>
+          <li>Include measurable results where possible.</li>
+          <li>Proofread carefully before submitting.</li>
+        </ul>
+      </section>
+
+      <div class="mt-10 text-gray-600">
+        For support, contact <a href="mailto:recruitment@bma.gov.za" class="text-green-600 hover:underline">recruitment@bma.gov.za</a>.
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/js/data_grabber.js"></script>
+
+  <!-- Scripts -->
+  <script src="/static/js/login.js"></script>
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+
+    if (menuBtn && sidebar && overlay) {
+      menuBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("-translate-x-full");
+        overlay.classList.toggle("hidden");
+      });
+
+      overlay.addEventListener("click", () => {
+        sidebar.classList.add("-translate-x-full");
+        overlay.classList.add("hidden");
+      });
+    }
+  </script>
+  <script>
+    const dropdownBtn = document.getElementById('mobileDropdownBtn');
+    const dropdownMenu = document.getElementById('mobileDropdown');
+
+    dropdownBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdownMenu.contains(e.target) && !dropdownBtn.contains(e.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
+  </script>
+
+</body>
+</html>

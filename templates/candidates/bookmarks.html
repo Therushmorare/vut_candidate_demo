@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Bookmarks</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- Top Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-30">
+    <div class="flex justify-between items-center px-4 py-3 sm:px-6">
+
+      <!-- Left: Logo -->
+      <div class="flex items-center space-x-3">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+      </div>
+
+      <!-- Right: Desktop Navigation -->
+      <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">menu_book</span>
+          <span>CV Guide</span>
+        </a>
+        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-green-700 bg-green-50">
+          <span class="material-icons text-lg">bookmark</span>
+          <span>Bookmarked Jobs</span>
+        </a>
+        <a href="{{url_for('notifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">notifications</span>
+          <span>Notifications</span>
+        </a>
+
+        <!-- User Profile + Logout -->
+        <div class="flex items-center space-x-3">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
+            <span class="material-icons text-lg">logout</span>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+    <!-- Mobile Controls -->
+    <div class="sm:hidden flex items-center space-x-2 relative">
+      <!-- Dropdown Trigger Icon -->
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      </button>
+
+      <!-- Sidebar Menu Button -->
+      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+        <span class="material-icons text-3xl">menu</span>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+        <a href="{{url_for('cvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        </a>
+        <a href="{{url_for('bookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        </a>
+        <a href="{{url_for('notifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        </a>
+        <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
+          <span class="material-icons mr-2 text-red-500">logout</span> Logout
+        </button>
+      </div>
+    </div>
+
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+        class="fixed top-0 left-0 h-full w-64 bg-white shadow-md flex flex-col z-40 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
+
+    <!-- Logo -->
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+      <a href="{{url_for('candidateDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="{{url_for('account')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      </a>
+      <a href="{{url_for('applications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      </a>
+      <a href="{{url_for('interviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="{{url_for('offers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      </a>
+      <a href="{{url_for('accountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Overlay for Mobile -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-40 hidden z-30 sm:hidden"></div>
+
+  <!-- Main Content -->
+  <main class="flex-1 sm:ml-64 p-6 sm:p-10 transition-all duration-300">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-green-600 mb-6">My Bookmarks</h2>
+    </div>
+
+      <div id="bookmarksContainer" class="space-y-4"></div>
+
+    </div>
+  </main>
+
+<!-- Remove Bookmark Modal -->
+<div id="removeBookmarkModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 text-center">
+    <h3 class="text-xl font-bold text-gray-800 mb-3 flex items-center justify-center gap-2">
+      <span class="material-icons text-red-500">bookmark_remove</span>
+      Remove Bookmark
+    </h3>
+    <p class="text-gray-600 mb-6">Are you sure you want to remove this job from your bookmarks?</p>
+    <div class="flex justify-center space-x-3">
+      <button id="cancelRemoveBookmark" 
+        class="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+        Cancel
+      </button>
+      <button id="confirmRemoveBookmark" 
+        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+        Remove
+      </button>
+    </div>
+  </div>
+</div>
+<script src="/static/js/login.js"></script>
+
+<script>
+const aid = sessionStorage.getItem("applicant_id");
+
+async function loadBookmarks() {
+  const container = document.getElementById("bookmarksContainer");
+  container.innerHTML = `
+    <div class="flex justify-center items-center py-10">
+      <div class="animate-pulse text-gray-500">Loading bookmarks...</div>
+    </div>
+  `;
+
+  try {
+    const res = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/bookmarks/${aid}`);
+    const data = await res.json();
+
+    if (!data.jobs || data.jobs.length === 0) {
+      container.innerHTML = `
+        <div class="p-6 text-center bg-yellow-50 text-yellow-800 rounded-xl border border-yellow-300">
+          <span class="material-icons align-middle mr-1">info</span>
+          You haven’t bookmarked any jobs yet.
+        </div>
+      `;
+      return;
+    }
+
+    // Fetch job details for each bookmarked job
+    const jobPromises = data.jobs.map(j =>
+      fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/viewPost/${j.job_id}`)
+        .then(r => r.ok ? r.json() : null)
+        .catch(() => null)
+    );
+
+    const jobsDetails = await Promise.all(jobPromises);
+    const validJobs = jobsDetails.filter(job => job !== null);
+
+    if (validJobs.length === 0) {
+      container.innerHTML = `
+        <div class="p-6 text-center bg-yellow-50 text-yellow-800 rounded-xl border border-yellow-300">
+          No bookmarked job posts are currently available or they may have been removed.
+        </div>
+      `;
+      return;
+    }
+
+    // Clear old content and render jobs
+    container.innerHTML = "";
+    validJobs.forEach(job => {
+      const jobCard = document.createElement("div");
+      jobCard.className = `
+        job-card bg-white rounded-2xl shadow-sm border border-gray-100 p-5 
+        flex flex-col justify-between transition-transform transform hover:scale-[1.02] hover:shadow-lg
+      `;
+
+      jobCard.innerHTML = `
+        <div class="space-y-2">
+          <h2 class="job-title text-lg font-semibold text-gray-800 truncate">${job.job_title || "Untitled Job"}</h2>
+          <p class="job-department text-gray-500 text-sm">${job.department || "Unknown Department"}</p>
+          <p class="job-city text-gray-400 text-sm flex items-center gap-1">
+            <span class="material-icons text-base text-gray-400">location_on</span>
+            ${job.office || "Location not specified"}
+          </p>
+          <p class="text-gray-400 text-sm">
+            <span class="font-medium text-gray-600">Closing:</span> ${job.closing_date || "Not specified"}
+          </p>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-gray-100 mt-3">
+          <a href="/viewPost/${job.job_id}" 
+            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all duration-300">
+            View
+          </a>
+          <button title="Remove Bookmark" 
+            class="text-gray-400 hover:text-red-600 transition-all duration-300" 
+            onclick="removeBookmark('${job.job_id}')">
+            <span class="material-icons">bookmark_remove</span>
+          </button>
+        </div>
+      `;
+
+      container.appendChild(jobCard);
+    });
+  } catch (err) {
+    console.error("Error fetching bookmarks:", err);
+    container.innerHTML = `
+      <div class="p-6 text-center bg-red-50 text-red-700 rounded-xl border border-red-300">
+        <span class="material-icons align-middle mr-1">error_outline</span>
+        Failed to load bookmarks. Please try again later.
+      </div>
+    `;
+  }
+}
+
+let pendingJobId = null;
+
+function removeBookmark(jobId) {
+  pendingJobId = jobId;
+  document.getElementById("removeBookmarkModal").classList.remove("hidden");
+  document.getElementById("removeBookmarkModal").classList.add("flex");
+}
+
+// Handle modal actions
+document.getElementById("cancelRemoveBookmark").addEventListener("click", () => {
+  document.getElementById("removeBookmarkModal").classList.add("hidden");
+  document.getElementById("removeBookmarkModal").classList.remove("flex");
+  pendingJobId = null;
+});
+
+document.getElementById("confirmRemoveBookmark").addEventListener("click", async () => {
+  if (!pendingJobId) return;
+
+  const applicantId = sessionStorage.getItem("applicant_id");
+
+  try {
+    const response = await fetch(
+      "https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/dislikePost",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ job_id: pendingJobId, applicant_id: applicantId }),
+      }
+    );
+
+    const data = await response.json();
+    if (response.ok) {
+      // Graceful toast feedback
+      const toast = document.createElement("div");
+      toast.textContent = data.message || "Removed successfully";
+      toast.className =
+        "fixed bottom-5 right-5 bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in";
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2500);
+
+      // Remove job card visually
+      const jobCard = document.querySelector(`[onclick="removeBookmark('${pendingJobId}')"]`)?.closest(".job-card");
+      if (jobCard) jobCard.remove();
+    } else {
+      alert(data.message || "Something went wrong");
+    }
+  } catch (error) {
+    console.error("Error removing bookmark:", error);
+    alert("Network error. Please try again.");
+  }
+
+  document.getElementById("removeBookmarkModal").classList.add("hidden");
+  document.getElementById("removeBookmarkModal").classList.remove("flex");
+  pendingJobId = null;
+});
+
+// Initialize bookmarks when page loads
+window.addEventListener("DOMContentLoaded", loadBookmarks);
+</script>
+
+<script>
+const APPLICANT_ID = sessionStorage.getItem('applicant_id');
+const ACCESS_TOKEN = sessionStorage.getItem('access_token');
+
+async function checkPersonalInfoAndRedirect() {
+  try {
+    const response = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/personalInfo/${APPLICANT_ID}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${ACCESS_TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.status === 404) {
+      // No personal info exists, redirect to create profile page
+      window.location.href = '{{url_for("profileSetup")}}'; // replace with your create profile URL
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch personal info: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Personal info exists:", data);
+    // Optionally, pre-fill form fields here
+  } catch (err) {
+    console.error("Error checking personal info:", err);
+    // You might also choose to redirect or show an error page
+  }
+}
+
+// Run this check as soon as the page loads
+window.addEventListener('DOMContentLoaded', () => {
+  checkPersonalInfoAndRedirect();
+});
+
+</script>
+
+<script src="/static/js/data_grabber.js"></script>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Sidebar Toggle Script -->
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const menuBtn = document.getElementById("menuBtn");
+
+  menuBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("-translate-x-full");
+    overlay.classList.toggle("hidden");
+  });
+
+  overlay.addEventListener("click", () => {
+    sidebar.classList.add("-translate-x-full");
+    overlay.classList.add("hidden");
+  });
+</script>
+
+<script>
+  const dropdownBtn = document.getElementById('mobileDropdownBtn');
+  const dropdownMenu = document.getElementById('mobileDropdown');
+
+  dropdownBtn.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!dropdownMenu.contains(e.target) && !dropdownBtn.contains(e.target)) {
+      dropdownMenu.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>

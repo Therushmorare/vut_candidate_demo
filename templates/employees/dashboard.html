@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="/static/styles/bookmark.css" rel="stylesheet">
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- Top Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-30">
+    <div class="flex justify-between items-center px-4 py-3 sm:px-6">
+
+      <!-- Left: Logo -->
+      <div class="flex items-center space-x-3">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+      </div>
+
+      <!-- Right: Desktop Navigation -->
+      <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
+        <a href="{{url_for('employeeCvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">menu_book</span>
+          <span>CV Guide</span>
+        </a>
+        <a href="{{url_for('employeeBookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">bookmark</span>
+          <span>Bookmarked Jobs</span>
+        </a>
+        <a href="{{url_for('employeeNotifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">notifications</span>
+          <span>Notifications</span>
+        </a>
+
+        <!-- User Profile + Logout -->
+        <div class="flex items-center space-x-3">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
+            <span class="material-icons text-lg">logout</span>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+    
+    <!-- Mobile Controls -->
+    <div class="sm:hidden flex items-center space-x-2 relative">
+      <!-- Dropdown Trigger Icon -->
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      </button>
+
+      <!-- Sidebar Menu Button -->
+      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+        <span class="material-icons text-3xl">menu</span>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+        <a href="{{url_for('employeeCvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        </a>
+        <a href="{{url_for('employeeBookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        </a>
+        <a href="{{url_for('employeeNotifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        </a>
+        <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
+          <span class="material-icons mr-2 text-red-500">logout</span> Logout
+        </button>
+      </div>
+    </div>
+
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+        class="fixed top-0 left-0 h-full w-64 bg-white shadow-md flex flex-col z-40 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
+
+    <!-- Logo -->
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+      <a href="{{url_for('employeeDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-green-700 bg-green-50">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="{{url_for('employeeProfile')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      </a>
+      <a href="{{url_for('employeeApplications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      </a>
+      <a href="{{url_for('employeeInterviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="{{url_for('employeeOffers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      </a>
+      <a href="#" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event_available</span> Leave Management
+      </a>
+      <a href="#" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">attach_money</span> Payslip Management
+      </a>
+      <a href="{{url_for('employeeAccountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Overlay for Mobile -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-40 hidden z-30 sm:hidden"></div>
+
+  <!-- Main Content -->
+  <main class="flex-1 sm:ml-64 p-6 sm:p-10 transition-all duration-300">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-green-600 mb-6">Dashboard</h2>
+
+      <!-- Filters -->
+      <div class="bg-white/80 backdrop-blur-md border border-gray-100 rounded-2xl p-5 md:p-6 shadow-lg mb-8 transition-all duration-300 hover:shadow-xl">
+        <!-- Filter Header -->
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+            <span class="material-icons text-green-600">work_outline</span>
+            Job Search
+          </h2>
+          <button 
+            id="clearFilters"
+            class="text-sm text-gray-500 hover:text-green-600 transition flex items-center gap-1"
+          >
+            <span class="material-icons text-base">refresh</span>
+            Clear Filters
+          </button>
+        </div>
+
+        <!-- Filter Inputs -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <!-- Job Title -->
+          <div class="relative">
+            <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">work_outline</span>
+            <input 
+              id="searchInput" 
+              type="text" 
+              placeholder="Job title, department, or city..." 
+              class="pl-10 pr-3 py-3 w-full bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition placeholder-gray-400"
+            />
+          </div>
+
+          <!-- Department -->
+          <div class="relative">
+            <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">apartment</span>
+            <input 
+              id="departmentInput"
+              type="text" 
+              placeholder="Department" 
+              class="pl-10 pr-3 py-3 w-full bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition placeholder-gray-400"
+            />
+          </div>
+
+          <!-- City + Zip -->
+          <div class="flex flex-col sm:flex-row gap-2">
+            <div class="relative flex-1">
+              <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">location_on</span>
+              <input 
+                id="cityInput"
+                type="text" 
+                placeholder="City" 
+                class="pl-10 pr-3 py-3 w-full bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition placeholder-gray-400"
+              />
+            </div>
+            <input 
+              id="zipInput"
+              type="text" 
+              placeholder="Zip" 
+              class="px-3 py-3 w-full sm:w-24 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition placeholder-gray-400"
+            />
+          </div>
+        </div>
+
+        <!-- Search Button -->
+        <div class="flex justify-end mt-5">
+          <button 
+            id="searchBtn"
+            class="flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition active:scale-95 w-full sm:w-auto"
+          >
+            <span class="material-icons text-white text-lg">search</span>
+            Search Jobs
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="mb-6">
+        <!-- Mobile Dropdown -->
+        <div class="sm:hidden mb-3">
+          <select id="tabSelect" class="w-full border border-gray-300 rounded-lg p-2 text-gray-700 focus:ring-2 focus:ring-green-500">
+            <option value="all">All Positions</option>
+            <option value="open">Open</option>
+            <option value="archived">Archived</option>
+          </select>
+        </div>
+
+        <!-- Desktop Tabs -->
+        <div class="hidden sm:block">
+          <nav role="tablist" class="relative flex space-x-2 border-b border-gray-200 overflow-x-auto hide-scrollbar">
+            <button type="button" data-tab="all" class="tab-btn px-4 py-2 text-green-600 font-medium border-b-2 border-green-600 transition">All</button>
+            <button type="button" data-tab="open" class="tab-btn px-4 py-2 text-gray-600 hover:text-green-600 border-b-2 border-transparent transition">Open</button>
+            <button type="button" data-tab="archived" class="tab-btn px-4 py-2 text-gray-600 hover:text-green-600 border-b-2 border-transparent transition">Archived</button>          </nav>
+        </div>
+      </div>
+
+      <!-- Job Cards (Sample) -->
+      <section id="jobList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></section>
+    </div>
+  </main>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const searchInput = document.getElementById('searchInput');
+    const departmentInput = document.getElementById('departmentInput');
+    const cityInput = document.getElementById('cityInput');
+    const zipInput = document.getElementById('zipInput');
+    const clearFiltersBtn = document.getElementById('clearFilters');
+    const searchBtn = document.getElementById('searchBtn');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabSelect = document.getElementById('tabSelect');
+    let activeTab = 'all';
+
+    const jobListContainer = document.getElementById('jobList');
+
+    // Create "no jobs found" element
+    const noJobsMessage = document.createElement('p');
+    noJobsMessage.className = 'col-span-full text-center text-gray-500 text-lg';
+    noJobsMessage.textContent = 'No jobs found matching your criteria.';
+
+    // Fetch jobs
+    let jobCards = [];
+    try {
+      //change endpoint to internal posts
+      const res = await fetch('https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/openPositions');
+      const data = await res.json();
+      const jobs = data.jobs || [];
+
+      // Filter only APPROVED or ARCHIVED
+      const filteredJobs = jobs.filter(job => ["REVIEW", "ARCHIVED"].includes(job.status.toUpperCase()));
+
+      // Create job card elements
+      jobCards = filteredJobs.map(job => {
+        const card = document.createElement('article');
+        card.className = 'job-card bg-white rounded-xl p-6 shadow hover:shadow-xl transition';
+        card.dataset.status = job.status.toLowerCase();
+        card.dataset.title = job.job_title.toLowerCase();
+        card.dataset.department = job.department.toLowerCase();
+        card.dataset.city = job.office.toLowerCase();
+        card.dataset.zip = job.quantity.toString();
+
+        card.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="job-title text-lg font-semibold text-gray-800">${job.job_title}</h3>
+              <p class="job-department text-sm text-gray-500 mt-1">${job.department}</p>
+              <p class="job-city text-xs text-gray-400">${job.office}</p>
+              <p class="job-zip hidden">${job.quantity}</p>
+            </div>
+            <button 
+              title="Bookmark" 
+              class="bookmark-btn text-gray-400 hover:text-green-600 transition" 
+              data-job-id="${job.job_id}">
+              <span class="material-icons">bookmark_border</span>
+            </button>
+          </div>
+
+          <!-- Employment Type Badge -->
+          <p class="mt-3">
+            <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full ${
+              job.employment_type.toLowerCase() === 'full_time'
+                ? 'bg-green-100 text-green-700'
+                : 'bg-blue-100 text-blue-700'
+            }">
+              ${job.employment_type.replace('_', ' ')}
+            </span>
+          </p>
+
+          <!-- Salary and Experience -->
+          ${
+            job.filters && job.filters.length > 0
+              ? `
+              <div class="mt-2 text-sm text-gray-600">
+                <p><span class="font-medium">Salary:</span> R${job.filters[0].salary.toLocaleString()}</p>
+                <p><span class="font-medium">Experience:</span> ${job.filters[0].experience} year${job.filters[0].experience > 1 ? 's' : ''}</p>
+              </div>
+              `
+              : ''
+          }
+
+          <!-- Job Description -->
+          <p class="text-gray-600 text-sm mt-2 line-clamp-3">${job.job_description}</p>
+
+          <!-- Closing Date -->
+          <p class="text-gray-500 text-xs mt-2">Closing Date: <span class="font-medium">${job.closing_date}</span></p>
+
+          <!-- Footer -->
+          <div class="mt-4 flex items-center justify-between">
+            <a href="/viewPost/${job.job_id}" style="text-decoration:none;">
+              <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Apply</button>
+            </a>
+            <span class="text-xs font-semibold px-2 py-1 rounded-full ${
+              job.status.toUpperCase() === 'APPROVED'
+                ? 'bg-green-100 text-green-700'
+                : job.status.toUpperCase() === 'ARCHIVED'
+                ? 'bg-gray-200 text-gray-700'
+                : 'bg-gray-100 text-gray-600'
+            }">
+              ${job.status.charAt(0) + job.status.slice(1).toLowerCase()}
+            </span>
+          </div>
+        `;
+
+        jobListContainer.appendChild(card);
+        return card;
+      });
+
+      // If no jobs initially
+      if (jobCards.length === 0) {
+        jobListContainer.appendChild(noJobsMessage);
+      }
+
+    } catch (err) {
+      console.error('Error fetching jobs:', err);
+      jobListContainer.innerHTML = '<p class="text-red-500 col-span-full text-center">Failed to load jobs.</p>';
+    }
+
+    // Filtering function
+    function filterJobs() {
+      let anyVisible = false;
+
+      jobCards.forEach(card => {
+        const title = card.dataset.title || '';
+        const department = card.dataset.department || '';
+        const city = card.dataset.city || '';
+        const zip = card.dataset.zip || '';
+        const status = card.dataset.status || 'all';
+
+        const matchesSearch = title.includes(searchInput.value.toLowerCase()) || 
+                              department.includes(searchInput.value.toLowerCase()) || 
+                              city.includes(searchInput.value.toLowerCase());
+        const matchesDepartment = !departmentInput.value || department.includes(departmentInput.value.toLowerCase());
+        const matchesCity = !cityInput.value || city.includes(cityInput.value.toLowerCase());
+        const matchesZip = !zipInput.value || zip.includes(zipInput.value.toLowerCase());
+        const matchesTab = activeTab === 'all' || status === activeTab;
+
+        if (matchesSearch && matchesDepartment && matchesCity && matchesZip && matchesTab) {
+          card.style.display = '';
+          anyVisible = true;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Show/hide "no jobs" message
+      if (!anyVisible) {
+        if (!jobListContainer.contains(noJobsMessage)) {
+          jobListContainer.appendChild(noJobsMessage);
+        }
+      } else {
+        if (jobListContainer.contains(noJobsMessage)) {
+          jobListContainer.removeChild(noJobsMessage);
+        }
+      }
+    }
+
+    // Event listeners
+    searchBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      filterJobs();
+    });
+
+    clearFiltersBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      departmentInput.value = '';
+      cityInput.value = '';
+      zipInput.value = '';
+      activeTab = 'all';
+      tabButtons.forEach(btn => {
+        btn.classList.remove('text-green-600', 'border-green-600');
+        btn.classList.add('text-gray-600', 'border-transparent');
+      });
+      tabButtons[0]?.classList.add('text-green-600', 'border-green-600');
+      tabSelect.value = 'all';
+      filterJobs();
+    });
+
+    // Tabs (desktop)
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => b.classList.remove('text-green-600', 'border-green-600'));
+        btn.classList.add('text-green-600', 'border-green-600');
+        activeTab = btn.dataset.tab;
+        filterJobs();
+      });
+    });
+
+    // Tabs (mobile)
+    tabSelect.addEventListener('change', () => {
+      activeTab = tabSelect.value;
+      filterJobs();
+    });
+  });
+  </script>
+
+<script>
+const APPLICANT_ID = sessionStorage.getItem('applicant_id');
+const ACCESS_TOKEN = sessionStorage.getItem('access_token');
+
+async function checkPersonalInfoAndRedirect() {
+  try {
+    const response = await fetch(`https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/personalInfo/${APPLICANT_ID}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${ACCESS_TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.status === 404) {
+      // No personal info exists, redirect to create profile page
+      window.location.href = '{{url_for("employeeProfileSetup")}}'; // replace with your create profile URL
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch personal info: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Personal info exists:", data);
+    // Optionally, pre-fill form fields here
+  } catch (err) {
+    console.error("Error checking personal info:", err);
+    // You might also choose to redirect or show an error page
+  }
+}
+
+// Run this check as soon as the page loads
+window.addEventListener('DOMContentLoaded', () => {
+  checkPersonalInfoAndRedirect();
+});
+
+</script>
+
+<script src="/static/js/login.js"></script>
+
+<script src="/static/js/data_grabber.js"></script>
+<script src="/static/js/bookmark_job.js"></script>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Sidebar Toggle Script -->
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const menuBtn = document.getElementById("menuBtn");
+
+  menuBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("-translate-x-full");
+    overlay.classList.toggle("hidden");
+  });
+
+  overlay.addEventListener("click", () => {
+    sidebar.classList.add("-translate-x-full");
+    overlay.classList.add("hidden");
+  });
+</script>
+
+<script>
+  const dropdownBtn = document.getElementById('mobileDropdownBtn');
+  const dropdownMenu = document.getElementById('mobileDropdown');
+
+  dropdownBtn.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!dropdownMenu.contains(e.target) && !dropdownBtn.contains(e.target)) {
+      dropdownMenu.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>

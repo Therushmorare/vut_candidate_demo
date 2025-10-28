@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Job Posts</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+  <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md flex flex-col fixed h-full z-20 overflow-y-auto">
+    <!-- Logo -->
+    <div class="p-6 flex items-center space-x-3 border-b">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12 rounded-full">
+        <h1 class="font-bold text-xl text-green-700">BMA Admin</h1>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-6 space-y-2">
+        <a href="dashboard.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+        </a>
+        <a href="requests.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">notifications</span> Requests
+        </a>
+        <a href="users.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">person</span> Users
+        </a>
+        <a href="posts.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">book</span> Posts
+        </a>
+        <a href="logs.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">bolt</span> Logs
+        </a>
+        <a href="logout.html" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">logout</span> Logout
+        </a>
+    </nav>
+    </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 ml-64 p-8 overflow-y-auto">
+    
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center mb-10 flex-wrap gap-4">
+      <h2 class="text-2xl font-bold text-gray-800">Dashboard</h2>
+      <div class="flex items-center space-x-3">
+        <input type="text" placeholder="Search..." class="px-4 py-2 w-60 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Documents</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Payroll</a>
+        <a href="#" class="px-3 py-2 text-gray-600 hover:text-green-600 font-medium">Reports</a>
+        <img src="https://i.pravatar.cc/40" alt="Admin Avatar" class="w-10 h-10 rounded-full border-2 border-green-500">
+      </div>
+    </div>
+
+
+    <div class="max-w-7xl mx-auto mt-10 px-4">
+  <!-- Filters -->
+  <div class="bg-white shadow rounded-lg p-4 mb-6 flex flex-wrap gap-4 items-center">
+    <input type="date" class="border p-2 rounded focus:ring-2 focus:ring-green-500 focus:outline-none" placeholder="Filter by Date">
+    <input type="number" class="border p-2 rounded focus:ring-2 focus:ring-green-500 focus:outline-none" placeholder="Salary Amount">
+    <select class="border p-2 rounded focus:ring-2 focus:ring-green-500 focus:outline-none">
+      <option value="">Select Department</option>
+      <option value="IT">IT</option>
+      <option value="Marketing">Marketing</option>
+      <option value="Finance">Finance</option>
+      <option value="HR">HR</option>
+    </select>
+    <input type="text" class="border p-2 rounded focus:ring-2 focus:ring-green-500 focus:outline-none" placeholder="Location">
+    <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Filter</button>
+  </div>
+
+  <!-- Job Post Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+    <!-- Example Card -->
+    <div class="bg-white shadow-md rounded-xl p-6 hover:shadow-xl hover:scale-105 transition transform duration-300">
+      <div class="flex justify-between items-start mb-3">
+        <h3 class="text-lg font-bold text-gray-800">Software Engineer - Cape Town</h3>
+        <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">Draft</span>
+      </div>
+      <p class="text-gray-600 text-sm mb-1">Posted by: HR001</p>
+      <p class="text-gray-600 text-sm mb-1">Salary: <span class="font-medium">R45,000/month</span></p>
+      <p class="text-gray-600 text-sm mb-1">Experience: <span class="font-medium">3+ years</span></p>
+      <p class="text-gray-600 text-sm mb-3">Location: <span class="font-medium">Cape Town</span></p>
+      <p class="text-gray-500 text-xs mb-3">Posted on: 06 Oct 2025</p>
+      <div class="flex space-x-2 mt-auto">
+        <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-semibold">View</button>
+        <button class="flex-1 bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition font-semibold">Update</button>
+        <button class="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition font-semibold">Delete</button>
+      </div>
+    </div>
+
+    <!-- Example Card 2 -->
+    <div class="bg-white shadow-md rounded-xl p-6 hover:shadow-xl hover:scale-105 transition transform duration-300">
+      <div class="flex justify-between items-start mb-3">
+        <h3 class="text-lg font-bold text-gray-800">Marketing Manager - Johannesburg</h3>
+        <span class="text-xs font-semibold bg-green-100 text-green-800 px-2 py-1 rounded-full">Published</span>
+      </div>
+      <p class="text-gray-600 text-sm mb-1">Posted by: HR002</p>
+      <p class="text-gray-600 text-sm mb-1">Salary: <span class="font-medium">R55,000/month</span></p>
+      <p class="text-gray-600 text-sm mb-1">Experience: <span class="font-medium">5+ years</span></p>
+      <p class="text-gray-600 text-sm mb-3">Location: <span class="font-medium">Johannesburg</span></p>
+      <p class="text-gray-500 text-xs mb-3">Posted on: 04 Oct 2025</p>
+      <div class="flex space-x-2 mt-auto">
+        <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-semibold">View</button>
+        <button class="flex-1 bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition font-semibold">Update</button>
+        <button class="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition font-semibold">Delete</button>
+      </div>
+    </div>
+
+    <!-- Example Card 3 -->
+    <div class="bg-white shadow-md rounded-xl p-6 hover:shadow-xl hover:scale-105 transition transform duration-300">
+      <div class="flex justify-between items-start mb-3">
+        <h3 class="text-lg font-bold text-gray-800">Devops Manager - Johannesburg</h3>
+        <span class="text-xs font-semibold bg-green-100 text-green-800 px-2 py-1 rounded-full">Published</span>
+      </div>
+      <p class="text-gray-600 text-sm mb-1">Posted by: HR002</p>
+      <p class="text-gray-600 text-sm mb-1">Salary: <span class="font-medium">R88,000/month</span></p>
+      <p class="text-gray-600 text-sm mb-1">Experience: <span class="font-medium">5+ years</span></p>
+      <p class="text-gray-600 text-sm mb-3">Location: <span class="font-medium">Johannesburg</span></p>
+      <p class="text-gray-500 text-xs mb-3">Posted on: 04 Oct 2025</p>
+      <div class="flex space-x-2 mt-auto">
+        <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-semibold">View</button>
+        <button class="flex-1 bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition font-semibold">Update</button>
+        <button class="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition font-semibold">Delete</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  </main>
+
+<!-- Google Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script>
+const tabs = document.querySelectorAll('.tab-btn');
+const contents = document.querySelectorAll('.tab-content');
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+
+    tabs.forEach(t => {
+        t.classList.remove('text-green-600', 'border-green-600');
+        t.classList.add('text-gray-500', 'border-transparent');
+    });
+    tab.classList.add('text-green-600', 'border-green-600');
+    tab.classList.remove('text-gray-500', 'border-transparent');
+
+    contents.forEach(c => c.classList.add('hidden'));
+    document.getElementById(target).classList.remove('hidden');
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Authentication</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+  <section class="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
+    <div class="flex flex-col items-center mb-6">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="BMA Logo" class="w-24 h-24 mb-3">
+      <h2 class="text-2xl font-bold text-gray-800">Verify Account</h2>
+      <p class="text-gray-500 text-sm mt-1 text-center">
+        Enter the 6-digit code sent to your email or phone to continue
+      </p>
+    </div>
+
+    <form id="mfaForm" class="space-y-5">
+
+      <!-- OTP Input Fields -->
+      <div class="flex justify-between space-x-2">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <input type="text" maxlength="1" class="otp-input w-12 h-12 text-center border rounded-lg text-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition shadow-md">
+          Verify
+        </button>
+      </div>
+
+    <!-- Resend Code Button -->
+    <div class="text-center text-sm text-gray-500 mt-2">
+      Didn’t receive a code? 
+      <button type="button" id="resendBtn" class="text-green-600 hover:underline font-medium">
+        Resend
+      </button>
+    </div>
+
+    </form>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+  const otpInputs = document.querySelectorAll(".otp-input");
+
+  // Auto-focus next input
+  otpInputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+      if (input.value.length === 1 && index < otpInputs.length - 1) {
+        otpInputs[index + 1].focus();
+      }
+    });
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && index > 0 && input.value === "") {
+        otpInputs[index - 1].focus();
+      }
+    });
+  });
+
+  // MFA Form Submission
+  document.getElementById("mfaForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = sessionStorage.getItem("email"); // saved from signup/login
+    const token = Array.from(otpInputs).map(i => i.value).join("");
+
+    if (!email || token.length < 6) {
+      return Swal.fire({
+        icon: 'warning',
+        title: 'Validation Error',
+        text: 'Please enter the 6-digit code'
+      });
+    }
+
+    try {
+      const res = await fetch("https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/verifyAccount", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, token })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Authentication Successful!',
+          text: 'Redirecting to dashboard...',
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          window.location.href = "{{ url_for('candidateDashboard') }}";
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid Code',
+          text: data.message || 'Please try again'
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Network Error',
+        text: 'Please try again later'
+      });
+    }
+  });
+
+  // Resend Token
+  document.getElementById("resendBtn").addEventListener("click", async () => {
+    const email = sessionStorage.getItem("email");
+    if (!email) {
+      return Swal.fire({
+        icon: 'warning',
+        title: 'Email Not Found',
+        text: 'Please login again'
+      });
+    }
+
+    try {
+      const res = await fetch("https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/resendToken", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Code Sent',
+          text: 'A new code has been sent to your email'
+        });
+        otpInputs.forEach(input => input.value = "");
+        otpInputs[0].focus();
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed to Resend',
+          text: data.message || 'Try again later'
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Network Error',
+        text: 'Please try again later'
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

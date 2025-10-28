@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMA | Interviews</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="/static/styles/bookmark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FullCalendar CSS & JS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- Top Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-30">
+    <div class="flex justify-between items-center px-4 py-3 sm:px-6">
+
+      <!-- Left: Logo -->
+      <div class="flex items-center space-x-3">
+        <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-12 h-12">
+      </div>
+
+      <!-- Right: Desktop Navigation -->
+      <div class="hidden sm:flex items-center space-x-6 text-gray-600 font-medium">
+        <a href="{{url_for('employeeCvGuidelines')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">menu_book</span>
+          <span>CV Guide</span>
+        </a>
+        <a href="{{url_for('employeeBookmarks')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">bookmark</span>
+          <span>Bookmarked Jobs</span>
+        </a>
+        <a href="{{url_for('employeeNotifications')}}" class="flex items-center space-x-1 hover:text-green-600 transition">
+          <span class="material-icons text-lg">notifications</span>
+          <span>Notifications</span>
+        </a>
+
+        <!-- User Profile + Logout -->
+        <div class="flex items-center space-x-3">
+          <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+          <a href="javascript:void(0)" onclick="logout()" class="flex items-center space-x-1 hover:text-red-500 transition">
+            <span class="material-icons text-lg">logout</span>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+    <!-- Mobile Controls -->
+    <div class="sm:hidden flex items-center space-x-2 relative">
+      <!-- Dropdown Trigger Icon -->
+      <button id="mobileDropdownBtn" class="focus:outline-none text-gray-600 hover:text-green-600 transition">
+        <img data-profile-image class="w-10 h-10 rounded-full border-2 border-green-500">
+      </button>
+
+      <!-- Sidebar Menu Button -->
+      <button id="menuBtn" class="focus:outline-none text-green-700 hover:text-green-600 transition">
+        <span class="material-icons text-3xl">menu</span>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div id="mobileDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+        <a href="{{url_for('employeeCvGuidelines')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">menu_book</span> CV Guide
+        </a>
+        <a href="{{url_for('employeeBookmarks')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">bookmark</span> Bookmarked Jobs
+        </a>
+        <a href="{{url_for('employeeNotifications')}}" class="flex items-center px-4 py-2 hover:bg-green-50 hover:text-green-600 transition">
+          <span class="material-icons mr-2 text-green-600">notifications</span> Notifications
+        </a>
+        <button onclick="logout()" class="w-full text-left flex items-center px-4 py-2 hover:bg-red-50 hover:text-red-500 transition">
+          <span class="material-icons mr-2 text-red-500">logout</span> Logout
+        </button>
+      </div>
+    </div>
+
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+        class="fixed top-0 left-0 h-full w-64 bg-white shadow-md flex flex-col z-40 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
+
+    <!-- Logo -->
+    <div class="p-6 flex items-center space-x-3 border-b">
+      <img src="/static/images/BMA-Logo-Approved-3.png" alt="Logo" class="w-20 h-20">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+      <a href="{{url_for('employeeDashboard')}}" class="flex items-center px-4 py-2 rounded-lg font-semibold text-green-700 bg-green-50">
+        <span class="material-icons mr-2 text-green-600">dashboard</span> Dashboard
+      </a>
+      <a href="{{url_for('employeeProfile')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">account_circle</span> Account
+      </a>
+      <a href="{{url_for('employeeApplications')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">description</span> Applications
+      </a>
+      <a href="{{url_for('employeeInterviews')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event</span> Interviews
+      </a>
+      <a href="{{url_for('employeeOffers')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">how_to_reg</span> Offers
+      </a>
+      <a href="#" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">event_available</span> Leave Management
+      </a>
+      <a href="#" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">attach_money</span> Payslip Management
+      </a>
+      <a href="{{url_for('employeeAccountSettings')}}" class="flex items-center px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-green-50 hover:text-green-600 transition">
+        <span class="material-icons mr-2 text-green-600">settings</span> Account Settings
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Overlay for Mobile -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-40 hidden z-30 sm:hidden"></div>
+
+  <!-- Main Content -->
+  <main class="flex-1 sm:ml-64 p-4 sm:p-10 transition-all duration-300">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-green-600 mb-4 sm:mb-6">Interviews</h2>
+
+      <!-- Legend -->
+      <div class="flex flex-wrap gap-4 mb-4" id="interviewLegend">
+        <div class="flex items-center gap-2">
+          <span class="w-4 h-4 bg-yellow-500 rounded-full"></span> Pending
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-4 h-4 bg-green-600 rounded-full"></span> Confirmed
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-4 h-4 bg-blue-600 rounded-full"></span> Completed
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-4 h-4 bg-red-600 rounded-full"></span> Cancelled
+        </div>
+      </div>
+
+      <div id="calendar" class="bg-white p-2 sm:p-4 rounded-2xl shadow-md"></div>
+      <p id="noInterviewsMsg" class="text-gray-500 italic text-center py-4 hidden">No interviews scheduled.</p>
+    </div>
+  </main>
+
+  <!-- FullCalendar CSS & JS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    const calendarEl = document.getElementById('calendar');
+    const noInterviewsMsg = document.getElementById('noInterviewsMsg');
+    const applicantId = sessionStorage.getItem('applicant_id'); 
+    const apiURL = `https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/myInterviews/${applicantId}`;
+
+    let events = [];
+
+    try {
+      const res = await fetch(apiURL);
+      const data = await res.json();
+      const interviews = data.interviews || [];
+
+      if (interviews.length === 0) {
+        calendarEl.style.display = 'none';
+        noInterviewsMsg.classList.remove('hidden');
+      } else {
+        events = interviews.map(interview => {
+          const startDateTime = interview.date && interview.time ? `${interview.date}T${interview.time}` : interview.date;
+
+          // Determine color based on status
+          let color = '#16a34a'; // default green
+          if(interview.status) {
+            switch(interview.status.toLowerCase()) {
+              case 'pending': color = '#f59e0b'; break; // yellow
+              case 'confirmed': color = '#16a34a'; break; // green
+              case 'completed': color = '#2563eb'; break; // blue
+              case 'cancelled': color = '#ef4444'; break; // red
+            }
+          }
+
+          return {
+            title: interview.job_title || 'Interview',
+            start: startDateTime,
+            color: color,
+            extendedProps: { 
+              location: interview.location, 
+              details: interview.details,
+              jobId: interview.job_id,
+              interviewId: interview.interview_id
+            }
+          };
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Failed to load interviews!'
+      });
+    }
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      height: 'auto',
+      contentHeight: 'auto',
+      expandRows: true,
+      headerToolbar: {
+        left: 'prev,next',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek'
+      },
+      navLinks: true,
+      editable: false,
+      selectable: true,
+      dayMaxEvents: true,
+      events: events,
+      eventClick: function(info) {
+        Swal.fire({
+          title: info.event.title,
+          html: `
+            ${info.event.start ? `<p><strong>Start:</strong> ${info.event.start.toLocaleString()}</p>` : ''}
+            ${info.event.end ? `<p><strong>End:</strong> ${info.event.end.toLocaleString()}</p>` : ''}
+            ${info.event.extendedProps.location ? `<p><strong>Location:</strong> ${info.event.extendedProps.location}</p>` : ''}
+            ${info.event.extendedProps.details ? `<p><strong>Details:</strong> ${info.event.extendedProps.details}</p>` : ''}
+          `,
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonText: 'Close',
+          cancelButtonText: 'View Application'
+        }).then(result => {
+          if(result.dismiss === Swal.DismissReason.cancel) {
+            const jobId = info.event.extendedProps.jobId;
+            const interviewId = info.event.extendedProps.interviewId;
+            window.location.href = `/viewJobApplication/${interviewId}?job_id=${jobId}`;
+          }
+        });
+      },
+      windowResize: function() {
+        calendar.updateSize();
+      }
+    });
+
+    if (events.length > 0) {
+      calendar.render();
+    }
+  });
+  </script>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/static/js/data_grabber.js"></script>
+  <script src="/static/js/login.js"></script>
+
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const menuBtn = document.getElementById("menuBtn");
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("-translate-x-full");
+      overlay.classList.toggle("hidden");
+    });
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+    });
+  </script>
+
+  <script>
+    const dropdownBtn = document.getElementById('mobileDropdownBtn');
+    const dropdownMenu = document.getElementById('mobileDropdown');
+
+    dropdownBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdownMenu.contains(e.target) && !dropdownBtn.contains(e.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
+  </script>
+
+</body>
+
+</body>
+</html>

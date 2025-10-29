@@ -157,104 +157,117 @@
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
   <script>
-  document.addEventListener('DOMContentLoaded', async function() {
-    const calendarEl = document.getElementById('calendar');
-    const noInterviewsMsg = document.getElementById('noInterviewsMsg');
-    const applicantId = sessionStorage.getItem('applicant_id'); 
-    const apiURL = `https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/myInterviews/${applicantId}`;
+    document.addEventListener('DOMContentLoaded', async function() {
+      const calendarEl = document.getElementById('calendar');
+      const noInterviewsMsg = document.getElementById('noInterviewsMsg');
+      const applicantId = sessionStorage.getItem('applicant_id'); 
+      const apiURL = `https://jellyfish-app-z83s2.ondigitalocean.app/api/candidate/myInterviews/${applicantId}`;
 
-    let events = [];
+      let events = [];
 
-    try {
-      const res = await fetch(apiURL);
-      const data = await res.json();
-      const interviews = data.interviews || [];
+      try {
+        const res = await fetch(apiURL);
+        const data = await res.json();
+        const interviews = data.interviews || [];
 
-      if (interviews.length === 0) {
-        calendarEl.style.display = 'none';
-        noInterviewsMsg.classList.remove('hidden');
-      } else {
-        events = interviews.map(interview => {
-          const startDateTime = interview.date && interview.time ? `${interview.date}T${interview.time}` : interview.date;
+        if (interviews.length === 0) {
+          // fallback placeholder event
+          events.push({
+            title: 'No interviews scheduled',
+            start: new Date().toISOString().split('T')[0], // today
+            allDay: true,
+            color: '#9ca3af' // gray
+          });
+          noInterviewsMsg.classList.remove('hidden');
+        } else {
+          events = interviews.map(interview => {
+            const startDateTime = interview.date && interview.time ? `${interview.date}T${interview.time}` : interview.date;
 
-          // Determine color based on status
-          let color = '#16a34a'; // default green
-          if(interview.status) {
-            switch(interview.status.toLowerCase()) {
-              case 'pending': color = '#f59e0b'; break; // yellow
-              case 'confirmed': color = '#16a34a'; break; // green
-              case 'completed': color = '#2563eb'; break; // blue
-              case 'cancelled': color = '#ef4444'; break; // red
+            let color = '#16a34a'; // default green
+            if(interview.status) {
+              switch(interview.status.toLowerCase()) {
+                case 'pending': color = '#f59e0b'; break;
+                case 'confirmed': color = '#16a34a'; break;
+                case 'completed': color = '#2563eb'; break;
+                case 'cancelled': color = '#ef4444'; break;
+              }
             }
-          }
 
-          return {
-            title: interview.job_title || 'Interview',
-            start: startDateTime,
-            color: color,
-            extendedProps: { 
-              location: interview.location, 
-              details: interview.details,
-              jobId: interview.job_id,
-              interviewId: interview.interview_id
-            }
-          };
-        });
-      }
-    } catch (err) {
-      console.error(err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Failed to load interviews!'
-      });
-    }
-
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      height: 'auto',
-      contentHeight: 'auto',
-      expandRows: true,
-      headerToolbar: {
-        left: 'prev,next',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek'
-      },
-      navLinks: true,
-      editable: false,
-      selectable: true,
-      dayMaxEvents: true,
-      events: events,
-      eventClick: function(info) {
+            return {
+              title: interview.job_title || 'Interview',
+              start: startDateTime,
+              color: color,
+              extendedProps: { 
+                location: interview.location, 
+                details: interview.details,
+                jobId: interview.job_id,
+                interviewId: interview.interview_id
+              }
+            };
+          });
+          noInterviewsMsg.classList.add('hidden');
+        }
+      } catch (err) {
+        console.error(err);
         Swal.fire({
-          title: info.event.title,
-          html: `
-            ${info.event.start ? `<p><strong>Start:</strong> ${info.event.start.toLocaleString()}</p>` : ''}
-            ${info.event.end ? `<p><strong>End:</strong> ${info.event.end.toLocaleString()}</p>` : ''}
-            ${info.event.extendedProps.location ? `<p><strong>Location:</strong> ${info.event.extendedProps.location}</p>` : ''}
-            ${info.event.extendedProps.details ? `<p><strong>Details:</strong> ${info.event.extendedProps.details}</p>` : ''}
-          `,
-          icon: 'info',
-          showCancelButton: true,
-          confirmButtonText: 'Close',
-          cancelButtonText: 'View Application'
-        }).then(result => {
-          if(result.dismiss === Swal.DismissReason.cancel) {
-            const jobId = info.event.extendedProps.jobId;
-            const interviewId = info.event.extendedProps.interviewId;
-            window.location.href = `/viewJobApplication/${interviewId}?job_id=${jobId}`;
-          }
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Failed to load interviews!'
         });
-      },
-      windowResize: function() {
-        calendar.updateSize();
+        // fallback placeholder event if API fails
+        events.push({
+          title: 'No interviews available',
+          start: new Date().toISOString().split('T')[0],
+          allDay: true,
+          color: '#9ca3af'
+        });
       }
-    });
 
-    if (events.length > 0) {
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        height: 'auto',
+        contentHeight: 'auto',
+        expandRows: true,
+        headerToolbar: {
+          left: 'prev,next',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek'
+        },
+        navLinks: true,
+        editable: false,
+        selectable: true,
+        dayMaxEvents: true,
+        events: events,
+        eventClick: function(info) {
+          if(info.event.title === 'No interviews scheduled' || info.event.title === 'No interviews available') return;
+
+          Swal.fire({
+            title: info.event.title,
+            html: `
+              ${info.event.start ? `<p><strong>Start:</strong> ${info.event.start.toLocaleString()}</p>` : ''}
+              ${info.event.end ? `<p><strong>End:</strong> ${info.event.end.toLocaleString()}</p>` : ''}
+              ${info.event.extendedProps.location ? `<p><strong>Location:</strong> ${info.event.extendedProps.location}</p>` : ''}
+              ${info.event.extendedProps.details ? `<p><strong>Details:</strong> ${info.event.extendedProps.details}</p>` : ''}
+            `,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Close',
+            cancelButtonText: 'View Application'
+          }).then(result => {
+            if(result.dismiss === Swal.DismissReason.cancel) {
+              const jobId = info.event.extendedProps.jobId;
+              const interviewId = info.event.extendedProps.interviewId;
+              window.location.href = `/viewJobApplication/${interviewId}?job_id=${jobId}`;
+            }
+          });
+        },
+        windowResize: function() {
+          calendar.updateSize();
+        }
+      });
+
       calendar.render();
-    }
-  });
+    });
   </script>
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
